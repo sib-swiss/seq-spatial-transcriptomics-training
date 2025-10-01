@@ -1,0 +1,52 @@
+---
+title: "Introduction to Sequencing-based Spatial Transcriptomics Data Analysis"
+---
+
+<!-- <figure> -->
+<!--     <img src="assets/images/course_logo.png" width="780"/> -->
+<!-- </figure> -->
+
+## Authors
+
+- Deepak Tanwar [ORCiD](https://orcid.org/0000-0001-8036-1989)
+- Joana Carlevaro-Fita [ORCiD](https://orcid.org/0000-0002-1674-2055)
+- Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X)
+- Julien Roux [ORCiD](https://orcid.org/0000-0002-4192-5099)
+- Martin Emons [ORCiD](https://orcid.org/0009-0000-5219-5311)
+- Peiying Cai [ORCiD](https://orcid.org/0009-0001-9229-2244)
+- Ivan Berest [ORCiD](https://orcid.org/0000-0001-7607-9163)
+- Mark Robinson [ORCiD](https://orcid.org/0000-0002-3048-5518)
+
+
+## License & copyright
+
+**License:** [CC BY 4.0](https://github.com/sib-swiss/spatial-transcriptomics-training/blob/master/LICENSE.md)
+
+**Copyright:** [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/)
+
+## Learning outcomes
+
+### General learning outcomes
+
+At the end of the course, the participants are expected to:
+
+- Explain the principles and describe applications of sequencing-based spatially-resolved transcriptomics (SRT)
+- Define the differences between sequencing-based SRT methods and imaging-based SRT methods.
+- Identify potential pitfalls and limitations of sequencing-based SRT experiments and analysis workflows.
+- Assess and interpret raw sequencing outputs and spatial metadata files, understanding their structure and relevance for downstream analyses.
+- Define important aspects of quality control, feature selection, dimensionality reduction and differentail gene expression to SRT data and apply those.
+- Clarify various spatial statistics and their application to biological questions.
+- Use frequently-used methods to analyze multi-sample SRT experiments.
+
+
+### Learning outcomes explained
+
+To reach the general learning outcomes above, we have set a number of smaller learning outcomes. Each chapter starts with these smaller learning outcomes. Use these at the start of a chapter to get an idea what you will learn. Use them also at the end of a chapter to evaluate whether you have learned what you were expected to learn.
+
+## Learning experiences
+
+To reach the learning outcomes we will use lectures, exercises, polls and group work. During exercises, you are free to discuss with other participants. During lectures, focus on the lecture only.
+
+### Exercises
+
+Each block has practical work involved. Some more than others. The practicals are subdivided into chapters, and we'll have a (short) discussion after each chapter. All answers to the practicals are incorporated, but they are hidden. Do the exercise first by yourself, before checking out the answer. If your answer is different from the answer in the practicals, try to figure out why they are different.
