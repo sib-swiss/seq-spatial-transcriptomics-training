@@ -33,7 +33,7 @@ website:
           - href: "day2/day2-4_deconvolution.qmd"
     right:
       - icon: github
-        href: https://github.com/sib-swiss/spatial-transcriptomics-training
+        href: https://github.com/sib-swiss/seq-spatial-transcriptomics-training
         aria-label: GitHub
   sidebar:
     logo: assets/SIB_LogoQ_GBv.svg

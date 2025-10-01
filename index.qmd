@@ -20,7 +20,7 @@ title: "Introduction to Sequencing-based Spatial Transcriptomics Data Analysis"
 
 ## License & copyright
 
-**License:** [CC BY 4.0](https://github.com/sib-swiss/spatial-transcriptomics-training/blob/master/LICENSE.md)
+**License:** [CC BY 4.0](https://github.com/sib-swiss/seq-spatial-transcriptomics-training/blob/master/LICENSE.md)
 
 **Copyright:** [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/)
 
