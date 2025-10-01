@@ -1,0 +1,6 @@
+---
+title: "Exercise"
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
