@@ -8,6 +8,7 @@ title: "Introduction to Sequencing-based Spatial Transcriptomics Data Analysis"
 
 ## Authors
 
+<!-- 
 - Deepak Tanwar [ORCiD](https://orcid.org/0000-0001-8036-1989)
 - Joana Carlevaro-Fita [ORCiD](https://orcid.org/0000-0002-1674-2055)
 - Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X)
@@ -16,7 +17,7 @@ title: "Introduction to Sequencing-based Spatial Transcriptomics Data Analysis"
 - Peiying Cai [ORCiD](https://orcid.org/0009-0001-9229-2244)
 - Ivan Berest [ORCiD](https://orcid.org/0000-0001-7607-9163)
 - Mark Robinson [ORCiD](https://orcid.org/0000-0002-3048-5518)
-
+-->
 
 ## License & copyright
 
