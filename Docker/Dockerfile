@@ -5,9 +5,8 @@ FROM rocker/rstudio:4.5.1
 
 # CMD [ "sh", "-c", "/rocker_scripts/experimental/batch_user_creation.sh && /init" ]
 
-RUN apt-get update
-
-RUN apt-get update && sudo apt-get install -y \
+# Install system dependencies required for R packages
+RUN apt-get update && apt-get install -y \
     libxt6 \
     libgl1 \
     libcurl4-openssl-dev \
@@ -18,7 +17,11 @@ RUN apt-get update && sudo apt-get install -y \
     libgdal-dev \
     tree \
     libcairo2-dev \
-    libxt-dev
+    libxt-dev \
+    cmake \
+    gdal-bin \
+    libmagick++-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY renv.lock ./
 
