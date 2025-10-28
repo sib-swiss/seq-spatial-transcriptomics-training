@@ -1,0 +1,224 @@
+---
+title: "Quality Control using SpotSweeper"
+format: html
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+## Learning Objectives
+
+By the end of this exercise, you will be able to:
+
+- Load a `SpatialExperiment` object from a `.qs` file.
+- Calculate per-spot QC metrics.
+- Identify local outliers based on various QC metrics.
+- Detect spatial artifacts using `SpotSweeper`.
+- Visualize QC metrics and detected artifacts.
+
+# Libraries
+```{r}
+library(SpatialExperiment)
+library(qs2)
+library(SpotSweeper)
+library(scuttle)
+library(ggplot2)
+library(escheR) # For spatial plotting
+library(HDF5Array)
+```
+
+# Data Object
+
+In this section, we will load our `SpatialExperiment` object, which has been saved as a `.qs2` file, and prepare it for quality control analysis.
+
+```{r}
+# Load the SpatialExperiment object from the .qs2 file.
+# This object contains the processed spatial transcriptomics data.
+spe <- qs_read("results/01_spe.qs2", nthreads = 1)
+
+# Change row names from gene IDs to gene symbols for easier interpretation.
+# This assumes 'Symbol' is a column in the rowData of the SpatialExperiment object.
+rownames(spe) <- rowData(spe)$Symbol
+
+# Identify mitochondrial transcripts. These are often used as a QC metric.
+# Genes starting with "MT-" are typically mitochondrial.
+is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
+
+# Calculate per-spot (per-cell) QC metrics using scuttle's addPerCellQCMetrics function.
+# This adds metrics like sum (total counts), detected (number of detected genes),
+# and mitochondrial gene percentage to the colData of the SpatialExperiment object.
+spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
+
+# Display the column names of the colData to see the newly added QC metrics.
+colnames(colData(spe))
+```
+
+# Subsetting for Demonstration
+
+For the purpose of this tutorial, and to reduce computation time, we will subset the `SpatialExperiment` object to a smaller number of genes and spots. In a real analysis, you would typically work with the full dataset or apply more sophisticated filtering criteria.
+
+```{r}
+# Subset to a smaller number of genes (e.g., top 1000 genes by variance or a random subset).
+# For simplicity, let's take a random subset of 1000 genes.
+set.seed(123) # for reproducibility
+num_genes_to_keep <- 1000
+if (nrow(spe) > num_genes_to_keep) {
+  gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep)
+  spe_subset <- spe[gene_indices, ]
+} else {
+  spe_subset <- spe
+}
+
+# Subset to a smaller number of spots (e.g., a random subset of 5000 spots).
+num_spots_to_keep <- 5000
+if (ncol(spe_subset) > num_spots_to_keep) {
+  spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep)
+  spe_subset <- spe_subset[, spot_indices]
+} else {
+  spe_subset <- spe_subset
+}
+
+spe <- spe_subset
+
+# Display the dimensions of the subsetted object to confirm reduction.
+dim(spe)
+```
+
+## Question: Impact of Subsetting
+
+**What are the potential implications of subsetting the data (both genes and spots) for QC analysis in a real-world scenario?**
+
+:::{.callout-tip collapse="true"}
+### Answer
+
+Subsetting the data can significantly speed up computations, which is beneficial for tutorials and initial exploration. However, in a real-world scenario, it has several implications:
+
+-   **Loss of Information:** Subsetting genes might remove important genes that could be relevant for certain QC metrics or biological insights. Subsetting spots might miss localized artifacts or rare cell populations.
+-   **Altered Statistics:** Metrics like `localOutliers` and `findArtifacts` rely on neighborhood information. Subsetting spots can change the definition of neighborhoods and thus alter the results of these analyses.
+-   **Representativeness:** A small subset might not be representative of the entire dataset, potentially leading to biased conclusions about data quality.
+
+Therefore, while useful for quick demonstrations, full QC should ideally be performed on the complete dataset.
+:::
+
+# Local Outlier Detection
+
+Here, we identify local outliers based on common QC metrics such as library size, number of detected genes, and mitochondrial percentage. `localOutliers` from `SpotSweeper` helps in identifying spots that deviate significantly from their local neighborhood.
+
+```{r}
+# Identify local outliers based on library size ("sum" of counts).
+# Spots with unusually low library size compared to their neighbors will be flagged.
+spe <- localOutliers(spe,
+  metric = "sum",
+  direction = "lower",
+  log = TRUE,
+  workers = parallel::detectCores() - 1
+)
+
+# Identify local outliers based on the number of unique genes detected ("detected").
+# Spots with an unusually low number of detected genes will be flagged.
+spe <- localOutliers(spe,
+  metric = "detected",
+  direction = "lower",
+  log = TRUE,
+  workers = parallel::detectCores() - 1
+)
+
+# Identify local outliers based on the mitochondrial gene percentage.
+# Spots with an unusually high mitochondrial percentage will be flagged.
+spe <- localOutliers(spe,
+  metric = "subsets_Mito_percent",
+  direction = "higher",
+  log = FALSE,
+  workers = parallel::detectCores() - 1
+)
+
+# Combine all individual outlier flags into a single "local_outliers" column.
+# A spot is considered a local outlier if it's flagged by any of the above metrics.
+spe$local_outliers <- as.logical(spe$sum_outliers) |
+  as.logical(spe$detected_outliers) |
+  as.logical(spe$subsets_Mito_percent_outliers)
+```
+
+## Question 1
+
+**How many spots were identified as local outliers based on the combined criteria?**
+
+:::{.callout-tip collapse="true"}
+### Answer
+
+```r
+# Count the number of spots flagged as local outliers.
+table(spe$local_outliers)
+```
+:::
+
+## Spatial Artifact Detection with `SpotSweeper`
+
+`SpotSweeper` is designed to detect spatial artifacts that might not be captured by simple local outlier detection. This is particularly useful for identifying regions with systematic issues.
+
+```{r, eval=FALSE}
+# not working anymore
+spe <- findArtifacts(spe,
+  mito_percent = "subsets_Mito_percent", # Using the metric calculated by scuttle
+  mito_sum = "subsets_Mito_sum", # Using the metric calculated by scuttle
+  name = "artifact"
+)
+
+# Check that "artifact" is now a column in colData, indicating detected artifacts.
+colnames(colData(spe))
+```
+
+## Question 2
+
+**What is the difference between `localOutliers` and `findArtifacts`? When would you use one over the other?**
+
+:::{.callout-tip collapse="true"}
+### Answer
+
+`localOutliers` identifies individual spots that deviate significantly from their immediate neighbors based on a single metric (e.g., unusually low library size). It's good for detecting isolated problematic spots.
+
+`findArtifacts` from `SpotSweeper` is designed to detect larger, spatially coherent regions of problematic spots (artifacts) by considering multiple metrics and their spatial patterns. It's more suitable for identifying systematic issues across a larger area of the tissue.
+
+You would use `localOutliers` for general per-spot QC and `findArtifacts` when you suspect or observe larger, structured regions of poor quality that might indicate experimental issues or tissue damage.
+:::
+
+# Visualization of QC Results
+
+Visualizing the QC metrics and detected artifacts is crucial for understanding the quality of your spatial transcriptomics data.
+
+```{r}
+# Plot the spatial distribution of local outliers.
+# Spots flagged as local outliers will be highlighted.
+plotQCmetrics(spe,
+  metric = "sum_log", outliers = "local_outliers", point_size = 1.1,
+  stroke = 0.75
+) +
+  ggtitle("All Local Outliers")
+```
+
+## Question 3
+
+**Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`.**
+
+:::{.callout-tip collapse="true"}
+### Answer
+
+```r
+# Plot the spatial distribution of the detected artifacts.
+plotQCmetrics(spe,
+    metric = "subsets_Mito_percent", # You can choose any relevant metric to display
+    outliers = "artifact", 
+    point_size = 1.1
+) +
+    ggtitle("Detected Spatial Artifacts")
+```
+:::
+
+:::{.callout-important}
+**Key Takeaways:**
+
+-   `scuttle::addPerCellQCMetrics` provides essential per-spot QC metrics.
+-   `SpotSweeper::localOutliers` helps identify individual problematic spots.
+-   `SpotSweeper::findArtifacts` is powerful for detecting spatially coherent regions of poor quality.
+-   Visualizing QC results is critical for data interpretation and downstream analysis decisions.
+:::

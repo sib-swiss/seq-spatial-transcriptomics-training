@@ -22,9 +22,9 @@ website:
       - href: course_schedule.qmd
       - text: "day 1"
         menu:
-          - href: "day1/day1-1_dataset.qmd"
-          - href: "day1/day1-2_qc_norm.qmd"
-          - href: "day1/day1-3_dim_red_clust.qmd"
+          - href: "day1/day1-1_SpatialExperiment.qmd"
+          - href: "day1/day1-2_spotsweeper_qc.qmd"
+          - href: "day1/day1-3_feature_dimred_cluster.qmd"
       - text: "day 2"
         menu: 
           - href: "day2/day2-1_spatial_stats.qmd"
