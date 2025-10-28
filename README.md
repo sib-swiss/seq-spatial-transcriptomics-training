@@ -1,6 +1,5 @@
 ![build workflow](https://github.com/sib-swiss/seq-spatial-transcriptomics-training/actions/workflows/docker-image.yml/badge.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/sib-swiss/seq-spatial-transcriptomics-training)
-# [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5703106.svg)](https://doi.org/10.5281/zenodo.5703106)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 This website is hosted at: https://sib-swiss.github.io/seq-spatial-transcriptomics-training
