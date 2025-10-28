@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.31">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>SpatialExperiment object – Sequencing-based Spatial Transcriptomics</title>
+<title>Exercise 1 – Sequencing-based Spatial Transcriptomics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,11 +132,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../precourse_preparations.html"> 
+    <a class="nav-link" href="../qmd/precourse_preparations.html"> 
 <span class="menu-text">Precourse preparations</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../course_schedule.html"> 
+    <a class="nav-link" href="../qmd/course_schedule.html"> 
 <span class="menu-text">Course schedule</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -146,15 +146,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">
 <li>
     <a class="dropdown-item" href="../day1/day1-1_SpatialExperiment.html">
- <span class="dropdown-text"><code>SpatialExperiment</code> object</span></a>
+ <span class="dropdown-text">Exercise 1</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../day1/day1-2_spotsweeper_qc.html">
- <span class="dropdown-text">Quality Control using SpotSweeper</span></a>
+ <span class="dropdown-text">Exercise 2</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../day1/day1-3_feature_dimred_cluster.html">
- <span class="dropdown-text">Feature Selection, Dimensionality Reduction, and Clustering</span></a>
+ <span class="dropdown-text">Exercise 3</span></a>
   </li>  
     </ul>
 </li>
@@ -197,8 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-<code>SpatialExperiment</code> object</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Exercise 1</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -214,7 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+<li><a href="#spatialexperiment-object" id="toc-spatialexperiment-object" class="nav-link active" data-scroll-target="#spatialexperiment-object"><code>SpatialExperiment</code> object</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
   <li><a href="#data-for-the-course" id="toc-data-for-the-course" class="nav-link" data-scroll-target="#data-for-the-course">Data for the course</a></li>
   <li>
@@ -253,8 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<code>SpatialExperiment</code> object</h1>
+<h1 class="title">Exercise 1</h1>
 </div>
 
 
@@ -269,7 +268,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </header><p><img src="../assets/images/spe.png" class="img-fluid"></p>
-<section id="learning-objectives" class="level2"><h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<section id="spatialexperiment-object" class="level2"><h2 class="anchored" data-anchor-id="spatialexperiment-object">
+<code>SpatialExperiment</code> object</h2>
+<p>In this first exercise, we will dive into the <code>SpatialExperiment</code> object, a cornerstone of spatial transcriptomics analysis in <code>R</code>. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the <code>R</code>/<code>Bioconductor</code> ecosystem.</p>
+</section><section id="learning-objectives" class="level2"><h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <p>By the end of this exercise, you will be able to:</p>
 <ul>
 <li>Understand the structure of a <code>SpatialExperiment</code> object.</li>
