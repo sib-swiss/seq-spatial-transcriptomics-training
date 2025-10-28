@@ -18,8 +18,8 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: precourse_preparations.qmd
-      - href: course_schedule.qmd
+      - href: qmd/precourse_preparations.qmd
+      - href: qmd/course_schedule.qmd
       - text: "day 1"
         menu:
           - href: "day1/day1-1_SpatialExperiment.qmd"

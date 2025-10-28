@@ -1,10 +1,12 @@
 ---
-title: "Quality Control using SpotSweeper"
+title: "Exercise 2"
 format: html
 editor: source
 editor_options: 
   chunk_output_type: console
 ---
+
+## Quality Control using `SpotSweeper`
 
 ## Learning Objectives
 

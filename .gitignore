@@ -25,6 +25,7 @@ course_data*
 *.rds
 de_genes_FindAllMarkers.csv
 data/
+results/
 
 # Other
 single_cell_course

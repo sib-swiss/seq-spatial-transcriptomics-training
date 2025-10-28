@@ -1,10 +1,12 @@
 ---
-title: "Feature Selection, Dimensionality Reduction, and Clustering"
+title: "Exercise 3"
 format: html
 editor: source
 editor_options: 
   chunk_output_type: console
 ---
+
+## Feature Selection, Dimensionality Reduction, and Clustering
 
 ## Learning Objectives
 
