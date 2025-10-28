@@ -21,6 +21,8 @@ RUN apt-get update && apt-get install -y \
     cmake \
     gdal-bin \
     libmagick++-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY renv.lock ./

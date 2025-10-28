@@ -21,6 +21,10 @@ By the end of this exercise, you will be able to:
 
 ## Libraries
 ```{r}
+#| message: false
+#| warning: false
+#| output: false
+
 library(SpatialExperiment)
 library(qs2)
 library(scran) # For feature selection and clustering
