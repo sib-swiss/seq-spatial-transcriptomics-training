@@ -30,3 +30,4 @@ results/
 # Other
 single_cell_course
 *.html
+/.quarto/

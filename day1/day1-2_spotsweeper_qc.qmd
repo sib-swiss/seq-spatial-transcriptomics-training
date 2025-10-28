@@ -8,6 +8,8 @@ editor_options:
 
 ## Quality Control using `SpotSweeper`
 
+In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. Using the `SpotSweeper` package, we will learn how to identify and handle low-quality spots and spatial artifacts, which is essential for ensuring the reliability of downstream analyses. We will calculate various QC metrics, detect local outliers, and visualize the results to gain a comprehensive understanding of data quality.
+
 ## Learning Objectives
 
 By the end of this exercise, you will be able to:

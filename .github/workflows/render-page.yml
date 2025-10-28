@@ -22,6 +22,12 @@ jobs:
     container:
       image: sibswiss/training-seq-spatial-transcriptomics-rstudio:latest
     steps:
+      - name: Log in to Docker Hub
+        run: |
+          echo "Logging into Docker Hub"
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        shell: bash
+
       - name: Checkout
         uses: actions/checkout@v4
 

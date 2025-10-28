@@ -8,6 +8,8 @@ editor_options:
 
 ## Feature Selection, Dimensionality Reduction, and Clustering
 
+In this third exercise, we will explore the essential techniques of feature selection, dimensionality reduction, and clustering to uncover meaningful biological insights from spatial transcriptomics data. We will learn how to identify the most informative genes, visualize complex high-dimensional data in lower-dimensional spaces using methods like PCA and UMAP, and group spots into clusters representing distinct spatial domains. These steps are fundamental for interpreting the underlying biological structure of the tissue.
+
 ## Learning Objectives
 
 By the end of this exercise, you will be able to:
