@@ -1,26 +1,31 @@
+# General
 .DS_Store
-site
 .Rproj.user
+.Rhistory
+.Rprofile
+.bash_history
+.sh_history
+.wget-hsts
 .cache
 .local
 .config
-.bash_history
-.Rhistory
-.Rprofile
-single_cell_course
+/.luarc.json
+~$*
+
+# Quarto
+_site/
+_freeze/
+.quarto/
+*_files/
+*cache/
+
+# Data
 cellranger*
 course_data*
 *.rds
-_site/
-# _freeze/
-.quarto/
-/.quarto/
-*cache*
-*_files*
-/.luarc.json
-~$*
-.sh_history
-.wget-hsts
 de_genes_FindAllMarkers.csv
-*.html
 data/
+
+# Other
+single_cell_course
+*.html
