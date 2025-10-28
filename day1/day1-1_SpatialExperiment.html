@@ -267,10 +267,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p><img src="../assets/images/spe.png" class="img-fluid"></p>
-<section id="spatialexperiment-object" class="level2"><h2 class="anchored" data-anchor-id="spatialexperiment-object">
+</header><section id="spatialexperiment-object" class="level2"><h2 class="anchored" data-anchor-id="spatialexperiment-object">
 <code>SpatialExperiment</code> object</h2>
 <p>In this first exercise, we will dive into the <code>SpatialExperiment</code> object, a cornerstone of spatial transcriptomics analysis in <code>R</code>. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the <code>R</code>/<code>Bioconductor</code> ecosystem.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../assets/images/spe.png" class="img-fluid figure-img"></p>
+<figcaption>Overview of the <code>SpatialExperiment</code> class structure</figcaption></figure>
+</div>
 </section><section id="learning-objectives" class="level2"><h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <p>By the end of this exercise, you will be able to:</p>
 <ul>
@@ -696,7 +699,7 @@ Important
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

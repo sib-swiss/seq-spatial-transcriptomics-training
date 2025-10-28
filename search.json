@@ -119,11 +119,18 @@
     "text": "Question 3\nPlot the spatial distribution of the artifact column identified by SpotSweeper.\n\n\n\n\n\n\nAnswer\n\n\n\n\n\n# Plot the spatial distribution of the detected artifacts.\nplotQCmetrics(spe,\n    metric = \"subsets_Mito_percent\", # You can choose any relevant metric to display\n    outliers = \"artifact\", \n    point_size = 1.1\n) +\n    ggtitle(\"Detected Spatial Artifacts\")\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nKey Takeaways:\n\n\nscuttle::addPerCellQCMetrics provides essential per-spot QC metrics.\n\nSpotSweeper::localOutliers helps identify individual problematic spots.\n\nSpotSweeper::findArtifacts is powerful for detecting spatially coherent regions of poor quality.\nVisualizing QC results is critical for data interpretation and downstream analysis decisions."
   },
   {
+    "objectID": "day1/day1-1_SpatialExperiment.html",
+    "href": "day1/day1-1_SpatialExperiment.html",
+    "title": "Exercise 1",
+    "section": "",
+    "text": "In this first exercise, we will dive into the SpatialExperiment object, a cornerstone of spatial transcriptomics analysis in R. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the R/Bioconductor ecosystem.\n\n\nOverview of the SpatialExperiment class structure"
+  },
+  {
     "objectID": "day1/day1-1_SpatialExperiment.html#spatialexperiment-object",
     "href": "day1/day1-1_SpatialExperiment.html#spatialexperiment-object",
     "title": "Exercise 1",
-    "section": "\nSpatialExperiment object",
-    "text": "SpatialExperiment object\nIn this first exercise, we will dive into the SpatialExperiment object, a cornerstone of spatial transcriptomics analysis in R. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the R/Bioconductor ecosystem."
+    "section": "",
+    "text": "In this first exercise, we will dive into the SpatialExperiment object, a cornerstone of spatial transcriptomics analysis in R. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the R/Bioconductor ecosystem.\n\n\nOverview of the SpatialExperiment class structure"
   },
   {
     "objectID": "day1/day1-1_SpatialExperiment.html#learning-objectives",
