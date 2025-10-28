@@ -1,7 +1,5 @@
 ---
 title: "Exercise 1"
-
-In this first exercise, we will dive into the `SpatialExperiment` object, a cornerstone of spatial transcriptomics analysis in R. We will learn how to load Visium data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the R/Bioconductor ecosystem.
 format: html
 editor: source
 editor_options: 
@@ -11,6 +9,8 @@ editor_options:
 ![](../assets/images/spe.png)
 
 ## `SpatialExperiment` object
+
+In this first exercise, we will dive into the `SpatialExperiment` object, a cornerstone of spatial transcriptomics analysis in `R`. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the `R`/`Bioconductor` ecosystem.
 
 ## Learning Objectives
 
