@@ -61,74 +61,76 @@ spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
 colnames(colData(spe))
 ```
 
-# Subsetting for Demonstration
+<!-- # Subsetting for Demonstration -->
 
-For the purpose of this tutorial, and to reduce computation time, we will subset the `SpatialExperiment` object to a smaller number of genes and spots. In a real analysis, you would typically work with the full dataset or apply more sophisticated filtering criteria.
+<!-- For the purpose of this tutorial, and to reduce computation time, we will subset the `SpatialExperiment` object to a smaller number of genes and spots. In a real analysis, you would typically work with the full dataset or apply more sophisticated filtering criteria. -->
 
-```{r}
-# Subset to a smaller number of genes (e.g., top 1000 genes by variance or a random subset).
-# For simplicity, let's take a random subset of 1000 genes.
-set.seed(123) # for reproducibility
-num_genes_to_keep <- 1000
-if (nrow(spe) > num_genes_to_keep) {
-  gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep)
-  spe_subset <- spe[gene_indices, ]
-} else {
-  spe_subset <- spe
-}
+<!-- ```{r} -->
+<!-- # Subset to a smaller number of genes (e.g., top 1000 genes by variance or a random subset). -->
+<!-- # For simplicity, let's take a random subset of 1000 genes. -->
+<!-- set.seed(123) # for reproducibility -->
+<!-- num_genes_to_keep <- 1000 -->
+<!-- if (nrow(spe) > num_genes_to_keep) { -->
+<!--   gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep) -->
+<!--   spe_subset <- spe[gene_indices, ] -->
+<!-- } else { -->
+<!--   spe_subset <- spe -->
+<!-- } -->
 
-# Subset to a smaller number of spots (e.g., a random subset of 5000 spots).
-num_spots_to_keep <- 5000
-if (ncol(spe_subset) > num_spots_to_keep) {
-  spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep)
-  spe_subset <- spe_subset[, spot_indices]
-} else {
-  spe_subset <- spe_subset
-}
+<!-- # Subset to a smaller number of spots (e.g., a random subset of 5000 spots). -->
+<!-- num_spots_to_keep <- 5000 -->
+<!-- if (ncol(spe_subset) > num_spots_to_keep) { -->
+<!--   spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep) -->
+<!--   spe_subset <- spe_subset[, spot_indices] -->
+<!-- } else { -->
+<!--   spe_subset <- spe_subset -->
+<!-- } -->
 
-spe <- spe_subset
+<!-- spe <- spe_subset -->
 
-# Display the dimensions of the subsetted object to confirm reduction.
-dim(spe)
-```
+<!-- # Display the dimensions of the subsetted object to confirm reduction. -->
+<!-- dim(spe) -->
+<!-- ``` -->
 
-## Question: Impact of Subsetting
+<!-- ## Question: Impact of Subsetting -->
 
-**What are the potential implications of subsetting the data (both genes and spots) for QC analysis in a real-world scenario?**
+<!-- **What are the potential implications of subsetting the data (both genes and spots) for QC analysis in a real-world scenario?** -->
 
-:::{.callout-tip collapse="true"}
-### Answer
+<!-- :::{.callout-tip collapse="true"} -->
+<!-- ### Answer -->
 
-Subsetting the data can significantly speed up computations, which is beneficial for tutorials and initial exploration. However, in a real-world scenario, it has several implications:
+<!-- Subsetting the data can significantly speed up computations, which is beneficial for tutorials and initial exploration. However, in a real-world scenario, it has several implications: -->
 
--   **Loss of Information:** Subsetting genes might remove important genes that could be relevant for certain QC metrics or biological insights. Subsetting spots might miss localized artifacts or rare cell populations.
--   **Altered Statistics:** Metrics like `localOutliers` and `findArtifacts` rely on neighborhood information. Subsetting spots can change the definition of neighborhoods and thus alter the results of these analyses.
--   **Representativeness:** A small subset might not be representative of the entire dataset, potentially leading to biased conclusions about data quality.
+<!-- -   **Loss of Information:** Subsetting genes might remove important genes that could be relevant for certain QC metrics or biological insights. Subsetting spots might miss localized artifacts or rare cell populations. -->
+<!-- -   **Altered Statistics:** Metrics like `localOutliers` and `findArtifacts` rely on neighborhood information. Subsetting spots can change the definition of neighborhoods and thus alter the results of these analyses. -->
+<!-- -   **Representativeness:** A small subset might not be representative of the entire dataset, potentially leading to biased conclusions about data quality. -->
 
-Therefore, while useful for quick demonstrations, full QC should ideally be performed on the complete dataset.
-:::
+<!-- Therefore, while useful for quick demonstrations, full QC should ideally be performed on the complete dataset. -->
+<!-- ::: -->
 
 # Local Outlier Detection
 
 Here, we identify local outliers based on common QC metrics such as library size, number of detected genes, and mitochondrial percentage. `localOutliers` from `SpotSweeper` helps in identifying spots that deviate significantly from their local neighborhood.
 
+**Note:** this takes about 10 minutes to run. Have a coffee. 
+
 ```{r}
 # Identify local outliers based on library size ("sum" of counts).
 # Spots with unusually low library size compared to their neighbors will be flagged.
+
 spe <- localOutliers(spe,
   metric = "sum",
   direction = "lower",
-  log = TRUE,
-  workers = parallel::detectCores() - 1
+  log = TRUE
 )
+
 
 # Identify local outliers based on the number of unique genes detected ("detected").
 # Spots with an unusually low number of detected genes will be flagged.
 spe <- localOutliers(spe,
   metric = "detected",
   direction = "lower",
-  log = TRUE,
-  workers = parallel::detectCores() - 1
+  log = TRUE
 )
 
 # Identify local outliers based on the mitochondrial gene percentage.
@@ -136,9 +138,9 @@ spe <- localOutliers(spe,
 spe <- localOutliers(spe,
   metric = "subsets_Mito_percent",
   direction = "higher",
-  log = FALSE,
-  workers = parallel::detectCores() - 1
+  log = FALSE
 )
+
 
 # Combine all individual outlier flags into a single "local_outliers" column.
 # A spot is considered a local outlier if it's flagged by any of the above metrics.
@@ -160,36 +162,6 @@ table(spe$local_outliers)
 ```
 :::
 
-## Spatial Artifact Detection with `SpotSweeper`
-
-`SpotSweeper` is designed to detect spatial artifacts that might not be captured by simple local outlier detection. This is particularly useful for identifying regions with systematic issues.
-
-```{r, eval=FALSE}
-# not working anymore
-spe <- findArtifacts(spe,
-  mito_percent = "subsets_Mito_percent", # Using the metric calculated by scuttle
-  mito_sum = "subsets_Mito_sum", # Using the metric calculated by scuttle
-  name = "artifact"
-)
-
-# Check that "artifact" is now a column in colData, indicating detected artifacts.
-colnames(colData(spe))
-```
-
-## Question 2
-
-**What is the difference between `localOutliers` and `findArtifacts`? When would you use one over the other?**
-
-:::{.callout-tip collapse="true"}
-### Answer
-
-`localOutliers` identifies individual spots that deviate significantly from their immediate neighbors based on a single metric (e.g., unusually low library size). It's good for detecting isolated problematic spots.
-
-`findArtifacts` from `SpotSweeper` is designed to detect larger, spatially coherent regions of problematic spots (artifacts) by considering multiple metrics and their spatial patterns. It's more suitable for identifying systematic issues across a larger area of the tissue.
-
-You would use `localOutliers` for general per-spot QC and `findArtifacts` when you suspect or observe larger, structured regions of poor quality that might indicate experimental issues or tissue damage.
-:::
-
 # Visualization of QC Results
 
 Visualizing the QC metrics and detected artifacts is crucial for understanding the quality of your spatial transcriptomics data.
@@ -198,11 +170,25 @@ Visualizing the QC metrics and detected artifacts is crucial for understanding t
 # Plot the spatial distribution of local outliers.
 # Spots flagged as local outliers will be highlighted.
 plotQCmetrics(spe,
-  metric = "sum_log", outliers = "local_outliers", point_size = 1.1,
+  metric = "sum_log", outliers = "subsets_Mito_percent_outliers", point_size = 0.4,
+  colors = c("green", "purple"),
   stroke = 0.75
 ) +
   ggtitle("All Local Outliers")
 ```
+
+```{r}
+# Plot the spatial distribution of local outliers.
+# Spots flagged as local outliers will be highlighted.
+plotQCmetrics(spe,
+  metric = "sum_log", outliers = "local_outliers", point_size = 0.4,
+  stroke = 0.75
+) +
+  ggtitle("All Local Outliers")
+```
+
+
+
 
 ## Question 3
 
