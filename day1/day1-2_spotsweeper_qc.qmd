@@ -162,10 +162,6 @@ table(spe$local_outliers)
 ```
 :::
 
-
-
-
-
 # Visualization of QC Results
 
 Visualizing the QC metrics and detected artifacts is crucial for understanding the quality of your spatial transcriptomics data.

@@ -3,28 +3,21 @@ title: "Exercise 1"
 format: html
 editor: source
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
-
-
-## `SpatialExperiment` object
-
-In this first exercise, we will dive into the `SpatialExperiment` object, a cornerstone of spatial transcriptomics analysis in `R`. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the `R`/`Bioconductor` ecosystem.
-
-![Overview of the `SpatialExperiment` class structure](../assets/images/spe.png)
 
 ## Learning Objectives
 
 By the end of this exercise, you will be able to:
 
-- Understand the structure of a `SpatialExperiment` object.
-- Access and interpret `spatialCoords` and `imgData`.
-- Perform basic subsetting operations on `SpatialExperiment` objects.
-- Combine multiple `SpatialExperiment` objects.
-- Apply image transformations (rotation, mirroring) to spatial data.
+-   Understand the structure of a `SpatialExperiment` object.
+-   Access and interpret `spatialCoords` and `imgData`.
+-   Perform basic subsetting operations on `SpatialExperiment` objects.
+-   Combine multiple `SpatialExperiment` objects.
+-   Apply image transformations (rotation, mirroring) to spatial data.
 
+## Libraries
 
-# Libraries 
 ```{r}
 #| message: false
 #| warning: false
@@ -39,9 +32,14 @@ library(arrow)
 library(qs2)
 library(ggspavis)
 library(patchwork)
+library(dplyr)
 ```
 
-# Data for the course
+## Data for the course
+
+We start with downloading the data. We will work with VisiumHD data from human colon cancer. The full dataset is available [here](https://cf.10xgenomics.com/samples/spatial-exp/3.0.0/Visium_HD_Human_Colon_Cancer_P1/Visium_HD_Human_Colon_Cancer_P1_binned_outputs.tar.gz). It's a Visium HD dataset from human colon cancer.
+
+> We need more explanation here!
 
 ```{r}
 if (!dir.exists("data/Human_Colon_Cancer_P1/binned_outputs/")) {
@@ -61,6 +59,7 @@ if (!dir.exists("data/Human_Colon_Cancer_P1/binned_outputs/")) {
 }
 ```
 
+We will import a part of the downloaded files to create a `SpatialExperiment` object. For these exercises, we choose to use the largest bin size of 16 µm:
 
 ```{r}
 # Import Visium HD data from Space Ranger output into a SpatialExperiment object.
@@ -75,210 +74,423 @@ spe <- TENxVisiumHD(
 spe
 ```
 
+::: callout-important
+## Exercise
 
-# Exploring the object
+What other bin size do we have available?
+:::
 
-## `spatialCoords`
-```{r}
-# Display the head of the spatial coordinates, which represent the (x, y) locations of each spot.
-head(spatialCoords(spe))
-# List the names of the spatial coordinate columns.
-spatialCoordsNames(spe)
+::: {.callout-tip collapse="true"}
+## Answer
+
+Check out `data/Human_Colon_Cancer_P1/binned_outputs`. Here you will find three directories:
+
+```         
+square_002um
+square_008um
+square_016um
 ```
 
-## `imgData`
+So in addition to 16 µm, we also have 2 and 8 µm available.
+:::
+
+## Exploring the object
+
+In this first exercise, we will dive into the `SpatialExperiment` object, a cornerstone of spatial transcriptomics analysis in `R`. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the `R`/`Bioconductor` ecosystem.
+
+![Overview of the `SpatialExperiment` class structure](../assets/images/spe.png)
+
+The different slots of the `SpatialExperiment` object can be approached with several helper functions that correspond with their names.
+
+::: callout-important
+## Exercise
+
+Check out the outputs of running the following functions:
+
+-   `colData()`
+-   `spatialCoords()`
+-   `rowData()`
+-   `assay()`
+-   `imgRaster()`
+-   `reducedDims()`
+
+Questions:
+
+-   What kind of data is in the different slots?
+-   How many spots and genes do we have?
+-   Are spots in the tissue?
+:::
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+The slot `colData` contains metadata of each of the 127809 spots:
+
 ```{r}
-# Display the image data associated with the SpatialExperiment object.
-imgData(spe)
+colData(spe) |> head()
+ncol(spe)
 ```
 
-### `SpatialImage` class
+We also have the column `in_tissue` here, and we can check whether all the spots are in the tissue:
 
 ```{r}
-# Extract the SpatialImage object from the SpatialExperiment object.
-spi <- getImg(spe)
-spi
-
-# Plot the raster image from the SpatialImage object.
-plot(imgRaster(spe))
+colData(spe) |> as.data.frame() |>
+  group_by(in_tissue) |> summarise(number = n())
 ```
 
+The slot `spatialCoords` maps each spot to the full resolution image:
 
 ```{r}
-p1 <- plotVisium(spe, annotate = "sum", point_size = 0.5)
+spatialCoords(spe) |> head()
 ```
+
+The slot `rowData` contains metadata about the 18085 genes for which we measured expression:
 
 ```{r}
-p1 <- plotCoords(spe, annotate = "sum", point_size = 0.5)
-p2 <- plotCoords(spe, annotate = "detected", point_size = 0.5)
-p1 | p2
+rowData(spe) |> head()
+nrow(spe)
 ```
+
+The assay is the core matrix of the object. Corresponding to the genes (rows) and spots (columns):
 
 ```{r}
-spe$loglibsize <- log1p(spe$sum)
-p1 <- plotCoords(spe, annotate = "loglibsize", point_size = 0.5)
-p2 <- plotCoords(spe, annotate = "sum", point_size = 0.5)
-
-p1 | p2
+assay(spe)
 ```
 
+Of course, also the image is included:
 
-## Question 1
+```{r}
+imgRaster(spe) |> plot()
+```
 
-**How would you extract the image data for a specific sample and image ID, for example, 'sample01' and 'lowres'?**
+And the slot for `reducedDims` is empty, as we didn't perform any dimensionality reduction calculations yet:
 
-:::{.callout-tip collapse="true"}
-### Answer
-
-```r
-# Extract the image data for 'sample01' and 'lowres' image ID.
-getImg(spe, sample_id = "sample01", image_id = "lowres")
+```{r}
+reducedDims(spe)
 ```
 :::
 
-# Operations on `SpatialExperiment`
+To get a visual overview of what part of the slide is covered with spots we can use `ggspavis::plotVisium`. First without spots:
 
-## subset by `sample_id`
 ```{r}
-# Subset the SpatialExperiment object to include only observations from 'sample01'.
-sub <- spe[, spe$sample_id == "sample01"]
+plotVisium(spe, spots = FALSE)
 ```
 
-## Question 2
+And with spots:
 
-**How would you subset the `SpatialExperiment` object to only include spots where the `in_tissue` column in `colData` is `TRUE`?**
+```{r}
+plotVisium(spe) 
+```
 
-:::{.callout-tip collapse="true"}
-### Answer
+::: callout-important
+## Exercise
 
-```r
-# Subset the SpatialExperiment object to retain only spots that are within the tissue area.
-spe_in_tissue <- spe[, colData(spe)$in_tissue]
-# Verify the number of spots after subsetting.
-sum(colData(spe)$in_tissue) == ncol(spe_in_tissue)
+Check out the usage of `plotVisium` with `?plotVisium`. Create a plot that zooms in into the spots, and colors the spots according to column `array_row`.
+
+In which slot is `array_row` stored and what does it represent?
+:::
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+The column `array_row` is stored in `colData`, it represents in which row the spot is positioned. Of course, plotting this value is not particularly useful for biology. We will visualize more sensible values in the next chapter, when we do the quality control.
+
+We can use the argument `annotate` to color according to a column in `colData`, and we can zoom in by specifying `zoom = TRUE`:
+
+```{r}
+p <- plotVisium(spe, annotate = "array_row", zoom = TRUE)
+p
 ```
 :::
 
-## retain only observations that map to tissue
-```{r}
-# Subset the SpatialExperiment object to retain only spots that are within the tissue area.
-sub <- spe[, colData(spe)$in_tissue]
-# Verify that the number of columns in the subsetted object matches the count of 'in_tissue' spots.
-sum(colData(spe)$in_tissue) == ncol(sub)
-```
+<!-- ## `spatialCoords` -->
 
-## Combining samples
-```{r}
-# Create two copies of the SpatialExperiment object.
-spe1 <- spe2 <- spe
-# Combine the two SpatialExperiment objects column-wise (samples).
-spe3 <- cbind(spe1, spe2)
+<!-- ```{r} -->
 
-# Display the unique sample IDs in the combined object.
-unique(spe3$sample_id)
-```
+<!-- # Display the head of the spatial coordinates, which represent the (x, y) locations of each spot. -->
 
-## Question 3
+<!-- head(spatialCoords(spe)) -->
 
-**Imagine you have three `SpatialExperiment` objects (`spe1`, `spe2`, `spe3`). How would you combine all three into a single object?**
+<!-- # List the names of the spatial coordinate columns. -->
 
-:::{.callout-tip collapse="true"}
-### Answer
+<!-- spatialCoordsNames(spe) -->
 
-```r
-# Create three SpatialExperiment objects (for demonstration).
-spe1_q3 <- spe2_q3 <- spe3_q3 <- spe
-# Combine all three SpatialExperiment objects.
-spe_combined_q3 <- cbind(spe1_q3, spe2_q3, spe3_q3)
-# Display unique sample IDs in the combined object.
-unique(spe_combined_q3$sample_id)
-```
-:::
+<!-- ``` -->
 
-## Image transformation
+<!-- ## `imgData` -->
 
-### Rotation
-```{r}
-# Extract the first image from the SpatialExperiment object.
-spi <- getImg(spe)
-# Apply counter-clockwise (-90 degrees) and clockwise (+90 degrees) rotations to the image.
-spi1 <- rotateImg(spi, -90)
-spi2 <- rotateImg(spi, +90)
-# Visualize the original and rotated images for comparison.
-par(mfrow = c(1, 3))
-plot(as.raster(spi))
-plot(as.raster(spi1))
-plot(as.raster(spi2))
-```
+<!-- ```{r} -->
 
-```{r}
-# Specify the sample and image identifiers for targeted rotation.
-sid <- "sample01"
-iid <- "lowres"
-# Apply a counter-clockwise rotation of -90 degrees to the specified image within the SpatialExperiment object.
-tmp <- rotateImg(spe,
-  sample_id = sid,
-  image_id = iid,
-  degrees = -90
-)
-# Visualize the original and rotated images for the specified sample and image ID.
-par(mfrow = c(1, 2))
-plot(imgRaster(spe, sid, iid))
-plot(imgRaster(tmp, sid, iid))
-```
+<!-- # Display the image data associated with the SpatialExperiment object. -->
 
+<!-- imgData(spe) -->
 
-### Mirroring
-```{r}
-# Extract the first image from the SpatialExperiment object.
-spi <- getImg(spe)
-# Mirror the image horizontally ("h") and vertically ("v").
-spi1 <- mirrorImg(spi, "h")
-spi2 <- mirrorImg(spi, "v")
-# Visualize the original and mirrored images for comparison.
-par(mfrow = c(1, 3))
-plot(as.raster(spi))
-plot(as.raster(spi1))
-plot(as.raster(spi2))
-```
+<!-- ``` -->
 
-```{r}
-# Specify the sample and image identifiers for targeted mirroring.
-sid <- "sample01"
-iid <- "lowres"
-# Mirror the specified image horizontally within the SpatialExperiment object.
-tmp <- mirrorImg(spe,
-  sample_id = sid,
-  image_id = iid,
-  axis = "h"
-)
-plot(imgRaster(tmp, sid, iid))
-```
+<!-- ### `SpatialImage` class -->
 
-## Question 4
+<!-- ```{r} -->
 
-**How would you first rotate an image by 90 degrees clockwise and then mirror it horizontally?**
+<!-- # Extract the SpatialImage object from the SpatialExperiment object. -->
 
-:::{.callout-tip collapse="true"}
-### Answer
+<!-- spi <- getImg(spe) -->
 
-```r
-# Extract the first image.
-spi_q4 <- getImg(spe)
-# First, rotate the image by 90 degrees clockwise.
-rotated_spi_q4 <- rotateImg(spi_q4, degrees = 90)
-# Then, mirror the rotated image horizontally.
-final_transformed_spi_q4 <- mirrorImg(rotated_spi_q4, axis = "h")
-# Visualize the original, rotated, and final transformed images.
-par(mfrow = c(1, 3))
-plot(as.raster(spi_q4))
-plot(as.raster(rotated_spi_q4))
-plot(as.raster(final_transformed_spi_q4))
-```
-:::
+<!-- spi -->
 
+<!-- # Plot the raster image from the SpatialImage object. -->
+
+<!-- plot(imgRaster(spe)) -->
+
+<!-- ``` -->
+
+<!-- ## Question 1 -->
+
+<!-- **How would you extract the image data for a specific sample and image ID, for example, 'sample01' and 'lowres'?** -->
+
+<!-- :::{.callout-tip collapse="true"} -->
+
+<!-- ### Answer -->
+
+<!-- # Extract the image data for 'sample01' and 'lowres' image ID. -->
+
+<!-- getImg(spe, sample_id = "sample01", image_id = "lowres") -->
+
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- # Operations on `SpatialExperiment` -->
+
+<!-- ## subset by `sample_id` -->
+
+<!-- ```{r} -->
+
+<!-- # Subset the SpatialExperiment object to include only observations from 'sample01'. -->
+
+<!-- sub <- spe[, spe$sample_id == "sample01"] -->
+
+<!-- ``` -->
+
+<!-- ## Question 2 -->
+
+<!-- **How would you subset the `SpatialExperiment` object to only include spots where the `in_tissue` column in `colData` is `TRUE`?** -->
+
+<!-- :::{.callout-tip collapse="true"} -->
+
+<!-- ### Answer -->
+
+<!-- # Subset the SpatialExperiment object to retain only spots that are within the tissue area. -->
+
+<!-- spe_in_tissue <- spe[, colData(spe)$in_tissue] -->
+
+<!-- # Verify the number of spots after subsetting. -->
+
+<!-- sum(colData(spe)$in_tissue) == ncol(spe_in_tissue) -->
+
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- ## retain only observations that map to tissue -->
+
+<!-- ```{r} -->
+
+<!-- # Subset the SpatialExperiment object to retain only spots that are within the tissue area. -->
+
+<!-- sub <- spe[, colData(spe)$in_tissue] -->
+
+<!-- # Verify that the number of columns in the subsetted object matches the count of 'in_tissue' spots. -->
+
+<!-- sum(colData(spe)$in_tissue) == ncol(sub) -->
+
+<!-- ``` -->
+
+<!-- ## Combining samples -->
+
+<!-- ```{r} -->
+
+<!-- # Create two copies of the SpatialExperiment object. -->
+
+<!-- spe1 <- spe2 <- spe -->
+
+<!-- # Combine the two SpatialExperiment objects column-wise (samples). -->
+
+<!-- spe3 <- cbind(spe1, spe2) -->
+
+<!-- # Display the unique sample IDs in the combined object. -->
+
+<!-- unique(spe3$sample_id) -->
+
+<!-- ``` -->
+
+<!-- ## Question 3 -->
+
+<!-- **Imagine you have three `SpatialExperiment` objects (`spe1`, `spe2`, `spe3`). How would you combine all three into a single object?** -->
+
+<!-- :::{.callout-tip collapse="true"} -->
+
+<!-- ### Answer -->
+
+<!-- # Create three SpatialExperiment objects (for demonstration). -->
+
+<!-- spe1_q3 <- spe2_q3 <- spe3_q3 <- spe -->
+
+<!-- # Combine all three SpatialExperiment objects. -->
+
+<!-- spe_combined_q3 <- cbind(spe1_q3, spe2_q3, spe3_q3) -->
+
+<!-- # Display unique sample IDs in the combined object. -->
+
+<!-- unique(spe_combined_q3$sample_id) -->
+
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- ## Image transformation -->
+
+<!-- ### Rotation -->
+
+<!-- ```{r} -->
+
+<!-- # Extract the first image from the SpatialExperiment object. -->
+
+<!-- spi <- getImg(spe) -->
+
+<!-- # Apply counter-clockwise (-90 degrees) and clockwise (+90 degrees) rotations to the image. -->
+
+<!-- spi1 <- rotateImg(spi, -90) -->
+
+<!-- spi2 <- rotateImg(spi, +90) -->
+
+<!-- # Visualize the original and rotated images for comparison. -->
+
+<!-- par(mfrow = c(1, 3)) -->
+
+<!-- plot(as.raster(spi)) -->
+
+<!-- plot(as.raster(spi1)) -->
+
+<!-- plot(as.raster(spi2)) -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- # Specify the sample and image identifiers for targeted rotation. -->
+
+<!-- sid <- "sample01" -->
+
+<!-- iid <- "lowres" -->
+
+<!-- # Apply a counter-clockwise rotation of -90 degrees to the specified image within the SpatialExperiment object. -->
+
+<!-- tmp <- rotateImg(spe, -->
+
+<!--   sample_id = sid, -->
+
+<!--   image_id = iid, -->
+
+<!--   degrees = -90 -->
+
+<!-- ) -->
+
+<!-- # Visualize the original and rotated images for the specified sample and image ID. -->
+
+<!-- par(mfrow = c(1, 2)) -->
+
+<!-- plot(imgRaster(spe, sid, iid)) -->
+
+<!-- plot(imgRaster(tmp, sid, iid)) -->
+
+<!-- ``` -->
+
+<!-- ### Mirroring -->
+
+<!-- ```{r} -->
+
+<!-- # Extract the first image from the SpatialExperiment object. -->
+
+<!-- spi <- getImg(spe) -->
+
+<!-- # Mirror the image horizontally ("h") and vertically ("v"). -->
+
+<!-- spi1 <- mirrorImg(spi, "h") -->
+
+<!-- spi2 <- mirrorImg(spi, "v") -->
+
+<!-- # Visualize the original and mirrored images for comparison. -->
+
+<!-- par(mfrow = c(1, 3)) -->
+
+<!-- plot(as.raster(spi)) -->
+
+<!-- plot(as.raster(spi1)) -->
+
+<!-- plot(as.raster(spi2)) -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- # Specify the sample and image identifiers for targeted mirroring. -->
+
+<!-- sid <- "sample01" -->
+
+<!-- iid <- "lowres" -->
+
+<!-- # Mirror the specified image horizontally within the SpatialExperiment object. -->
+
+<!-- tmp <- mirrorImg(spe, -->
+
+<!--   sample_id = sid, -->
+
+<!--   image_id = iid, -->
+
+<!--   axis = "h" -->
+
+<!-- ) -->
+
+<!-- plot(imgRaster(tmp, sid, iid)) -->
+
+<!-- ``` -->
+
+<!-- ## Question 4 -->
+
+<!-- **How would you first rotate an image by 90 degrees clockwise and then mirror it horizontally?** -->
+
+<!-- :::{.callout-tip collapse="true"} -->
+
+<!-- ### Answer -->
+
+<!-- # Extract the first image. -->
+
+<!-- spi_q4 <- getImg(spe) -->
+
+<!-- # First, rotate the image by 90 degrees clockwise. -->
+
+<!-- rotated_spi_q4 <- rotateImg(spi_q4, degrees = 90) -->
+
+<!-- # Then, mirror the rotated image horizontally. -->
+
+<!-- final_transformed_spi_q4 <- mirrorImg(rotated_spi_q4, axis = "h") -->
+
+<!-- # Visualize the original, rotated, and final transformed images. -->
+
+<!-- par(mfrow = c(1, 3)) -->
+
+<!-- plot(as.raster(spi_q4)) -->
+
+<!-- plot(as.raster(rotated_spi_q4)) -->
+
+<!-- plot(as.raster(final_transformed_spi_q4)) -->
+
+<!-- ``` -->
+
+<!-- ::: -->
 
 # Save the object
+
 ```{r}
 dir.create("results", showWarnings = FALSE)
 qs_save(spe, file = "results/01_spe.qs2")
@@ -287,16 +499,16 @@ qs_save(spe, file = "results/01_spe.qs2")
 Clear your environment
 
 ```{r}
+#| eval: false
 rm(list = ls())
 gc()
 .rs.restartR()
 ```
 
-
-:::{.callout-important}
+::: callout-important
 **Key Takeaways:**
 
-- The `SpatialExperiment` object is a versatile container for spatial transcriptomics data.
-- It allows for easy access and manipulation of spatial coordinates, image data, and assay data.
-- Various operations like subsetting, combining, and image transformations can be performed efficiently.
+-   The `SpatialExperiment` object is a versatile container for spatial transcriptomics data.
+-   It allows for easy access and manipulation of spatial coordinates, image data, and assay data.
+-   Various operations like subsetting, combining, and image transformations can be performed efficiently.
 :::
