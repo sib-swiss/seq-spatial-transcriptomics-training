@@ -14,7 +14,6 @@
 
 # Quarto
 _site/
-_freeze/
 .quarto/
 *_files/
 *cache/
