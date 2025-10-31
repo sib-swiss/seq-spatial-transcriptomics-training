@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.7.32">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>Exercise 1 – Sequencing-based Spatial Transcriptomics</title>
 <style>
 code{white-space: pre-wrap;}
@@ -54,6 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
@@ -68,10 +72,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ab62ab6abcf2bb06eba42c0c53629186.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -97,8 +102,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-<!-- Matomo --><script>
+}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+<!-- Matomo -->
+<script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
   _paq.push(['trackPageView']);
@@ -110,12 +117,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
-</script><!-- End Matomo Code -->
+</script>
+<!-- End Matomo Code -->
+
+
 </head>
+
 <body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Sequencing-based Spatial Transcriptomics</span>
@@ -127,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
@@ -143,8 +156,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-1" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">day 1</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">
-<li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">    
+        <li>
     <a class="dropdown-item" href="../day1/day1-1_SpatialExperiment.html">
  <span class="dropdown-text">Exercise 1</span></a>
   </li>  
@@ -157,13 +170,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Exercise 3</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-2" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">day 2</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">
-<li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">    
+        <li>
     <a class="dropdown-item" href="../day2/day2-1_spatial_stats.html">
  <span class="dropdown-text">Exercise</span></a>
   </li>  
@@ -180,20 +193,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Exercise</span></a>
   </li>  
     </ul>
-</li>
+  </li>
 </ul>
-<ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item compact">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/sib-swiss/seq-spatial-transcriptomics-training"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -201,58 +216,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="../assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
       </div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#spatialexperiment-object" id="toc-spatialexperiment-object" class="nav-link active" data-scroll-target="#spatialexperiment-object"><code>SpatialExperiment</code> object</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
   <li><a href="#data-for-the-course" id="toc-data-for-the-course" class="nav-link" data-scroll-target="#data-for-the-course">Data for the course</a></li>
-  <li>
-<a href="#exploring-the-object" id="toc-exploring-the-object" class="nav-link" data-scroll-target="#exploring-the-object">Exploring the object</a>
-  <ul class="collapse">
-<li><a href="#spatialcoords" id="toc-spatialcoords" class="nav-link" data-scroll-target="#spatialcoords"><code>spatialCoords</code></a></li>
-  <li>
-<a href="#imgdata" id="toc-imgdata" class="nav-link" data-scroll-target="#imgdata"><code>imgData</code></a>
-  <ul class="collapse">
-<li><a href="#spatialimage-class" id="toc-spatialimage-class" class="nav-link" data-scroll-target="#spatialimage-class"><code>SpatialImage</code> class</a></li>
-  </ul>
-</li>
-  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#operations-on-spatialexperiment" id="toc-operations-on-spatialexperiment" class="nav-link" data-scroll-target="#operations-on-spatialexperiment">Operations on <code>SpatialExperiment</code></a>
-  <ul class="collapse">
-<li><a href="#subset-by-sample_id" id="toc-subset-by-sample_id" class="nav-link" data-scroll-target="#subset-by-sample_id">subset by <code>sample_id</code></a></li>
-  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
-  <li><a href="#retain-only-observations-that-map-to-tissue" id="toc-retain-only-observations-that-map-to-tissue" class="nav-link" data-scroll-target="#retain-only-observations-that-map-to-tissue">retain only observations that map to tissue</a></li>
-  <li><a href="#combining-samples" id="toc-combining-samples" class="nav-link" data-scroll-target="#combining-samples">Combining samples</a></li>
-  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
-  <li>
-<a href="#image-transformation" id="toc-image-transformation" class="nav-link" data-scroll-target="#image-transformation">Image transformation</a>
-  <ul class="collapse">
-<li><a href="#rotation" id="toc-rotation" class="nav-link" data-scroll-target="#rotation">Rotation</a></li>
-  <li><a href="#mirroring" id="toc-mirroring" class="nav-link" data-scroll-target="#mirroring">Mirroring</a></li>
-  </ul>
-</li>
-  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
-  </ul>
-</li>
+  <li><a href="#exploring-the-object" id="toc-exploring-the-object" class="nav-link" data-scroll-target="#exploring-the-object">Exploring the object</a></li>
   <li><a href="#save-the-object" id="toc-save-the-object" class="nav-link" data-scroll-target="#save-the-object">Save the object</a></li>
-  </ul></nav>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
 <h1 class="title">Exercise 1</h1>
 </div>
 
@@ -267,14 +262,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><section id="spatialexperiment-object" class="level2"><h2 class="anchored" data-anchor-id="spatialexperiment-object">
-<code>SpatialExperiment</code> object</h2>
-<p>In this first exercise, we will dive into the <code>SpatialExperiment</code> object, a cornerstone of spatial transcriptomics analysis in <code>R</code>. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the <code>R</code>/<code>Bioconductor</code> ecosystem.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="../assets/images/spe.png" class="img-fluid figure-img"></p>
-<figcaption>Overview of the <code>SpatialExperiment</code> class structure</figcaption></figure>
-</div>
-</section><section id="learning-objectives" class="level2"><h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+</header>
+
+
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <p>By the end of this exercise, you will be able to:</p>
 <ul>
 <li>Understand the structure of a <code>SpatialExperiment</code> object.</li>
@@ -282,65 +274,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Perform basic subsetting operations on <code>SpatialExperiment</code> objects.</li>
 <li>Combine multiple <code>SpatialExperiment</code> objects.</li>
 <li>Apply image transformations (rotation, mirroring) to spatial data.</li>
-</ul></section><section id="libraries" class="level1"><h1>Libraries</h1>
+</ul>
+</section>
+<section id="libraries" class="level2">
+<h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load necessary R libraries for spatial transcriptomics data analysis.</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">DropletUtils</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/BumpyMatrix">BumpyMatrix</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment">SpatialExperiment</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/VisiumIO">VisiumIO</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/apache/arrow/">arrow</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/qsbase/qs2">qs2</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary R libraries for spatial transcriptomics data analysis.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BumpyMatrix)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpatialExperiment)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VisiumIO)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qs2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspavis)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="data-for-the-course" class="level1"><h1>Data for the course</h1>
+</section>
+<section id="data-for-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="data-for-the-course">Data for the course</h2>
+<p>We start with downloading the data. We will work with VisiumHD data from human colon cancer. The full dataset is available <a href="https://cf.10xgenomics.com/samples/spatial-exp/3.0.0/Visium_HD_Human_Colon_Cancer_P1/Visium_HD_Human_Colon_Cancer_P1_binned_outputs.tar.gz">here</a>. It’s a Visium HD dataset from human colon cancer.</p>
+<blockquote class="blockquote">
+<p>We need more explanation here!</p>
+</blockquote>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.exists</a></span><span class="op">(</span><span class="st">"data/p1_crc/binned_outputs/square_008um/"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span></span>
-<span>    url <span class="op">=</span> <span class="st">"https://cf.10xgenomics.com/samples/spatial-exp/3.0.0/Visium_HD_Human_Colon_Cancer_P1/Visium_HD_Human_Colon_Cancer_P1_binned_outputs.tar.gz"</span>,</span>
-<span>    destfile <span class="op">=</span> <span class="st">"data/Visium_HD_Human_Colon_Cancer_P1_binned_outputs.tar.gz"</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span><span class="op">(</span></span>
-<span>    tarfile <span class="op">=</span> <span class="st">"data/Visium_HD_Human_Colon_Cancer_P1_binned_outputs.tar.gz"</span>,</span>
-<span>    files <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>      <span class="st">"binned_outputs/square_008um/filtered_feature_bc_matrix"</span>,</span>
-<span>      <span class="st">"binned_outputs/square_008um/filtered_feature_bc_matrix.h5"</span>,</span>
-<span>      <span class="st">"binned_outputs/square_002um/spatial"</span>,</span>
-<span>      <span class="st">"binned_outputs/square_008um/spatial"</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    exdir <span class="op">=</span> <span class="st">"data/p1_crc"</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.remove</a></span><span class="op">(</span><span class="st">"data/Visium_HD_Human_Colon_Cancer_P1_binned_outputs.tar.gz"</span><span class="op">)</span></span>
-<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Data exists, please proceed to next steps!"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"data/Human_Colon_Cancer_P1/binned_outputs/"</span>)) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"data"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> <span class="st">"https://seq-spatial-transcriptomics-training.s3.eu-central-1.amazonaws.com/Human_Colon_Cancer_P1.tar.gz"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> <span class="st">"Human_Colon_Cancer_P1.tar.gz"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">untar</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">tarfile =</span> <span class="st">"data/Human_Colon_Cancer_P1.tar.gz"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.remove</span>(<span class="st">"data/Human_Colon_Cancer_P1.tar.gz"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Data exists, please proceed to next steps!"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Data exists, please proceed to next steps!</code></pre>
 </div>
 </div>
+<p>We will import a part of the downloaded files to create a <code>SpatialExperiment</code> object. For these exercises, we choose to use the largest bin size of 16 µm:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Import Visium HD data from Space Ranger output into a SpatialExperiment object.</span></span>
-<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VisiumIO/man/TENxVisiumHD-class.html">TENxVisiumHD</a></span><span class="op">(</span></span>
-<span>  spacerangerOut <span class="op">=</span> <span class="st">"data/p1_crc/"</span>,</span>
-<span>  processing <span class="op">=</span> <span class="st">"filtered"</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"h5"</span>,</span>
-<span>  images <span class="op">=</span> <span class="st">"lowres"</span>,</span>
-<span>  bin_size <span class="op">=</span> <span class="st">"008"</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">import</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">spe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import Visium HD data from Space Ranger output into a SpatialExperiment object.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">TENxVisiumHD</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">spacerangerOut =</span> <span class="st">"data/Human_Colon_Cancer_P1/"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">processing =</span> <span class="st">"filtered"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"h5"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">images =</span> <span class="st">"lowres"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">bin_size =</span> <span class="st">"016"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">import</span>()</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>spe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SpatialExperiment 
-dim: 18085 507684 
+dim: 18085 127809 
 metadata(2): resources spatialList
 assays(1): counts
 rownames(18085): ENSG00000187634 ENSG00000188976 ... ENSG00000198695
   ENSG00000198727
 rowData names(3): ID Symbol Type
-colnames(507684): s_008um_00301_00321-1 s_008um_00602_00290-1 ...
-  s_008um_00353_00477-1 s_008um_00595_00611-1
+colnames(127809): s_016um_00052_00082-1 s_016um_00010_00367-1 ...
+  s_016um_00037_00193-1 s_016um_00144_00329-1
 colData names(6): barcode in_tissue ... bin_size sample_id
 reducedDimNames(0):
 mainExpName: Gene Expression
@@ -349,87 +347,19 @@ spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres
 imgData names(4): sample_id image_id data scaleFactor</code></pre>
 </div>
 </div>
-</section><section id="exploring-the-object" class="level1"><h1>Exploring the object</h1>
-<section id="spatialcoords" class="level2"><h2 class="anchored" data-anchor-id="spatialcoords"><code>spatialCoords</code></h2>
-<div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Display the head of the spatial coordinates, which represent the (x, y) locations of each spot.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">spatialCoords</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                      pxl_col_in_fullres pxl_row_in_fullres
-s_008um_00301_00321-1           9217.893           27883.12
-s_008um_00602_00290-1           8394.152           19079.20
-s_008um_00425_00829-1          24094.123           24396.58
-s_008um_00526_00291-1           8402.675           21300.29
-s_008um_00681_00396-1          11512.628           16799.19
-s_008um_00078_00444-1          12750.753           34432.55</code></pre>
-</div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># List the names of the spatial coordinate columns.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">spatialCoordsNames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "pxl_col_in_fullres" "pxl_row_in_fullres"</code></pre>
-</div>
-</div>
-</section><section id="imgdata" class="level2"><h2 class="anchored" data-anchor-id="imgdata"><code>imgData</code></h2>
-<div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Display the image data associated with the SpatialExperiment object.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">imgData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>DataFrame with 1 row and 4 columns
-    sample_id    image_id   data scaleFactor
-  &lt;character&gt; &lt;character&gt; &lt;list&gt;   &lt;numeric&gt;
-1    sample01      lowres   ####  0.00843811</code></pre>
-</div>
-</div>
-<section id="spatialimage-class" class="level3"><h3 class="anchored" data-anchor-id="spatialimage-class">
-<code>SpatialImage</code> class</h3>
-<div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract the SpatialImage object from the SpatialExperiment object.</span></span>
-<span><span class="va">spi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html">getImg</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
-<span><span class="va">spi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>600 x 496 (width x height) StoredSpatialImage
-imgSource():
-  /Users/detanw/Desktop/seq-spatial-transcriptomics-training/data/p1_crc/binned_ou
-  tputs/square_008um/spatial/tissue_lowres_image.png </code></pre>
-</div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot the raster image from the SpatialImage object.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">imgRaster</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section></section><section id="question-1" class="level2"><h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
-<p><strong>How would you extract the image data for a specific sample and image ID, for example, ‘sample01’ and ‘lowres’?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+Exercise
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract the image data for 'sample01' and 'lowres' image ID.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html">getImg</a></span><span class="op">(</span><span class="va">spe</span>, sample_id <span class="op">=</span> <span class="st">"sample01"</span>, image_id <span class="op">=</span> <span class="st">"lowres"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What other bin size do we have available?</p>
 </div>
 </div>
-</div>
-</section></section><section id="operations-on-spatialexperiment" class="level1"><h1>Operations on <code>SpatialExperiment</code>
-</h1>
-<section id="subset-by-sample_id" class="level2"><h2 class="anchored" data-anchor-id="subset-by-sample_id">subset by <code>sample_id</code>
-</h2>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subset the SpatialExperiment object to include only observations from 'sample01'.</span></span>
-<span><span class="va">sub</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span>, <span class="va">spe</span><span class="op">$</span><span class="va">sample_id</span> <span class="op">==</span> <span class="st">"sample01"</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section><section id="question-2" class="level2"><h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
-<p><strong>How would you subset the <code>SpatialExperiment</code> object to only include spots where the <code>in_tissue</code> column in <code>colData</code> is <code>TRUE</code>?</strong></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -442,141 +372,52 @@ Answer
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subset the SpatialExperiment object to retain only spots that are within the tissue area.</span></span>
-<span><span class="va">spe_in_tissue</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span>, <span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">in_tissue</span><span class="op">]</span></span>
-<span><span class="co"># Verify the number of spots after subsetting.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">in_tissue</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">spe_in_tissue</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check out <code>data/Human_Colon_Cancer_P1/binned_outputs</code>. Here you will find three directories:</p>
+<pre><code>square_002um
+square_008um
+square_016um</code></pre>
+<p>So in addition to 16 µm, we also have 2 and 8 µm available.</p>
 </div>
 </div>
 </div>
-</section><section id="retain-only-observations-that-map-to-tissue" class="level2"><h2 class="anchored" data-anchor-id="retain-only-observations-that-map-to-tissue">retain only observations that map to tissue</h2>
-<div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subset the SpatialExperiment object to retain only spots that are within the tissue area.</span></span>
-<span><span class="va">sub</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span>, <span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">in_tissue</span><span class="op">]</span></span>
-<span><span class="co"># Verify that the number of columns in the subsetted object matches the count of 'in_tissue' spots.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">in_tissue</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">sub</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
+</section>
+<section id="exploring-the-object" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-object">Exploring the object</h2>
+<p>In this first exercise, we will dive into the <code>SpatialExperiment</code> object, a cornerstone of spatial transcriptomics analysis in <code>R</code>. We will learn how to load Visium HD data, explore the different components of the object, and perform basic manipulations. By the end of this session, you will have a solid understanding of how to handle spatial transcriptomics data within the <code>R</code>/<code>Bioconductor</code> ecosystem.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/images/spe.png" class="img-fluid figure-img"></p>
+<figcaption>Overview of the <code>SpatialExperiment</code> class structure</figcaption>
+</figure>
 </div>
-</div>
-</section><section id="combining-samples" class="level2"><h2 class="anchored" data-anchor-id="combining-samples">Combining samples</h2>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create two copies of the SpatialExperiment object.</span></span>
-<span><span class="va">spe1</span> <span class="op">&lt;-</span> <span class="va">spe2</span> <span class="op">&lt;-</span> <span class="va">spe</span></span>
-<span><span class="co"># Combine the two SpatialExperiment objects column-wise (samples).</span></span>
-<span><span class="va">spe3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">spe1</span>, <span class="va">spe2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>'sample_id's are duplicated across 'SpatialExperiment' objects to cbind; appending sample indices.</code></pre>
-</div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Display the unique sample IDs in the combined object.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">spe3</span><span class="op">$</span><span class="va">sample_id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "sample01.1" "sample01.2"</code></pre>
-</div>
-</div>
-</section><section id="question-3" class="level2"><h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
-<p><strong>Imagine you have three <code>SpatialExperiment</code> objects (<code>spe1</code>, <code>spe2</code>, <code>spe3</code>). How would you combine all three into a single object?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<p>The different slots of the <code>SpatialExperiment</code> object can be approached with several helper functions that correspond with their names.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+Exercise
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create three SpatialExperiment objects (for demonstration).</span></span>
-<span><span class="va">spe1_q3</span> <span class="op">&lt;-</span> <span class="va">spe2_q3</span> <span class="op">&lt;-</span> <span class="va">spe3_q3</span> <span class="op">&lt;-</span> <span class="va">spe</span></span>
-<span><span class="co"># Combine all three SpatialExperiment objects.</span></span>
-<span><span class="va">spe_combined_q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">spe1_q3</span>, <span class="va">spe2_q3</span>, <span class="va">spe3_q3</span><span class="op">)</span></span>
-<span><span class="co"># Display unique sample IDs in the combined object.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">spe_combined_q3</span><span class="op">$</span><span class="va">sample_id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check out the outputs of running the following functions:</p>
+<ul>
+<li><code>colData()</code></li>
+<li><code>spatialCoords()</code></li>
+<li><code>rowData()</code></li>
+<li><code>assay()</code></li>
+<li><code>imgRaster()</code></li>
+<li><code>reducedDims()</code></li>
+</ul>
+<p>Questions:</p>
+<ul>
+<li>What kind of data is in the different slots?</li>
+<li>How many spots and genes do we have?</li>
+<li>Are spots in the tissue?</li>
+</ul>
 </div>
 </div>
-</div>
-</section><section id="image-transformation" class="level2"><h2 class="anchored" data-anchor-id="image-transformation">Image transformation</h2>
-<section id="rotation" class="level3"><h3 class="anchored" data-anchor-id="rotation">Rotation</h3>
-<div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract the first image from the SpatialExperiment object.</span></span>
-<span><span class="va">spi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html">getImg</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
-<span><span class="co"># Apply counter-clockwise (-90 degrees) and clockwise (+90 degrees) rotations to the image.</span></span>
-<span><span class="va">spi1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">rotateImg</a></span><span class="op">(</span><span class="va">spi</span>, <span class="op">-</span><span class="fl">90</span><span class="op">)</span></span>
-<span><span class="va">spi2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">rotateImg</a></span><span class="op">(</span><span class="va">spi</span>, <span class="op">+</span><span class="fl">90</span><span class="op">)</span></span>
-<span><span class="co"># Visualize the original and rotated images for comparison.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Specify the sample and image identifiers for targeted rotation.</span></span>
-<span><span class="va">sid</span> <span class="op">&lt;-</span> <span class="st">"sample01"</span></span>
-<span><span class="va">iid</span> <span class="op">&lt;-</span> <span class="st">"lowres"</span></span>
-<span><span class="co"># Apply a counter-clockwise rotation of -90 degrees to the specified image within the SpatialExperiment object.</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">rotateImg</a></span><span class="op">(</span><span class="va">spe</span>,</span>
-<span>  sample_id <span class="op">=</span> <span class="va">sid</span>,</span>
-<span>  image_id <span class="op">=</span> <span class="va">iid</span>,</span>
-<span>  degrees <span class="op">=</span> <span class="op">-</span><span class="fl">90</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co"># Visualize the original and rotated images for the specified sample and image ID.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">imgRaster</a></span><span class="op">(</span><span class="va">spe</span>, <span class="va">sid</span>, <span class="va">iid</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">imgRaster</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="va">sid</span>, <span class="va">iid</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="mirroring" class="level3"><h3 class="anchored" data-anchor-id="mirroring">Mirroring</h3>
-<div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract the first image from the SpatialExperiment object.</span></span>
-<span><span class="va">spi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html">getImg</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
-<span><span class="co"># Mirror the image horizontally ("h") and vertically ("v").</span></span>
-<span><span class="va">spi1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">mirrorImg</a></span><span class="op">(</span><span class="va">spi</span>, <span class="st">"h"</span><span class="op">)</span></span>
-<span><span class="va">spi2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">mirrorImg</a></span><span class="op">(</span><span class="va">spi</span>, <span class="st">"v"</span><span class="op">)</span></span>
-<span><span class="co"># Visualize the original and mirrored images for comparison.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Specify the sample and image identifiers for targeted mirroring.</span></span>
-<span><span class="va">sid</span> <span class="op">&lt;-</span> <span class="st">"sample01"</span></span>
-<span><span class="va">iid</span> <span class="op">&lt;-</span> <span class="st">"lowres"</span></span>
-<span><span class="co"># Mirror the specified image horizontally within the SpatialExperiment object.</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">mirrorImg</a></span><span class="op">(</span><span class="va">spe</span>,</span>
-<span>  sample_id <span class="op">=</span> <span class="va">sid</span>,</span>
-<span>  image_id <span class="op">=</span> <span class="va">iid</span>,</span>
-<span>  axis <span class="op">=</span> <span class="st">"h"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">imgRaster</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="va">sid</span>, <span class="va">iid</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section></section><section id="question-4" class="level2"><h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
-<p><strong>How would you first rotate an image by 90 degrees clockwise and then mirror it horizontally?</strong></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -589,23 +430,356 @@ Answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract the first image.</span></span>
-<span><span class="va">spi_q4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html">getImg</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
-<span><span class="co"># First, rotate the image by 90 degrees clockwise.</span></span>
-<span><span class="va">rotated_spi_q4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">rotateImg</a></span><span class="op">(</span><span class="va">spi_q4</span>, degrees <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span>
-<span><span class="co"># Then, mirror the rotated image horizontally.</span></span>
-<span><span class="va">final_transformed_spi_q4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">mirrorImg</a></span><span class="op">(</span><span class="va">rotated_spi_q4</span>, axis <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span></span>
-<span><span class="co"># Visualize the original, rotated, and final transformed images.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">spi_q4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">rotated_spi_q4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">final_transformed_spi_q4</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</section></section><section id="save-the-object" class="level1"><h1>Save the object</h1>
+<p>The slot <code>colData</code> contains metadata of each of the 127809 spots:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/qs2/man/qs_save.html">qs_save</a></span><span class="op">(</span><span class="va">spe</span>, file <span class="op">=</span> <span class="st">"results/01_spe.qs2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 6 rows and 6 columns
+                                    barcode in_tissue array_row array_col
+                                &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+s_016um_00052_00082-1 s_016um_00052_00082-1         1        52        82
+s_016um_00010_00367-1 s_016um_00010_00367-1         1        10       367
+s_016um_00163_00399-1 s_016um_00163_00399-1         1       163       399
+s_016um_00238_00388-1 s_016um_00238_00388-1         1       238       388
+s_016um_00144_00175-1 s_016um_00144_00175-1         1       144       175
+s_016um_00297_00147-1 s_016um_00297_00147-1         1       297       147
+                         bin_size   sample_id
+                      &lt;character&gt; &lt;character&gt;
+s_016um_00052_00082-1         016    sample01
+s_016um_00010_00367-1         016    sample01
+s_016um_00163_00399-1         016    sample01
+s_016um_00238_00388-1         016    sample01
+s_016um_00144_00175-1         016    sample01
+s_016um_00297_00147-1         016    sample01</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 127809</code></pre>
+</div>
+</div>
+<p>We also have the column <code>in_tissue</code> here, and we can check whether all the spots are in the tissue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(in_tissue) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  in_tissue number
+      &lt;int&gt;  &lt;int&gt;
+1         1 127809</code></pre>
+</div>
+</div>
+<p>The slot <code>spatialCoords</code> maps each spot to the full resolution image:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spatialCoords</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      pxl_col_in_fullres pxl_row_in_fullres
+s_016um_00052_00082-1           4592.154           33582.69
+s_016um_00010_00367-1          21222.637           36191.27
+s_016um_00163_00399-1          23176.077           27266.75
+s_016um_00238_00388-1          22574.200           22877.49
+s_016um_00144_00175-1          10076.365           28256.34
+s_016um_00297_00147-1           8523.582           19299.57</code></pre>
+</div>
+</div>
+<p>The slot <code>rowData</code> contains metadata about the 18085 genes for which we measured expression:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 6 rows and 3 columns
+                             ID      Symbol            Type
+                    &lt;character&gt; &lt;character&gt;        &lt;factor&gt;
+ENSG00000187634 ENSG00000187634      SAMD11 Gene Expression
+ENSG00000188976 ENSG00000188976       NOC2L Gene Expression
+ENSG00000187961 ENSG00000187961      KLHL17 Gene Expression
+ENSG00000187583 ENSG00000187583     PLEKHN1 Gene Expression
+ENSG00000187642 ENSG00000187642       PERM1 Gene Expression
+ENSG00000188290 ENSG00000188290        HES4 Gene Expression</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18085</code></pre>
+</div>
+</div>
+<p>The assay is the core matrix of the object. Corresponding to the genes (rows) and spots (columns):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;18085 x 127809&gt; sparse TENxMatrix object of type "integer":
+                s_016um_00052_00082-1 ... s_016um_00144_00329-1
+ENSG00000187634                     0   .                     0
+ENSG00000188976                     0   .                     0
+ENSG00000187961                     0   .                     0
+ENSG00000187583                     0   .                     0
+ENSG00000187642                     0   .                     0
+            ...                     .   .                     .
+ENSG00000212907                     1   .                    19
+ENSG00000198886                     0   .                    91
+ENSG00000198786                     0   .                     3
+ENSG00000198695                     0   .                     5
+ENSG00000198727                     0   .                    49</code></pre>
+</div>
+</div>
+<p>Of course, also the image is included:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">imgRaster</span>(spe) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And the slot for <code>reducedDims</code> is empty, as we didn’t perform any dimensionality reduction calculations yet:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDims</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of length 0
+names(0): </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>To get a visual overview of what part of the slide is covered with spots we can use <code>ggspavis::plotVisium</code>. First without spots:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVisium</span>(spe, <span class="at">spots =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the ggspavis package.
+  Please report the issue at &lt;https://github.com/lmweber/ggspavis/issues&gt;.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And with spots:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVisium</span>(spe) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Check out the usage of <code>plotVisium</code> with <code>?plotVisium</code>. Create a plot that zooms in into the spots, and colors the spots according to column <code>array_row</code>.</p>
+<p>In which slot is <code>array_row</code> stored and what does it represent?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The column <code>array_row</code> is stored in <code>colData</code>, it represents in which row the spot is positioned. Of course, plotting this value is not particularly useful for biology. We will visualize more sensible values in the next chapter, when we do the quality control.</p>
+<p>We can use the argument <code>annotate</code> to color according to a column in <code>colData</code>, and we can zoom in by specifying <code>zoom = TRUE</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plotVisium</span>(spe, <span class="at">annotate =</span> <span class="st">"array_row"</span>, <span class="at">zoom =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
+✖ Problematic argument:
+• override.aes = list(col = NA, size = 3)
+ℹ Did you misspell an argument name?</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the ggspavis package.
+  Please report the issue at &lt;https://github.com/lmweber/ggspavis/issues&gt;.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ## `spatialCoords` -->
+<!-- ```{r} -->
+<!-- # Display the head of the spatial coordinates, which represent the (x, y) locations of each spot. -->
+<!-- head(spatialCoords(spe)) -->
+<!-- # List the names of the spatial coordinate columns. -->
+<!-- spatialCoordsNames(spe) -->
+<!-- ``` -->
+<!-- ## `imgData` -->
+<!-- ```{r} -->
+<!-- # Display the image data associated with the SpatialExperiment object. -->
+<!-- imgData(spe) -->
+<!-- ``` -->
+<!-- ### `SpatialImage` class -->
+<!-- ```{r} -->
+<!-- # Extract the SpatialImage object from the SpatialExperiment object. -->
+<!-- spi <- getImg(spe) -->
+<!-- spi -->
+<!-- # Plot the raster image from the SpatialImage object. -->
+<!-- plot(imgRaster(spe)) -->
+<!-- ``` -->
+<!-- ## Question 1 -->
+<!-- **How would you extract the image data for a specific sample and image ID, for example, 'sample01' and 'lowres'?** -->
+<!-- :::{.callout-tip collapse="true"} -->
+<!-- ### Answer -->
+<!-- # Extract the image data for 'sample01' and 'lowres' image ID. -->
+<!-- getImg(spe, sample_id = "sample01", image_id = "lowres") -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- # Operations on `SpatialExperiment` -->
+<!-- ## subset by `sample_id` -->
+<!-- ```{r} -->
+<!-- # Subset the SpatialExperiment object to include only observations from 'sample01'. -->
+<!-- sub <- spe[, spe$sample_id == "sample01"] -->
+<!-- ``` -->
+<!-- ## Question 2 -->
+<!-- **How would you subset the `SpatialExperiment` object to only include spots where the `in_tissue` column in `colData` is `TRUE`?** -->
+<!-- :::{.callout-tip collapse="true"} -->
+<!-- ### Answer -->
+<!-- # Subset the SpatialExperiment object to retain only spots that are within the tissue area. -->
+<!-- spe_in_tissue <- spe[, colData(spe)$in_tissue] -->
+<!-- # Verify the number of spots after subsetting. -->
+<!-- sum(colData(spe)$in_tissue) == ncol(spe_in_tissue) -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ## retain only observations that map to tissue -->
+<!-- ```{r} -->
+<!-- # Subset the SpatialExperiment object to retain only spots that are within the tissue area. -->
+<!-- sub <- spe[, colData(spe)$in_tissue] -->
+<!-- # Verify that the number of columns in the subsetted object matches the count of 'in_tissue' spots. -->
+<!-- sum(colData(spe)$in_tissue) == ncol(sub) -->
+<!-- ``` -->
+<!-- ## Combining samples -->
+<!-- ```{r} -->
+<!-- # Create two copies of the SpatialExperiment object. -->
+<!-- spe1 <- spe2 <- spe -->
+<!-- # Combine the two SpatialExperiment objects column-wise (samples). -->
+<!-- spe3 <- cbind(spe1, spe2) -->
+<!-- # Display the unique sample IDs in the combined object. -->
+<!-- unique(spe3$sample_id) -->
+<!-- ``` -->
+<!-- ## Question 3 -->
+<!-- **Imagine you have three `SpatialExperiment` objects (`spe1`, `spe2`, `spe3`). How would you combine all three into a single object?** -->
+<!-- :::{.callout-tip collapse="true"} -->
+<!-- ### Answer -->
+<!-- # Create three SpatialExperiment objects (for demonstration). -->
+<!-- spe1_q3 <- spe2_q3 <- spe3_q3 <- spe -->
+<!-- # Combine all three SpatialExperiment objects. -->
+<!-- spe_combined_q3 <- cbind(spe1_q3, spe2_q3, spe3_q3) -->
+<!-- # Display unique sample IDs in the combined object. -->
+<!-- unique(spe_combined_q3$sample_id) -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ## Image transformation -->
+<!-- ### Rotation -->
+<!-- ```{r} -->
+<!-- # Extract the first image from the SpatialExperiment object. -->
+<!-- spi <- getImg(spe) -->
+<!-- # Apply counter-clockwise (-90 degrees) and clockwise (+90 degrees) rotations to the image. -->
+<!-- spi1 <- rotateImg(spi, -90) -->
+<!-- spi2 <- rotateImg(spi, +90) -->
+<!-- # Visualize the original and rotated images for comparison. -->
+<!-- par(mfrow = c(1, 3)) -->
+<!-- plot(as.raster(spi)) -->
+<!-- plot(as.raster(spi1)) -->
+<!-- plot(as.raster(spi2)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # Specify the sample and image identifiers for targeted rotation. -->
+<!-- sid <- "sample01" -->
+<!-- iid <- "lowres" -->
+<!-- # Apply a counter-clockwise rotation of -90 degrees to the specified image within the SpatialExperiment object. -->
+<!-- tmp <- rotateImg(spe, -->
+<!--   sample_id = sid, -->
+<!--   image_id = iid, -->
+<!--   degrees = -90 -->
+<!-- ) -->
+<!-- # Visualize the original and rotated images for the specified sample and image ID. -->
+<!-- par(mfrow = c(1, 2)) -->
+<!-- plot(imgRaster(spe, sid, iid)) -->
+<!-- plot(imgRaster(tmp, sid, iid)) -->
+<!-- ``` -->
+<!-- ### Mirroring -->
+<!-- ```{r} -->
+<!-- # Extract the first image from the SpatialExperiment object. -->
+<!-- spi <- getImg(spe) -->
+<!-- # Mirror the image horizontally ("h") and vertically ("v"). -->
+<!-- spi1 <- mirrorImg(spi, "h") -->
+<!-- spi2 <- mirrorImg(spi, "v") -->
+<!-- # Visualize the original and mirrored images for comparison. -->
+<!-- par(mfrow = c(1, 3)) -->
+<!-- plot(as.raster(spi)) -->
+<!-- plot(as.raster(spi1)) -->
+<!-- plot(as.raster(spi2)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # Specify the sample and image identifiers for targeted mirroring. -->
+<!-- sid <- "sample01" -->
+<!-- iid <- "lowres" -->
+<!-- # Mirror the specified image horizontally within the SpatialExperiment object. -->
+<!-- tmp <- mirrorImg(spe, -->
+<!--   sample_id = sid, -->
+<!--   image_id = iid, -->
+<!--   axis = "h" -->
+<!-- ) -->
+<!-- plot(imgRaster(tmp, sid, iid)) -->
+<!-- ``` -->
+<!-- ## Question 4 -->
+<!-- **How would you first rotate an image by 90 degrees clockwise and then mirror it horizontally?** -->
+<!-- :::{.callout-tip collapse="true"} -->
+<!-- ### Answer -->
+<!-- # Extract the first image. -->
+<!-- spi_q4 <- getImg(spe) -->
+<!-- # First, rotate the image by 90 degrees clockwise. -->
+<!-- rotated_spi_q4 <- rotateImg(spi_q4, degrees = 90) -->
+<!-- # Then, mirror the rotated image horizontally. -->
+<!-- final_transformed_spi_q4 <- mirrorImg(rotated_spi_q4, axis = "h") -->
+<!-- # Visualize the original, rotated, and final transformed images. -->
+<!-- par(mfrow = c(1, 3)) -->
+<!-- plot(as.raster(spi_q4)) -->
+<!-- plot(as.raster(rotated_spi_q4)) -->
+<!-- plot(as.raster(final_transformed_spi_q4)) -->
+<!-- ``` -->
+<!-- ::: -->
+</section>
+<section id="save-the-object" class="level1">
+<h1>Save the object</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"results"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qs_save</span>(spe, <span class="at">file =</span> <span class="st">"results/01_spe.qs2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Clear your environment</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">.rs.restartR</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -627,7 +801,10 @@ Important
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -699,7 +876,7 @@ Important
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1027,6 +1204,7 @@ Important
   });
   </script>
 </div> <!-- /content -->
+
 
 
 

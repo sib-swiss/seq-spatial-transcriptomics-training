@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ab62ab6abcf2bb06eba42c0c53629186.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -243,6 +243,15 @@ Note
 <section id="day-1" class="level2">
 <h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 48%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 7%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>block</th>
@@ -260,7 +269,7 @@ Note
 <td>9:15</td>
 <td>9:45</td>
 <td>introduction to the course</td>
-<td>Deepak Tanwar</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -269,7 +278,7 @@ Note
 <td>9:45</td>
 <td>10:30</td>
 <td>introduction to spatial omics</td>
-<td>Joana Carlevaro-Fita</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -287,7 +296,7 @@ Note
 <td>10:45</td>
 <td>12:30</td>
 <td>Data structure + quality control + normalization and scaling</td>
-<td>Deepak Tanwar</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -298,14 +307,14 @@ Note
 <td></td>
 <td></td>
 <td></td>
-<td><a href="../day1/day1-1_SpatialExperiment.html">Exercise 1</a>, <a href="../day1/day1-2_spotsweeper_qc.html">Exercise 2</a></td>
+<td></td>
 </tr>
 <tr class="even">
 <td>block 3</td>
 <td>1:30</td>
 <td>3:00</td>
 <td>Exercises quality control</td>
-<td>Deepak Tanwar</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -323,9 +332,9 @@ Note
 <td>3:15</td>
 <td>5:15</td>
 <td>Feature selection, dimensionality reduction and clustering</td>
-<td>Joana Carlevaro-Fita</td>
 <td></td>
-<td><a href="../day1/day1-3_feature_dimred_cluster.html">Exercise 3</a></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -359,7 +368,7 @@ Note
 <td>9:15</td>
 <td>10:30</td>
 <td>Spatial statistics</td>
-<td>Mark Robinson</td>
+<td>Martin Emonts</td>
 <td></td>
 <td></td>
 </tr>
@@ -377,7 +386,7 @@ Note
 <td>10:45</td>
 <td>12:30</td>
 <td>DESpace</td>
-<td>Martin Emonts</td>
+<td>Peiying Cai</td>
 <td></td>
 <td></td>
 </tr>
@@ -395,7 +404,7 @@ Note
 <td>1:30</td>
 <td>3:00</td>
 <td>Multiple samples DESpace, differential colocalization</td>
-<td>Peiying Ca</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -413,15 +422,6 @@ Note
 <td>3:15</td>
 <td>5:15</td>
 <td>Deconvolution</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>post-course info</td>
-<td>5:15</td>
-<td>5:20</td>
-<td>Evaluation and additional resources</td>
 <td></td>
 <td></td>
 <td></td>
@@ -505,7 +505,7 @@ Note
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
