@@ -22,23 +22,25 @@ jobs:
     container:
       image: sibswiss/training-seq-spatial-transcriptomics-rstudio:latest
     steps:
-      - name: Log in to Docker Hub
-        run: |
-          echo "Logging into Docker Hub"
-          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        shell: bash
-
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Build site
         run: |
-          Rscript -e 'install.packages("renv")'
-          Rscript -e 'renv::restore()'
-
-      - name: Render and Publish
+          quarto render
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: '_site/'
+      
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
         if: github.ref == 'refs/heads/main'
-        run: |
-          quarto publish gh-pages --no-prompt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: ./_site
