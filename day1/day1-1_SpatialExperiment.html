@@ -280,11 +280,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary R libraries for spatial transcriptomics data analysis.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BumpyMatrix)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(DropletUtils)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># library(BumpyMatrix)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpatialExperiment)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VisiumIO)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># library(arrow)</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qs2)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspavis)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
@@ -328,24 +328,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">bin_size =</span> <span class="st">"016"</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">import</span>()</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>spe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>class: SpatialExperiment 
-dim: 18085 127809 
-metadata(2): resources spatialList
-assays(1): counts
-rownames(18085): ENSG00000187634 ENSG00000188976 ... ENSG00000198695
-  ENSG00000198727
-rowData names(3): ID Symbol Type
-colnames(127809): s_016um_00052_00082-1 s_016um_00010_00367-1 ...
-  s_016um_00037_00193-1 s_016um_00144_00329-1
-colData names(6): barcode in_tissue ... bin_size sample_id
-reducedDimNames(0):
-mainExpName: Gene Expression
-altExpNames(0):
-spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres
-imgData names(4): sample_id image_id data scaleFactor</code></pre>
-</div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># we will subset the dataset for computational and visual reasons</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> spe[, <span class="fu">spatialCoords</span>(spe)[, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">scaleFactors</span>(spe) <span class="sc">&gt;</span> <span class="dv">70</span> <span class="sc">&amp;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>               <span class="fu">spatialCoords</span>(spe)[, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">scaleFactors</span>(spe) <span class="sc">&lt;</span> <span class="dv">130</span> <span class="sc">&amp;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>               <span class="fu">spatialCoords</span>(spe)[, <span class="dv">2</span>] <span class="sc">*</span> <span class="fu">scaleFactors</span>(spe) <span class="sc">&gt;</span> <span class="dv">200</span> <span class="sc">&amp;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>               <span class="fu">spatialCoords</span>(spe)[, <span class="dv">2</span>] <span class="sc">*</span> <span class="fu">scaleFactors</span>(spe) <span class="sc">&lt;</span> <span class="dv">260</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -430,60 +418,60 @@ Answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The slot <code>colData</code> contains metadata of each of the 127809 spots:</p>
+<p>The slot <code>colData</code> contains metadata of each of the 14207 spots:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 6 rows and 6 columns
                                     barcode in_tissue array_row array_col
                                 &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-s_016um_00052_00082-1 s_016um_00052_00082-1         1        52        82
-s_016um_00010_00367-1 s_016um_00010_00367-1         1        10       367
-s_016um_00163_00399-1 s_016um_00163_00399-1         1       163       399
-s_016um_00238_00388-1 s_016um_00238_00388-1         1       238       388
 s_016um_00144_00175-1 s_016um_00144_00175-1         1       144       175
-s_016um_00297_00147-1 s_016um_00297_00147-1         1       297       147
+s_016um_00204_00145-1 s_016um_00204_00145-1         1       204       145
+s_016um_00191_00159-1 s_016um_00191_00159-1         1       191       159
+s_016um_00111_00233-1 s_016um_00111_00233-1         1       111       233
+s_016um_00202_00235-1 s_016um_00202_00235-1         1       202       235
+s_016um_00102_00186-1 s_016um_00102_00186-1         1       102       186
                          bin_size   sample_id
                       &lt;character&gt; &lt;character&gt;
-s_016um_00052_00082-1         016    sample01
-s_016um_00010_00367-1         016    sample01
-s_016um_00163_00399-1         016    sample01
-s_016um_00238_00388-1         016    sample01
 s_016um_00144_00175-1         016    sample01
-s_016um_00297_00147-1         016    sample01</code></pre>
+s_016um_00204_00145-1         016    sample01
+s_016um_00191_00159-1         016    sample01
+s_016um_00111_00233-1         016    sample01
+s_016um_00202_00235-1         016    sample01
+s_016um_00102_00186-1         016    sample01</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 127809</code></pre>
+<pre><code>[1] 14207</code></pre>
 </div>
 </div>
 <p>We also have the column <code>in_tissue</code> here, and we can check whether all the spots are in the tissue:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(in_tissue) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(in_tissue) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   in_tissue number
       &lt;int&gt;  &lt;int&gt;
-1         1 127809</code></pre>
+1         1  14207</code></pre>
 </div>
 </div>
 <p>The slot <code>spatialCoords</code> maps each spot to the full resolution image:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spatialCoords</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spatialCoords</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      pxl_col_in_fullres pxl_row_in_fullres
-s_016um_00052_00082-1           4592.154           33582.69
-s_016um_00010_00367-1          21222.637           36191.27
-s_016um_00163_00399-1          23176.077           27266.75
-s_016um_00238_00388-1          22574.200           22877.49
 s_016um_00144_00175-1          10076.365           28256.34
-s_016um_00297_00147-1           8523.582           19299.57</code></pre>
+s_016um_00204_00145-1           8356.073           24733.65
+s_016um_00191_00159-1           9167.045           25500.94
+s_016um_00111_00233-1          13447.496           30216.22
+s_016um_00202_00235-1          13613.955           24899.03
+s_016um_00102_00186-1          10696.244           30716.82</code></pre>
 </div>
 </div>
 <p>The slot <code>rowData</code> contains metadata about the 18085 genes for which we measured expression:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(spe) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 6 rows and 3 columns
                              ID      Symbol            Type
@@ -495,44 +483,44 @@ ENSG00000187583 ENSG00000187583     PLEKHN1 Gene Expression
 ENSG00000187642 ENSG00000187642       PERM1 Gene Expression
 ENSG00000188290 ENSG00000188290        HES4 Gene Expression</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18085</code></pre>
 </div>
 </div>
 <p>The assay is the core matrix of the object. Corresponding to the genes (rows) and spots (columns):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;18085 x 127809&gt; sparse TENxMatrix object of type "integer":
-                s_016um_00052_00082-1 ... s_016um_00144_00329-1
+<pre><code>&lt;18085 x 14207&gt; sparse DelayedMatrix object of type "integer":
+                s_016um_00144_00175-1 ... s_016um_00109_00223-1
 ENSG00000187634                     0   .                     0
 ENSG00000188976                     0   .                     0
 ENSG00000187961                     0   .                     0
 ENSG00000187583                     0   .                     0
 ENSG00000187642                     0   .                     0
             ...                     .   .                     .
-ENSG00000212907                     1   .                    19
-ENSG00000198886                     0   .                    91
-ENSG00000198786                     0   .                     3
-ENSG00000198695                     0   .                     5
-ENSG00000198727                     0   .                    49</code></pre>
+ENSG00000212907                     7   .                     5
+ENSG00000198886                    29   .                    15
+ENSG00000198786                     0   .                     1
+ENSG00000198695                     2   .                     1
+ENSG00000198727                    11   .                    11</code></pre>
 </div>
 </div>
 <p>Of course, also the image is included:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">imgRaster</span>(spe) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">imgRaster</span>(spe) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And the slot for <code>reducedDims</code> is empty, as we didn’t perform any dimensionality reduction calculations yet:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDims</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDims</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of length 0
 names(0): </code></pre>
@@ -541,31 +529,46 @@ names(0): </code></pre>
 </div>
 </div>
 </div>
+<p>We saw that the rownames of the object were Ensembl IDs. However, for most purposes it’s easier to have gene symbols. Therefore, we replace the ensembl IDs, with the symbols stored in <code>rowData</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(spe) <span class="ot">&lt;-</span> <span class="fu">rowData</span>(spe)<span class="sc">$</span>Symbol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>To get a visual overview of what part of the slide is covered with spots we can use <code>ggspavis::plotVisium</code>. First without spots:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVisium</span>(spe, <span class="at">spots =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette("ggplot2-in-packages")` for more information.
-ℹ The deprecated feature was likely used in the ggspavis package.
-  Please report the issue at &lt;https://github.com/lmweber/ggspavis/issues&gt;.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And with spots:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVisium</span>(spe) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVisium</span>(spe, <span class="at">point_shape =</span> <span class="dv">22</span>, <span class="at">point_size =</span> <span class="fl">0.5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Coloured by e.g.&nbsp;gene expression:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVisium</span>(spe, <span class="at">annotate =</span> <span class="st">"PIGR"</span>, <span class="at">zoom =</span> <span class="cn">TRUE</span>, <span class="at">point_size =</span> <span class="dv">1</span>,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">point_shape =</span> <span class="dv">22</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
+✖ Problematic argument:
+• override.aes = list(col = NA, size = 3)
+ℹ Did you misspell an argument name?</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -599,25 +602,18 @@ Answer
 <p>The column <code>array_row</code> is stored in <code>colData</code>, it represents in which row the spot is positioned. Of course, plotting this value is not particularly useful for biology. We will visualize more sensible values in the next chapter, when we do the quality control.</p>
 <p>We can use the argument <code>annotate</code> to color according to a column in <code>colData</code>, and we can zoom in by specifying <code>zoom = TRUE</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plotVisium</span>(spe, <span class="at">annotate =</span> <span class="st">"array_row"</span>, <span class="at">zoom =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plotVisium</span>(spe, <span class="at">annotate =</span> <span class="st">"array_row"</span>, <span class="at">zoom =</span> <span class="cn">TRUE</span>, <span class="at">point_shape =</span> <span class="dv">22</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
 ✖ Problematic argument:
 • override.aes = list(col = NA, size = 3)
 ℹ Did you misspell an argument name?</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette("ggplot2-in-packages")` for more information.
-ℹ The deprecated feature was likely used in the ggspavis package.
-  Please report the issue at &lt;https://github.com/lmweber/ggspavis/issues&gt;.</code></pre>
-</div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="day1-1_SpatialExperiment_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
