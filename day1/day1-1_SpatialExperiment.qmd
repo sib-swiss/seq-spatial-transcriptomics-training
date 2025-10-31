@@ -19,16 +19,29 @@ By the end of this exercise, you will be able to:
 ## Libraries
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| output: false
+
+# load libraries to automatically include in renv
+library(downlit)
+library(xml2)
+library(GenomeInfoDb)
+
+```
+
+```{r}
 #| message: false
 #| warning: false
 #| output: false
 
 # Load necessary R libraries for spatial transcriptomics data analysis.
-library(DropletUtils)
-library(BumpyMatrix)
+# library(DropletUtils)
+# library(BumpyMatrix)
 library(SpatialExperiment)
 library(VisiumIO)
-library(arrow)
+# library(arrow)
 library(qs2)
 library(ggspavis)
 library(patchwork)
@@ -71,8 +84,16 @@ spe <- TENxVisiumHD(
   bin_size = "016"
 ) |>
   import()
-spe
+
+# we will subset the dataset for computational and visual reasons
+spe <- spe[, spatialCoords(spe)[, 1] * scaleFactors(spe) > 70 &
+               spatialCoords(spe)[, 1] * scaleFactors(spe) < 130 &
+               spatialCoords(spe)[, 2] * scaleFactors(spe) > 200 &
+               spatialCoords(spe)[, 2] * scaleFactors(spe) < 260]
+
 ```
+
+
 
 ::: callout-important
 ## Exercise
@@ -124,7 +145,7 @@ Questions:
 ::: {.callout-tip collapse="true"}
 ## Answer
 
-The slot `colData` contains metadata of each of the 127809 spots:
+The slot `colData` contains metadata of each of the 14207 spots:
 
 ```{r}
 colData(spe) |> head()
@@ -170,6 +191,13 @@ reducedDims(spe)
 ```
 :::
 
+We saw that the rownames of the object were Ensembl IDs. However, for most purposes it's easier to have gene symbols. Therefore, we replace the ensembl IDs, with the symbols stored in `rowData`:
+
+```{r}
+rownames(spe) <- rowData(spe)$Symbol
+```
+
+
 To get a visual overview of what part of the slide is covered with spots we can use `ggspavis::plotVisium`. First without spots:
 
 ```{r}
@@ -179,7 +207,15 @@ plotVisium(spe, spots = FALSE)
 And with spots:
 
 ```{r}
-plotVisium(spe) 
+plotVisium(spe, point_shape = 22, point_size = 0.5) 
+```
+
+Coloured by e.g. gene expression: 
+
+```{r}
+plotVisium(spe, annotate = "PIGR", zoom = TRUE, point_size = 1,
+                point_shape = 22)
+
 ```
 
 ::: callout-important
@@ -198,7 +234,7 @@ The column `array_row` is stored in `colData`, it represents in which row the sp
 We can use the argument `annotate` to color according to a column in `colData`, and we can zoom in by specifying `zoom = TRUE`:
 
 ```{r}
-p <- plotVisium(spe, annotate = "array_row", zoom = TRUE)
+p <- plotVisium(spe, annotate = "array_row", zoom = TRUE, point_shape = 22)
 p
 ```
 :::
