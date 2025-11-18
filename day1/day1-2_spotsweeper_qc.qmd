@@ -15,6 +15,8 @@ In this second exercise, we will focus on the critical step of quality control (
 By the end of this exercise, you will be able to:
 
 - Load a `SpatialExperiment` object from a `.qs` file.
+> Julien: Isn't this trivial?
+
 - Calculate per-spot QC metrics.
 - Identify local outliers based on various QC metrics.
 - Detect spatial artifacts using `SpotSweeper`.
@@ -46,13 +48,14 @@ spe <- qs_read("results/01_spe.qs2", nthreads = 1)
 
 # Change row names from gene IDs to gene symbols for easier interpretation.
 # This assumes 'Symbol' is a column in the rowData of the SpatialExperiment object.
-rownames(spe) <- rowData(spe)$Symbol
+# rownames(spe) <- rowData(spe)$Symbol
+# Julien: this was done already, see my comment in the exercise 1
 
 # Identify mitochondrial transcripts. These are often used as a QC metric.
-# Genes starting with "MT-" are typically mitochondrial.
+# Genes starting with "MT-" are from the mitochondrial genome.
 is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
 
-# Calculate per-spot (per-cell) QC metrics using scuttle's addPerCellQCMetrics function.
+# Calculate per-spot QC metrics using scuttle's addPerCellQCMetrics function.
 # This adds metrics like sum (total counts), detected (number of detected genes),
 # and mitochondrial gene percentage to the colData of the SpatialExperiment object.
 spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
@@ -113,6 +116,7 @@ colnames(colData(spe))
 Here, we identify local outliers based on common QC metrics such as library size, number of detected genes, and mitochondrial percentage. `localOutliers` from `SpotSweeper` helps in identifying spots that deviate significantly from their local neighborhood.
 
 **Note:** this takes about 10 minutes to run. Have a coffee. 
+> Julien: took a few seconds on the subsetted object
 
 ```{r}
 # Identify local outliers based on library size ("sum" of counts).
@@ -152,6 +156,7 @@ spe$local_outliers <- as.logical(spe$sum_outliers) |
 ## Question 1
 
 **How many spots were identified as local outliers based on the combined criteria?**
+> Should we also run an outlier detection similar to scRNA-seq data, without spatial neighbourhood consideration? It would be interesting to discuss the benefit/shortcomnings of the spotSweeper approach (e.g., a whole low-quality region of a sample could be retained) related to naive filtering (e.g., whole cell types/domaisn could be excluded)
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -170,34 +175,53 @@ Visualizing the QC metrics and detected artifacts is crucial for understanding t
 # Plot the spatial distribution of local outliers.
 # Spots flagged as local outliers will be highlighted.
 plotQCmetrics(spe,
-  metric = "sum_log", outliers = "subsets_Mito_percent_outliers", point_size = 0.4,
-  colors = c("green", "purple"),
+  metric = "subsets_Mito_percent", outliers = "subsets_Mito_percent_outliers", point_size = 0.4,
   stroke = 0.75
 ) +
-  ggtitle("All Local Outliers")
+  ggtitle("Local outliers for %MT")
 ```
 
 ```{r}
-# Plot the spatial distribution of local outliers.
-# Spots flagged as local outliers will be highlighted.
+plotQCmetrics(spe,
+  metric = "sum_log", outliers = "sum_outliers", point_size = 0.4,
+  stroke = 0.75
+) +
+  ggtitle("Local outliers for number of UMIs")
+```
+
+```{r}
 plotQCmetrics(spe,
   metric = "sum_log", outliers = "local_outliers", point_size = 0.4,
   stroke = 0.75
 ) +
-  ggtitle("All Local Outliers")
+  ggtitle("Local outliers excluded based on 3 criteria")
 ```
 
+# Identify technical artifacts
 
+Technical artifacts can arise during tissue preparation, for example tissue dissection can cause mechanical damage, leading to areas with artificially low biological heterogeneity. These can be detected wiht the `findArtifacts` function of the `spotSweeper` package.
 
+```{r}
+# find artifacts using SpotSweeper
+spe <- findArtifacts(spe,
+    mito_percent = "subsets_Mito_percent",
+    mito_sum = "subsets_Mito_sum",
+    n_order = 5,
+    name = "artifact"
+)
+```
+
+## Question 2 
+What is the `findArtifacts` function performing and what are the (potentially) problematic assumptions?
 
 ## Question 3
 
-**Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`.**
+**Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`. What do you observe?**
 
 :::{.callout-tip collapse="true"}
 ### Answer
 
-```r
+```{r}
 # Plot the spatial distribution of the detected artifacts.
 plotQCmetrics(spe,
     metric = "subsets_Mito_percent", # You can choose any relevant metric to display

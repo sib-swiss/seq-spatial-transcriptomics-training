@@ -45,33 +45,36 @@ We will start by loading the `SpatialExperiment` object and performing the neces
 spe <- qs2::qs_read("results/01_spe.qs2", nthreads = 1)
 
 # Change row names from gene IDs to gene symbols.
-rownames(spe) <- rowData(spe)$Symbol
+# rownames(spe) <- rowData(spe)$Symbol
+# Julien: this was done already, see my comment in the exercise 1
 
 # Identify mitochondrial transcripts.
 is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
 
 # Calculate per-spot QC metrics.
 spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
+## Julien: better to save object from day1-2 and reload it?
 
 # Subsetting for Demonstration (to reduce computation time)
-set.seed(123) # for reproducibility
-num_genes_to_keep <- 10000
-if (nrow(spe) > num_genes_to_keep) {
-  gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep)
-  spe_subset <- spe[gene_indices, ]
-} else {
-  spe_subset <- spe
-}
-
-num_spots_to_keep <- 10000
-if (ncol(spe_subset) > num_spots_to_keep) {
-  spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep)
-  spe_subset <- spe_subset[, spot_indices]
-} else {
-  spe_subset <- spe_subset
-}
-
-spe <- spe_subset
+# set.seed(123) # for reproducibility
+# num_genes_to_keep <- 10000
+# if (nrow(spe) > num_genes_to_keep) {
+#   gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep)
+#   spe_subset <- spe[gene_indices, ]
+# } else {
+#   spe_subset <- spe
+# }
+# 
+# num_spots_to_keep <- 10000
+# if (ncol(spe_subset) > num_spots_to_keep) {
+#   spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep)
+#   spe_subset <- spe_subset[, spot_indices]
+# } else {
+#   spe_subset <- spe_subset
+# }
+# 
+# spe <- spe_subset
+## Julien: is it a good idea to subset spots randomly? Is it really necessary here given that spe is already a subsetted object?
 
 # Remove spots with NA/NaN/Inf in mitochondrial QC metrics or spatial coordinates
 na_mito_percent <- is.na(colData(spe)$subsets_Mito_percent)
@@ -81,6 +84,7 @@ if (any(spots_to_remove_mito)) {
   message(paste0("Removing ", sum(spots_to_remove_mito), " spots with NA mitochondrial QC metrics."))
   spe <- spe[, !spots_to_remove_mito]
 }
+## Julien: nothing removed here on my side...
 
 spatial_coords <- spatialCoords(spe)
 problematic_spatial_coords <- apply(spatial_coords, 1, function(row) any(is.na(row) | is.nan(row) | is.infinite(row)))
@@ -88,6 +92,7 @@ if (any(problematic_spatial_coords)) {
   message(paste0("Removing ", sum(problematic_spatial_coords), " spots with NA/NaN/Inf in spatial coordinates."))
   spe <- spe[, !problematic_spatial_coords]
 }
+## Julien: nothing removed here on my side...
 
 # Remove spots with zero total counts, as these can cause issues with size factor calculation during normalization.
 zero_sum_spots <- colSums(counts(spe)) == 0
@@ -95,6 +100,7 @@ if (any(zero_sum_spots)) {
   message(paste0("Removing ", sum(zero_sum_spots), " spots with zero total counts."))
   spe <- spe[, !zero_sum_spots]
 }
+## Julien: nothing removed here on my side...
 
 # Log-normalize counts for downstream analysis
 spe <- logNormCounts(spe)
@@ -119,6 +125,11 @@ hist(sizeFactors(spe),
 
 # Display the dimensions of the prepared object
 dim(spe)
+
+# Julien: what do we want to convey here? It's impprtant to show that size factors are also correlated to biology/cell types, so it's nice to show them on the slide too:
+colData(spe)$sizeFactors <- sizeFactors(spe)
+plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
+## We can then ask a question and explore other ways to normalize?
 ```
 
 ## Feature Selection
@@ -130,7 +141,23 @@ Feature selection is a crucial step to reduce noise and focus on genes that show
 ```{r}
 # Model gene variance to identify highly variable genes.
 # This function fits a trend to the technical noise and calculates biological variance.
-dec <- modelGeneVar(spe)
+dec <- modelGeneVarByPoisson(spe)
+## Julien: I personally prefer to account for the mean-variance trend corresponding to Poisson noise
+
+## Top 10 HVGs
+top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:10]
+
+ps <- lapply(top_HVG, \(.) {
+    plotCoords(spe, 
+        annotate = ., 
+        feature_names = "Symbol", 
+        assay_name = "logcounts") })
+# figure arrangement
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+
 
 # Select the top N highly variable genes.
 # The number of HVGs can influence downstream dimensionality reduction and clustering.
@@ -175,6 +202,94 @@ Identifying SVGs can reveal genes that define distinct tissue regions, cell type
 
 While several advanced methods and packages exist for SVG identification (e.g., `nnSVG`, `SPARK-X`, `Giotto`), implementing a full SVG analysis is beyond the scope of this introductory exercise. However, it's important to be aware of this concept as a crucial step in spatial data analysis.
 
+> Julien: wouldn't it be actually very interesting? And then compare SVGs and HVGs. The issue is that it can be long to calculate... What if we reduce to a subset of HVGs and to run nnSVG / Moran's I?
+
+```{r}
+#BiocManager::install("nnSVG")
+#library(nnSVG)
+
+## Subset to top 100 HVGs (faster)
+spe_subset <- spe[rowData(spe)$Symbol %in% getTopHVGs(dec, n = 100), ]
+## TO DO: subset spots too?
+
+# set random seed for number generation in order to make results reproducible
+spe_subset <- nnSVG(spe_subset,
+                    n_neighbors = 5, ## default 10 better, but slower
+                    BPPARAM = BiocParallel::MulticoreParam(4),
+                    verbose=TRUE) 
+## Problem: This is quite long!
+## TO DO: speed up by reducing even more number of spots? Or give students a pre-computed list of SVGs to download?
+
+## Results
+head(rowData(spe_subset), 3)
+table(rowData(spe_subset)$padj <= 0.05) ## all of them!
+
+hist(rowData(spe_subset)$pval,
+  breaks = 50, xlab = "P-value"
+)
+## Maybe more interesting to look at top-ranking ones?
+head(rowData(spe_subset)[order(rowData(spe_subset)$rank), ])
+
+top_nnSVG <- rowData(spe_subset)$Symbol[rowData(spe_subset)$rank <= 10]
+
+gs <- rowData(spe)$Symbol[match(gs, rownames(spe))]
+# gene-wise spatial plots
+ps <- lapply(top_nnSVG, \(.) {
+    plotCoords(spe, 
+        annotate = ., 
+        feature_names = "Symbol", 
+        assay_name = "logcounts") })
+# figure arrangement
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+
+################################################################################ 
+# Moran's I
+# renv::install("Voyager")
+library(Voyager)
+
+sfe <- toSpatialFeatureExperiment(spe_subset)
+knn8 <- findSpatialNeighbors(sfe, type="centroids", method="knearneigh", k=8)
+colGraph(sfe, "knn8") <- knn8
+# visualize across tissue section
+plotColGraph(sfe, 
+    colGraphName="knn8", 
+    colGeometryName="centroids", 
+    segment_size=0.1,
+    geometry_size=0.1) + 
+    theme_void()
+
+bp <- BiocParallel::MulticoreParam(4)
+sfe <- runUnivariate(sfe, 
+    type="moran", 
+    colGraphName="knn8", 
+    BPPARAM=bp)
+## This takes a few minutes only
+
+# We can visualize the 10 genes with highest Moran’s
+rowData(spe_subset)$moran_sample01 <- rowData(sfe)$moran_sample01
+top_moran <- rowData(spe_subset)$Symbol[order(rowData(spe_subset)$moran_sample01, decreasing = TRUE)][1:10]
+all(top_nnSVG %in% top_moran)
+
+ps <- lapply(top_moran, \(.) {
+    plotCoords(spe, 
+        annotate = ., 
+        feature_names = "Symbol", 
+        assay_name = "logcounts") })
+unit <- ggplot2::unit ## masked when loading Voyager
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+
+## Both measures are showing very similar thing...
+df <- rowData(spe_subset) |> as.data.frame()
+ggplot(data = df, aes(x=moran_sample01, y=LR_stat)) +
+  geom_point(alpha = 0.3, pch=16)
+```
+
 ## Question 1.2
 
 **How do Spatially Variable Genes (SVGs) differ from Highly Variable Genes (HVGs), and why is identifying SVGs particularly important in spatial transcriptomics?**
@@ -216,6 +331,20 @@ plot(attr(reducedDim(spe, "PCA"), "percentVar"),
 # This helps to see the main sources of variation in the data.
 plotPCA(spe, colour_by = "sum") +
   ggtitle("PCA colored by Library Size")
+
+
+## Visualize PCs on the tissue slice coordinates
+pcs <- reducedDim(spe, "PCA")
+pcs <- pcs[, seq_len(10)]
+ps <- lapply(colnames(pcs), \(.) {
+    spe[[.]] <- pcs[, .]
+    plotCoords(spe, annotate = .)
+}) 
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+
 ```
 
 ## Question 2
@@ -233,7 +362,9 @@ An appropriate number of principal components (PCs) can often be determined by l
 
 ### t-Distributed Stochastic Neighbor Embedding (t-SNE)
 
-t-SNE is another non-linear dimensionality reduction technique particularly well-suited for visualizing high-dimensional datasets. It aims to place similar data points close together in a low-dimensional map, while dissimilar points are placed far apart. It is especially good at revealing local structures in the data.
+t-SNE is a non-linear dimensionality reduction technique widely used for visualizing high-dimensional datasets. It tries placing similar data points close together in a low-dimensional map, while dissimilar points are placed far apart. This has many limitations, and distances ont he tSNE should be interpreted with caution, but it can be helpful at illsutrating patterns in the data.
+> Julien: is this making sense here? Given how controversial tSNE and UMAPs are, maybe we could simply avoid them here. I find much more helpful to plot the PCs on the tissue, see above
+> It seems that the rest of the practicals are not showing anything specific to spatial data, wouldn't it make sense to look for spatial domains and show how thye differ from clusters ignoring the spatial info?
 
 ```{r}
 # Run t-SNE on the PCA-reduced data.
