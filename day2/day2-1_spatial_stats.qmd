@@ -3,6 +3,7 @@ title: "Exercise 1"
 editor: source
 editor_options: 
   chunk_output_type: inline
+bibliography: ../references.bib
 ---
 
 ## Learning objectives
@@ -10,6 +11,7 @@ editor_options:
 - Learn the basic principles of exploratory spatial statistics
 - Compute and visualise local and global measures of spatial autocorrelation
 - Compare spatial statistics measures across samples
+- This chapter is based on the `OSTA` online book chapter on spatial statistics and uses heavily the `Voyager` spatial statistics library [@moses2023voyager]
 
 ## Libraries
 ```{r}
@@ -20,7 +22,7 @@ editor_options:
 library("SpatialExperiment")
 library("ggplot2")
 library("Voyager")
-set.seed(123)
+set.seed(1234)
 ```
 
 ## Load data
@@ -30,7 +32,7 @@ set.seed(123)
 spe <- qs2::qs_read("results/01_spe.qs2", nthreads = 1)
 ```
 
-In order to use the big spatial statistics library `sf` we convert the `SpatialExperiment` object into a `SpatialFeatureExperiment` object [@lambdaMoses]. In addition to the `SpatialExperiment` object it contains simple feature categories such as `Geometries` and `Graphs`. In this 10x Visium Dataset the `Geometries` stored are the points of the spots
+In order to use the big spatial statistics library `sf` we convert the `SpatialExperiment` object into a `SpatialFeatureExperiment` object [@Moses2025.02.24.640007]. In addition to the `SpatialExperiment` object it contains simple feature categories such as `Geometries` and `Graphs`. In this 10x Visium Dataset the `Geometries` stored are the points of the spots
 
 ```{r}
 sfe <- toSpatialFeatureExperiment(spe)
@@ -39,9 +41,9 @@ sfe
 
 ## Data modalities of spatial statistics
 
-In spatial transcriptomics we differentiate between imaging-based and sequencing-based technologies which give rise to very different _data modalities_ [@Rao].  
+In spatial transcriptomics we differentiate between imaging-based and sequencing-based technologies which give rise to very different _data modalities_ [@rao2021exploring].  
 
-![Data Modalities in Spatial Transcriptomics [@emons]](https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/53/17/10.1093_nar_gkaf870/1/gkaf870fig1.jpeg?Expires=1766403187&Signature=WxVqrLv3B2ktSO5UWsRogBTtrwQeC3Ol-gM090kNJc8hAakLbV1v~BmiBJ5ae-810EciaTYjbNSvPwAGSzaWQXbh9qSOf4jjkNwJsMp2JEI77MoADpxGWvO17H4PUrzfaRlDZK82fc~Ik2GchhlLaKJvQWAMvIKEAdSwrB74D~sbAKqTL1bngu3xL-Ta4x3254JJJbSdAeHbmXH1e8jpeTTFri63iYHI3yUkhJAYhltRKwlfhCkwO2F7Hj1EcwPrTKJK~oFe2igeODcCkpnpvRqZDgAI3ImcF52nGksXGzqXQTO72RPolepCA1cVdGCcQ8K-VUjTGnsB8Ide89-gJw__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA)
+![Data Modalities in Spatial Transcriptomics [@emons2025harnessing]](https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/53/17/10.1093_nar_gkaf870/1/gkaf870fig1.jpeg?Expires=1766403187&Signature=WxVqrLv3B2ktSO5UWsRogBTtrwQeC3Ol-gM090kNJc8hAakLbV1v~BmiBJ5ae-810EciaTYjbNSvPwAGSzaWQXbh9qSOf4jjkNwJsMp2JEI77MoADpxGWvO17H4PUrzfaRlDZK82fc~Ik2GchhlLaKJvQWAMvIKEAdSwrB74D~sbAKqTL1bngu3xL-Ta4x3254JJJbSdAeHbmXH1e8jpeTTFri63iYHI3yUkhJAYhltRKwlfhCkwO2F7Hj1EcwPrTKJK~oFe2igeODcCkpnpvRqZDgAI3ImcF52nGksXGzqXQTO72RPolepCA1cVdGCcQ8K-VUjTGnsB8Ide89-gJw__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA)
 
 Our dataset was acquired by 10x Visium. The data modality of this technology is best described by a _regular lattice_. This means that the observations are taken at regularly spaced intervals. This is very different to imaging-based approaches where observations are due to a stochastic data generating process that is due to some underlying biological mechanism. 
 
@@ -50,6 +52,14 @@ Our dataset was acquired by 10x Visium. The data modality of this technology is 
 We note that the counts in our `SpatialFeatureExperiment` object are still raw counts therefore we will log normalise them with `scuttle::logNormCounts()`
 
 ```{r}
+# identify mitochondrial genes
+gn <- rowData(sfe)$Symbol
+mt <- grepl("^MT-", gn, ignore.case = TRUE)
+table(mt)
+# remove them
+sfe <- sfe[!mt, ]
+
+#log-normalise the counts
 sfe <- scuttle::logNormCounts(sfe)
 sfe
 ```
@@ -85,12 +95,12 @@ $$
 \sum_i \sum_j f(x_i,x_j) w_{ij}
 $$
 
-A very famous measure of global spatial autocorrelation is called Moran's $I$. It assess correlation of a gene with itself given a defined weight matrix. 
+A very famous measure of global spatial autocorrelation is called Moran's $I$. It assess correlation of a gene with itself given a defined weight matrix [@moran1950notes]. 
 
 ::: callout-important
 ## Exercise
 
-- Model the variance of the log-transformed expression profiles per gene with `scran::modelGeneVar()` (using the arguments `subset.fit = 1:100` and `subset.row = 1:100` will make the fitting faster)
+- Model the variance of the log-transformed expression profiles per gene with `scran::modelGeneVar()` (using the argument `subset.row` will make the fitting faster)
 - Extract the top 5 highly variable genes in this dataset with `scran::getTopHVGs()`
 - Calculate the global Moran's $I$ coefficient with the function `Voyager::runUnivariate()` on these 5 highly variable genes. You can find information and examples on how to run this function by typing `?runUnivariate` in your console
 - Extract the top 3 genes with the highest Moran's $I$ value
@@ -102,14 +112,14 @@ A very famous measure of global spatial autocorrelation is called Moran's $I$. I
 ## Answer
 
 First, we model the variance on a subset of the genes for computational reasons
-Then, we extract the 5 most highly variable genes
+Then, we extract the 20 most highly variable genes
 
 ```{r}
-stats <- scran::modelGeneVar(sfe, subset.row = 1:100, subset.fit=1:100)
-hvg <- scran::getTopHVGs(stats, n = 10)
+stats <- scran::modelGeneVar(sfe, subset.row = 1:2000)
+hvg <- scran::getTopHVGs(stats, prop = 0.02)
 ```
 
-Next, we calculate global Moran's I for these 5 genes
+Next, we calculate global Moran's I for these 20 genes
 
 ```{r}
 sfe <- runUnivariate(sfe, 
@@ -133,7 +143,7 @@ plotSpatialFeature(sfe, topGenes, ncol=3)
 
 In the section above, we have computed a global measure of spatial association, meaning that we get one number per field-of-view. This is an average of the local contributions and neglects the potential underlying heterogeneity completely. 
 
-Therefore, we will investigate local indicators of spatial association [@anselinLocalIndicatorsSpatial1995]. 
+Therefore, we will investigate local indicators of spatial association [@anselin1995local]. 
 
 In the case of Moran's $I$ we will now not calculate one measure for the entire field-of-view but rather one metric per location/spot $i$: $I_i$.
 
@@ -171,7 +181,7 @@ plotLocalResult(sfe, "localmoran",
 
 ## Discretising regions with Moran's scatterplot
 
-The continuous local Moran's $I_i$ measurements can be difficult to interpret. A simplification is Moran's scatter plot [@anselin]. The idea is to compare the Moran's $I$ of the spot $i$ itself with its neighbours $j$. Like this we obtain four options: high $I_i$ next to neighbours that have high $I_j$, high $I_i$ next to neighbours that have low $I_j$ etc. This separates outliers (high-low and low-high) from values within more homogeneous regions (high-high and low-low).
+The continuous local Moran's $I_i$ measurements can be difficult to interpret. A simplification is Moran's scatter plot [@anselin2019moran]. The idea is to compare the Moran's $I$ of the spot $i$ itself with its neighbours $j$. Like this we obtain four options: high $I_i$ next to neighbours that have high $I_j$, high $I_i$ next to neighbours that have low $I_j$ etc. This separates outliers (high-low and low-high) from values within more homogeneous regions (high-high and low-low).
 
 ::: callout-important
 ## Bonus Exercise
