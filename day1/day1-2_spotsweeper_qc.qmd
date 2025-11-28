@@ -49,7 +49,8 @@ We will start by loading our `SpatialExperiment` object, which has been saved as
 ```{r}
 # Load the SpatialExperiment object from the .qs2 file.
 # This object contains the processed spatial transcriptomics data.
-spe <- qs_read("results/01_spe.qs2", nthreads = 1)
+#spe <- qs_read("results/01_spe.qs2", nthreads = 1)
+spe <- loadHDF5SummarizedExperiment(dir="results/", prefix="01_spe")
 
 # Identify mitochondrial transcripts. These are often used as a QC metric.
 # Genes starting with "MT-" are from the mitochondrial genome.
