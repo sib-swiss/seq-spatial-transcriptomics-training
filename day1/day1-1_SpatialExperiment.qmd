@@ -48,6 +48,7 @@ library(patchwork)
 library(dplyr)
 library(arrow)
 library(scuttle)
+library(HDF5Array)
 ```
 
 ## Data for the course
@@ -284,7 +285,7 @@ Both objects have the same dimensions. Our spe object is a subset of tissue slic
 dir.create("results/day1", showWarnings = FALSE)
 #gc()
 #qs_save(spe, file = "results/day1/01_spe.qs2")
-saveHDF5SummarizedExperiment(spe, dir="results/", prefix="01_spe", replace=FALSE,
+saveHDF5SummarizedExperiment(spe, dir="results/day1", prefix="01.1_spe", replace=FALSE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
 ```

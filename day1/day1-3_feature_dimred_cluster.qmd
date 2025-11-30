@@ -34,6 +34,8 @@ library(patchwork) # For combining plots
 library(bluster) # For clustering
 library(escheR) # For spatial plotting
 library(pheatmap) # For clustering heatmap
+library(HDF5Array) # For loading object
+library(ggspavis)
 ```
 
 ## Load and Prepare Data
@@ -42,18 +44,8 @@ We will start by loading the `SpatialExperiment` object and performing the neces
 
 ```{r}
 # Load the SpatialExperiment object from the .qs2 file.
-spe <- qs2::qs_read("results/01_spe.qs2", nthreads = 1)
+spe <- loadHDF5SummarizedExperiment(dir="results/day1/", prefix="01.2_spe")
 
-# Change row names from gene IDs to gene symbols.
-# rownames(spe) <- rowData(spe)$Symbol
-# Julien: this was done already, see my comment in the exercise 1
-
-# Identify mitochondrial transcripts.
-is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
-
-# Calculate per-spot QC metrics.
-spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
-## Julien: better to save object from day1-2 and reload it?
 
 # Subsetting for Demonstration (to reduce computation time)
 # set.seed(123) # for reproducibility
@@ -77,30 +69,32 @@ spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
 ## Julien: is it a good idea to subset spots randomly? Is it really necessary here given that spe is already a subsetted object?
 
 # Remove spots with NA/NaN/Inf in mitochondrial QC metrics or spatial coordinates
-na_mito_percent <- is.na(colData(spe)$subsets_Mito_percent)
-na_mito_sum <- is.na(colData(spe)$subsets_Mito_sum)
-spots_to_remove_mito <- na_mito_percent | na_mito_sum
-if (any(spots_to_remove_mito)) {
-  message(paste0("Removing ", sum(spots_to_remove_mito), " spots with NA mitochondrial QC metrics."))
-  spe <- spe[, !spots_to_remove_mito]
-}
+#na_mito_percent <- is.na(colData(spe)$subsets_Mito_percent)
+#na_mito_sum <- is.na(colData(spe)$subsets_Mito_sum)
+#spots_to_remove_mito <- na_mito_percent | na_mito_sum
+#if (any(spots_to_remove_mito)) {
+#  message(paste0("Removing ", sum(spots_to_remove_mito), " spots with NA #mitochondrial QC metrics."))
+#  spe <- spe[, !spots_to_remove_mito]
+#}
 ## Julien: nothing removed here on my side...
 
-spatial_coords <- spatialCoords(spe)
-problematic_spatial_coords <- apply(spatial_coords, 1, function(row) any(is.na(row) | is.nan(row) | is.infinite(row)))
-if (any(problematic_spatial_coords)) {
-  message(paste0("Removing ", sum(problematic_spatial_coords), " spots with NA/NaN/Inf in spatial coordinates."))
-  spe <- spe[, !problematic_spatial_coords]
-}
+#spatial_coords <- spatialCoords(spe)
+#problematic_spatial_coords <- apply(spatial_coords, 1, function(row) #any(is.na(row) | is.nan(row) | is.infinite(row)))
+#if (any(problematic_spatial_coords)) {
+#  message(paste0("Removing ", sum(problematic_spatial_coords), " spots with #NA/NaN/Inf in spatial coordinates."))
+#  spe <- spe[, !problematic_spatial_coords]
+#}
 ## Julien: nothing removed here on my side...
 
 # Remove spots with zero total counts, as these can cause issues with size factor calculation during normalization.
-zero_sum_spots <- colSums(counts(spe)) == 0
-if (any(zero_sum_spots)) {
-  message(paste0("Removing ", sum(zero_sum_spots), " spots with zero total counts."))
-  spe <- spe[, !zero_sum_spots]
-}
+#zero_sum_spots <- colSums(counts(spe)) == 0
+#if (any(zero_sum_spots)) {
+#  message(paste0("Removing ", sum(zero_sum_spots), " spots with zero total #counts."))
+#  spe <- spe[, !zero_sum_spots]
+#}
 ## Julien: nothing removed here on my side...
+## Juna: not necessary if QC has been aplied already
+
 
 # Log-normalize counts for downstream analysis
 spe <- logNormCounts(spe)
@@ -138,27 +132,59 @@ plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
 
 Feature selection is a crucial step to reduce noise and focus on genes that show significant biological variation across spots. We typically identify Highly Variable Genes (HVGs) as these are more likely to distinguish different cell types or spatial domains.
 
+
+Before defining the top HVG, we can remove mitochondrial genes, since those genes tend to be highly variable and often not of biological interest.
+
+```{r}
+# identify mitochondrial genes
+nm <- rowData(spe)$Symbol
+mt <- grepl("^MT-", nm, ignore.case = TRUE)
+table(mt)
+# remove them
+spe <- spe[!mt, ]
+```
+
+
 ```{r}
 # Model gene variance to identify highly variable genes.
 # This function fits a trend to the technical noise and calculates biological variance.
 dec <- modelGeneVarByPoisson(spe)
 ## Julien: I personally prefer to account for the mean-variance trend corresponding to Poisson noise
 
+# Visualize the mean-variance relationship and the fitted trend.
+# This plot helps to understand how gene variability changes with expression level.
+plot(dec$mean, dec$total,
+  xlab = "Mean expression (log-counts)",
+  ylab = "Total variance (log-counts)",
+  main = "Mean-Variance Trend"
+)
+curve(metadata(dec)$trend(x), add = TRUE, col = "dodgerblue", lwd = 2)
+
+```
+
+
+Next, we proceed to define the top 5 HVG, and visualise their normalised counts on the tissue slide
+
+```{r}
 ## Top 10 HVGs
-top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:10]
+top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:5]
 
 ps <- lapply(top_HVG, \(.) {
     plotCoords(spe, 
         annotate = ., 
         feature_names = "Symbol", 
         assay_name = "logcounts") })
+
 # figure arrangement
 patchwork::wrap_plots(ps, nrow = 2) & 
   theme(legend.key.width = unit(0.4, "lines"), 
         legend.key.height = unit(0.8, "lines")) & 
   scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+```
 
+For downstream analysis, define a larger group of HVG and add the information of whether a genes is in the HVG list or not in rowData
 
+```{r}
 # Select the top N highly variable genes.
 # The number of HVGs can influence downstream dimensionality reduction and clustering.
 hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
@@ -169,14 +195,27 @@ rowData(spe)$hvg <- rowData(spe)$Symbol %in% hvg
 # Display the number of HVGs identified
 sum(rowData(spe)$hvg)
 
-# Visualize the mean-variance relationship and the fitted trend.
-# This plot helps to understand how gene variability changes with expression level.
-plot(dec$mean, dec$total,
-  xlab = "Mean expression (log-counts)",
-  ylab = "Total variance (log-counts)",
-  main = "Mean-Variance Trend"
-)
-curve(metadata(dec)$trend(x), add = TRUE, col = "dodgerblue", lwd = 2)
+# Have a look a the new column added
+rowData(spe)
+```
+
+
+
+# save data for later
+```{r}
+spe_HVG <- spe
+saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe_tmp", replace=FALSE,
+                                chunkdim=NULL, level=NULL, as.sparse=NA,
+                                verbose=NA)
+
+#To avoid large computational time, we will subset the dataset to the HVG
+
+
+tmp <- spe[hvg, ]
+saveHDF5SummarizedExperiment(tmp, dir="results/day1", prefix="01.3_spe_tmp_tmp", replace=FALSE,
+                                chunkdim=NULL, level=NULL, as.sparse=NA,
+                                verbose=NA)
+
 ```
 
 ## Question 1
@@ -213,6 +252,8 @@ spe_subset <- spe[rowData(spe)$Symbol %in% getTopHVGs(dec, n = 100), ]
 ## TO DO: subset spots too?
 
 # set random seed for number generation in order to make results reproducible
+set.seed(112358)
+
 spe_subset <- nnSVG(spe_subset,
                     n_neighbors = 5, ## default 10 better, but slower
                     BPPARAM = BiocParallel::MulticoreParam(4),
@@ -311,6 +352,8 @@ Identifying SVGs is particularly important in spatial transcriptomics because:
 
 Dimensionality reduction techniques project high-dimensional gene expression data into a lower-dimensional space, making it easier to visualize and analyze. This step is essential for identifying global patterns and preparing data for clustering.
 
+## Non-spatially awared
+
 ### Principal Component Analysis (PCA)
 
 PCA is a linear dimensionality reduction technique that transforms the data into a new coordinate system such that the greatest variance by some projection of the data comes to lie on the first coordinate (called the first principal component), the second greatest variance on the second coordinate, and so on.
@@ -318,7 +361,7 @@ PCA is a linear dimensionality reduction technique that transforms the data into
 ```{r}
 # Run PCA on the highly variable genes.
 # We use the 'ncomponents' argument to specify the number of principal components to retain.
-spe <- runPCA(spe, ncomponents = 50, subset_row = rowData(spe)$hvg)
+spe <- runPCA(spe, ncomponents = 20, subset_row = rowData(spe)$hvg)
 
 # Visualize the explained variance by each principal component.
 # This helps in determining how many PCs capture most of the variance.
@@ -327,10 +370,13 @@ plot(attr(reducedDim(spe, "PCA"), "percentVar"),
   main = "PCA Scree Plot"
 )
 
+
+spe <- runPCA(spe, ncomponents = 10, subset_row = rowData(spe)$hvg)
+
 # Visualize the PCA embedding.
 # This helps to see the main sources of variation in the data.
-plotPCA(spe, colour_by = "sum") +
-  ggtitle("PCA colored by Library Size")
+#plotPCA(spe, colour_by = "sum") +
+#  ggtitle("PCA colored by Library Size")
 
 
 ## Visualize PCs on the tissue slice coordinates
@@ -360,41 +406,24 @@ An appropriate number of principal components (PCs) can often be determined by l
 -   **Too many PCs:** Can retain too much noise, potentially obscuring true biological patterns and increasing computational complexity for downstream steps like clustering.
 :::
 
-### t-Distributed Stochastic Neighbor Embedding (t-SNE)
 
-t-SNE is a non-linear dimensionality reduction technique widely used for visualizing high-dimensional datasets. It tries placing similar data points close together in a low-dimensional map, while dissimilar points are placed far apart. This has many limitations, and distances ont he tSNE should be interpreted with caution, but it can be helpful at illsutrating patterns in the data.
-> Julien: is this making sense here? Given how controversial tSNE and UMAPs are, maybe we could simply avoid them here. I find much more helpful to plot the PCs on the tissue, see above
-> It seems that the rest of the practicals are not showing anything specific to spatial data, wouldn't it make sense to look for spatial domains and show how thye differ from clusters ignoring the spatial info?
+## Spatially aware
+
+### BANKSY:
+This method computes PCs taking sptial information into account. 
+
 
 ```{r}
-# Run t-SNE on the PCA-reduced data.
-# Similar to UMAP, using PCA output as input to t-SNE is a common practice.
-spe <- runTSNE(spe, dimred = "PCA")
-
-# Visualize the t-SNE embedding.
-plotTSNE(spe, colour_by = "sum") +
-  ggtitle("t-SNE colored by Library Size")
+spe <- computeBanksy(spe, assay_name="logcounts", k_geom=20)
+spe <- runBanksyPCA(spe, npcs=10, lambda=0.8)
 ```
 
-## Question 2.2
+We will rename the reducedDims to not confuse them
 
-**How does t-SNE differ from UMAP in its approach to dimensionality reduction, and what are the implications for interpreting their respective visualizations?**
+reducedDimNames(spe) <- c("PCA_artifacts","PCA_tx", "PCA_sp")
 
-:::{.callout-tip collapse="true"}
-### Answer
+> It seems that the rest of the practicals are not showing anything specific to spatial data, wouldn't it make sense to look for spatial domains and show how thye differ from clusters ignoring the spatial info?
 
-t-SNE and UMAP are both non-linear dimensionality reduction techniques that aim to preserve local and global data structures. However, they differ in their underlying algorithms and how they balance these aspects:
-
--   **t-SNE:** Focuses heavily on preserving local neighborhoods. It tends to create tightly packed clusters, but the distances between clusters in a t-SNE plot are often not meaningful. It can be computationally more intensive for very large datasets.
--   **UMAP:** Aims to preserve both local and global structures more effectively than t-SNE. Distances between clusters in a UMAP plot are generally considered more meaningful, and it is often faster and scales better to larger datasets.
-
-**Implications for interpretation:**
-
--   **t-SNE:** Excellent for revealing distinct, compact clusters. However, the relative sizes of clusters and distances between them should be interpreted with caution.
--   **UMAP:** Often provides a more faithful representation of the overall data topology, making inter-cluster distances and relative densities more interpretable. It can sometimes produce more diffuse clusters than t-SNE.
-
-Choosing between them often depends on the specific goals of the visualization and the characteristics of the data.
-:::
 
 ### Uniform Manifold Approximation and Projection (UMAP)
 
