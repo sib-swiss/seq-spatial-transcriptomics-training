@@ -29,3 +29,6 @@ COPY renv.lock ./
 
 RUN Rscript -e 'install.packages("renv")'
 RUN Rscript -e 'renv::restore()'
+RUN Rscript -e "install.packages('arrow')"
+RUN Rscript -e 'BiocManager::install(c("Banksy","igraph","BayesSpace","nnSVG","RColorBrewer"))'  
+

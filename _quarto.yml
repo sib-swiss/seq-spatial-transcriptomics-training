@@ -25,6 +25,7 @@ website:
           - href: "day1/day1-1_SpatialExperiment.qmd"
           - href: "day1/day1-2_spotsweeper_qc.qmd"
           - href: "day1/day1-3_feature_dimred_cluster.qmd"
+          - href: "day1/day1-4_clustering_find_markers.qmd"
       - text: "day 2"
         menu: 
           - href: "day2/day2-1_spatial_stats.qmd"

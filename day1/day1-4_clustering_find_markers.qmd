@@ -1,0 +1,197 @@
+---
+title: "Exercise 4"
+format: html
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+```{r}
+library(Banksy)
+library(igraph)
+library(ggspavis)
+library(BayesSpace)
+library(nnSVG)
+library(HDF5Array) # For loading object
+library(patchwork)
+library(SpatialExperiment)
+library(scran) 
+library(scater)
+```
+
+# Dimensionality Reduction
+
+To avoid large computational time, we will load the new subset containing 2000 HVG
+
+```{r}
+spe.hvg <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe_tmp_tmp")
+spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe_tmp_tmp")
+```
+
+
+### Non-spatially aware:
+
+#### PCA:
+
+```{r}
+spe <- runPCA(spe, ncomponents = 20, subset_row = rowData(spe)$hvg)
+
+# Visualize the explained variance by each principal component.
+# This helps in determining how many PCs capture most of the variance.
+plot(attr(reducedDim(spe, "PCA"), "percentVar"),
+  xlab = "PC", ylab = "Proportion of variance explained",
+  main = "PCA Scree Plot"
+)
+
+
+spe <- runPCA(spe, ncomponents = 10, subset_row = rowData(spe)$hvg)
+
+## Visualize PCs on the tissue slice coordinates
+pcs <- reducedDim(spe, "PCA")
+#pcs <- pcs[, seq_len(10)]
+ps <- lapply(colnames(pcs), \(.) {
+    spe[[.]] <- pcs[, .]
+    plotCoords(spe, annotate = .)
+}) 
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+
+```
+
+### Spatially aware
+
+#### Banksy
+
+```{r}
+# Clustering with Banksy
+set.seed(112358)
+
+# 'Banksy' parameter settings
+k <- 20   # consider first order neighbors
+l <- 0.8 # use little spatial information
+a <- "logcounts"
+xy <- c("array_row", "array_col")
+# restrict to selected HVG features
+dec <- modelGeneVarByPoisson(spe)
+hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
+tmp <- spe[hvg, ]
+# compute spatially aware 'Banksy' PCs
+tmp <- computeBanksy(tmp, assay_name=a, coord_names=xy, k_geom=k)
+tmp <- runBanksyPCA(tmp, lambda=l, npcs=10)
+reducedDim(spe, "PCA_banksy") <- reducedDim(tmp)
+
+## Visualize PCs on the tissue slice coordinates
+pcs <- reducedDim(spe, "PCA_banksy")
+#pcs <- pcs[, seq_len(10)]
+ps <- lapply(colnames(pcs), \(.) {
+    spe[[.]] <- pcs[, .]
+    plotCoords(spe, annotate = .)
+}) 
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+```
+
+### Run UMAP
+
+run UMAP (for visualization purposes only) based on both, spatially aware and not spatially aware dimensionality reduction
+
+```{r}
+# UMAP
+spe <- runUMAP(spe, dimred="PCA", name="UMAP_tx")
+spe <- runUMAP(spe, dimred="PCA_banksy", name="UMAP_banksy")
+```
+
+```{r}
+# Visualise
+plotReducedDim(spe, dimred = "UMAP_tx", colour_by = "sum") 
+plotReducedDim(spe, dimred = "UMAP_banksy", colour_by = "sum")
+```
+
+
+
+# Clustering
+
+### Non-spatial 
+
+```{r}
+# build cellular shared nearest-neighbor (SNN) graph
+g <- buildSNNGraph(spe, use.dimred="PCA", type="jaccard", k=20)
+# cluster using Leiden community detection algorithm
+k <- cluster_leiden(g, objective_function="modularity", resolution=0.6)
+table(spe$Leiden <- factor(k$membership))
+```
+
+
+### Spatial 
+
+#### Probabilistic: BayesSpace
+
+```{r}
+# prepare data for 'BayesSpace'
+# skipping PCA (already computed)
+spe <- spatialPreprocess(spe, skip.PCA=TRUE)
+# perform spatial clustering with 'BayesSpace'
+# using 'd=10' PCs and targeting 'q=8' clusters
+spe <- spatialCluster(spe, q=8, d=10, nrep=1e3, burn.in=100) 
+table(spe$BayesSpace <- factor(spe$spatial.cluster))
+
+```
+
+
+### Banksy
+
+We have computed a principal components using Banksy mathod already in the previous step. We will now used them (use Banksy dimentionality reduction space) to perdoem SNN graph-based Leiden clustering based on them, in order to obtain spatially-aware clusters.
+When building the SNN graph, we will use the same parameters we have used before for the non-spatially aware graph, but using banksy PCs.
+
+```{r}
+# perform SNN graph-based clustering on 'Banksy' PCs using
+g <- buildSNNGraph(spe, use.dimred="PCA_banksy", type="jaccard", k=20)
+# cluster using Leiden community detection algorithm
+k <- cluster_leiden(g, objective_function="modularity", resolution=0.6)
+table(spe$Banksy <- factor(k$membership))
+
+```
+
+```{r}
+plotVisium(spe, zoom=T,  annotate = "Banksy")
+```
+
+
+# Visualisation of the different clustering methods:
+
+```{r}
+ks <- c("BayesSpace", "Leiden", "Banksy")#, "CellCharter")
+plots <- c(lapply(ks, \(.) {
+    plt <- plotVisium(spe, annotate=., zoom = T)
+    plt$layers[[1]]$aes_params$stroke <- 0
+    plt$layers[[1]]$aes_params$size <- 0.2
+    plt
+}) ,  plotVisium(spe, zoom = T,  spots=FALSE ))
+plots |>  wrap_plots(nrow=2) &
+    #scale_color_manual(values=unname(pals::trubetskoy())) &
+    theme(legend.key.size=unit(0, "lines"), legend.justification="left")
+```
+
+```{r}
+# plot selected clusters in order of frequency,
+# highlighting cells assigned to cluster 'k'
+lapply(tail(names(sort(table(spe$Banksy))), 8), \(k) {
+    spe$foo <- spe$Banksy == k
+    spe <- spe[, order(spe$foo)]
+    plt <- plotCoords(spe, annotate="foo")
+    plt$layers[[1]]$aes_params$stroke <- 0
+    plt$layers[[1]]$aes_params$size <- 0.2
+    plt + ggtitle(k)
+}) |>
+    wrap_plots(nrow=3) &
+    scale_color_manual(values=c("lavender", "purple")) &
+    theme(plot.title=element_text(hjust=0.5), legend.position="none")
+```
+
+
