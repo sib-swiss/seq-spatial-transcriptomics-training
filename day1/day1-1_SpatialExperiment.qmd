@@ -28,7 +28,6 @@ By the end of this exercise, you will be able to:
 library(downlit)
 library(xml2)
 library(GenomeInfoDb)
-
 ```
 
 ```{r}
@@ -37,8 +36,6 @@ library(GenomeInfoDb)
 #| output: false
 
 # Load necessary R libraries for spatial transcriptomics data analysis.
-# library(DropletUtils)
-# library(BumpyMatrix)
 library(SpatialExperiment)
 library(VisiumIO)
 library(arrow)
@@ -54,7 +51,7 @@ library(HDF5Array)
 ## Data for the course
 
 We will start with downloading the data. We will work on a VisiumHD dataset from a human colon cancer study [published recently](https://www.nature.com/articles/s41588-025-02193-3). A Visium HD slide from one patient (P2CRC) used in the article is available [from the 10X website](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-of-human-crc). We will focus on the "binned output" provided available as an output of the Space Ranger pipeline. 
-The dataset contains normal adjacent tissue (NAT) and colorectal carcinoma (CRC) from 5 patients.  
+The dataset contains normal adjacent tissue (NAT) and 7colorectal carcinoma (CRC) from 5 patients.  
 We will start downloading and processing one of the Human colon cancer samples (P1).   
 
 > We need more explanation here!
