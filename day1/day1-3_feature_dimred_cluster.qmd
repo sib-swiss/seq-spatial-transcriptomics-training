@@ -36,6 +36,8 @@ library(escheR) # For spatial plotting
 library(pheatmap) # For clustering heatmap
 library(HDF5Array) # For loading object
 library(ggspavis)
+library(nnSVG)
+library(Banksy)
 ```
 
 ## Load and Prepare Data
@@ -45,56 +47,6 @@ We will start by loading the `SpatialExperiment` object and performing the neces
 ```{r}
 # Load the SpatialExperiment object from the .qs2 file.
 spe <- loadHDF5SummarizedExperiment(dir="results/day1/", prefix="01.2_spe")
-
-
-# Subsetting for Demonstration (to reduce computation time)
-# set.seed(123) # for reproducibility
-# num_genes_to_keep <- 10000
-# if (nrow(spe) > num_genes_to_keep) {
-#   gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep)
-#   spe_subset <- spe[gene_indices, ]
-# } else {
-#   spe_subset <- spe
-# }
-# 
-# num_spots_to_keep <- 10000
-# if (ncol(spe_subset) > num_spots_to_keep) {
-#   spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep)
-#   spe_subset <- spe_subset[, spot_indices]
-# } else {
-#   spe_subset <- spe_subset
-# }
-# 
-# spe <- spe_subset
-## Julien: is it a good idea to subset spots randomly? Is it really necessary here given that spe is already a subsetted object?
-
-# Remove spots with NA/NaN/Inf in mitochondrial QC metrics or spatial coordinates
-#na_mito_percent <- is.na(colData(spe)$subsets_Mito_percent)
-#na_mito_sum <- is.na(colData(spe)$subsets_Mito_sum)
-#spots_to_remove_mito <- na_mito_percent | na_mito_sum
-#if (any(spots_to_remove_mito)) {
-#  message(paste0("Removing ", sum(spots_to_remove_mito), " spots with NA #mitochondrial QC metrics."))
-#  spe <- spe[, !spots_to_remove_mito]
-#}
-## Julien: nothing removed here on my side...
-
-#spatial_coords <- spatialCoords(spe)
-#problematic_spatial_coords <- apply(spatial_coords, 1, function(row) #any(is.na(row) | is.nan(row) | is.infinite(row)))
-#if (any(problematic_spatial_coords)) {
-#  message(paste0("Removing ", sum(problematic_spatial_coords), " spots with #NA/NaN/Inf in spatial coordinates."))
-#  spe <- spe[, !problematic_spatial_coords]
-#}
-## Julien: nothing removed here on my side...
-
-# Remove spots with zero total counts, as these can cause issues with size factor calculation during normalization.
-#zero_sum_spots <- colSums(counts(spe)) == 0
-#if (any(zero_sum_spots)) {
-#  message(paste0("Removing ", sum(zero_sum_spots), " spots with zero total #counts."))
-#  spe <- spe[, !zero_sum_spots]
-#}
-## Julien: nothing removed here on my side...
-## Juna: not necessary if QC has been aplied already
-
 
 # Log-normalize counts for downstream analysis
 spe <- logNormCounts(spe)
@@ -204,7 +156,7 @@ rowData(spe)
 # save data for later
 ```{r}
 spe_HVG <- spe
-saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe_tmp", replace=FALSE,
+saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe_tmp", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
 
@@ -212,11 +164,14 @@ saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe_tmp",
 
 
 tmp <- spe[hvg, ]
-saveHDF5SummarizedExperiment(tmp, dir="results/day1", prefix="01.3_spe_tmp_tmp", replace=FALSE,
+saveHDF5SummarizedExperiment(tmp, dir="results/day1", prefix="01.3_spe_tmp_tmp", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
 
 ```
+
+
+
 
 ## Question 1
 
@@ -241,95 +196,7 @@ Identifying SVGs can reveal genes that define distinct tissue regions, cell type
 
 While several advanced methods and packages exist for SVG identification (e.g., `nnSVG`, `SPARK-X`, `Giotto`), implementing a full SVG analysis is beyond the scope of this introductory exercise. However, it's important to be aware of this concept as a crucial step in spatial data analysis.
 
-> Julien: wouldn't it be actually very interesting? And then compare SVGs and HVGs. The issue is that it can be long to calculate... What if we reduce to a subset of HVGs and to run nnSVG / Moran's I?
 
-```{r}
-#BiocManager::install("nnSVG")
-#library(nnSVG)
-
-## Subset to top 100 HVGs (faster)
-spe_subset <- spe[rowData(spe)$Symbol %in% getTopHVGs(dec, n = 100), ]
-## TO DO: subset spots too?
-
-# set random seed for number generation in order to make results reproducible
-set.seed(112358)
-
-spe_subset <- nnSVG(spe_subset,
-                    n_neighbors = 5, ## default 10 better, but slower
-                    BPPARAM = BiocParallel::MulticoreParam(4),
-                    verbose=TRUE) 
-## Problem: This is quite long!
-## TO DO: speed up by reducing even more number of spots? Or give students a pre-computed list of SVGs to download?
-
-## Results
-head(rowData(spe_subset), 3)
-table(rowData(spe_subset)$padj <= 0.05) ## all of them!
-
-hist(rowData(spe_subset)$pval,
-  breaks = 50, xlab = "P-value"
-)
-## Maybe more interesting to look at top-ranking ones?
-head(rowData(spe_subset)[order(rowData(spe_subset)$rank), ])
-
-top_nnSVG <- rowData(spe_subset)$Symbol[rowData(spe_subset)$rank <= 10]
-
-gs <- rowData(spe)$Symbol[match(gs, rownames(spe))]
-# gene-wise spatial plots
-ps <- lapply(top_nnSVG, \(.) {
-    plotCoords(spe, 
-        annotate = ., 
-        feature_names = "Symbol", 
-        assay_name = "logcounts") })
-# figure arrangement
-patchwork::wrap_plots(ps, nrow = 2) & 
-  theme(legend.key.width = unit(0.4, "lines"), 
-        legend.key.height = unit(0.8, "lines")) & 
-  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
-
-################################################################################ 
-# Moran's I
-# renv::install("Voyager")
-library(Voyager)
-
-sfe <- toSpatialFeatureExperiment(spe_subset)
-knn8 <- findSpatialNeighbors(sfe, type="centroids", method="knearneigh", k=8)
-colGraph(sfe, "knn8") <- knn8
-# visualize across tissue section
-plotColGraph(sfe, 
-    colGraphName="knn8", 
-    colGeometryName="centroids", 
-    segment_size=0.1,
-    geometry_size=0.1) + 
-    theme_void()
-
-bp <- BiocParallel::MulticoreParam(4)
-sfe <- runUnivariate(sfe, 
-    type="moran", 
-    colGraphName="knn8", 
-    BPPARAM=bp)
-## This takes a few minutes only
-
-# We can visualize the 10 genes with highest Moran’s
-rowData(spe_subset)$moran_sample01 <- rowData(sfe)$moran_sample01
-top_moran <- rowData(spe_subset)$Symbol[order(rowData(spe_subset)$moran_sample01, decreasing = TRUE)][1:10]
-all(top_nnSVG %in% top_moran)
-
-ps <- lapply(top_moran, \(.) {
-    plotCoords(spe, 
-        annotate = ., 
-        feature_names = "Symbol", 
-        assay_name = "logcounts") })
-unit <- ggplot2::unit ## masked when loading Voyager
-patchwork::wrap_plots(ps, nrow = 2) & 
-  theme(legend.key.width = unit(0.4, "lines"), 
-        legend.key.height = unit(0.8, "lines")) & 
-  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
-
-## Both measures are showing very similar thing...
-df <- rowData(spe_subset) |> as.data.frame()
-ggplot(data = df, aes(x=moran_sample01, y=LR_stat)) +
-  geom_point(alpha = 0.3, pch=16)
-```
 
 ## Question 1.2
 
@@ -416,11 +283,10 @@ This method computes PCs taking sptial information into account.
 ```{r}
 spe <- computeBanksy(spe, assay_name="logcounts", k_geom=20)
 spe <- runBanksyPCA(spe, npcs=10, lambda=0.8)
-```
 
-We will rename the reducedDims to not confuse them
-
+#We will rename the reducedDims to not confuse them
 reducedDimNames(spe) <- c("PCA_artifacts","PCA_tx", "PCA_sp")
+```
 
 > It seems that the rest of the practicals are not showing anything specific to spatial data, wouldn't it make sense to look for spatial domains and show how thye differ from clusters ignoring the spatial info?
 

@@ -1,9 +1,24 @@
+---
+title: "Exercise 4"
+format: html
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
 ```{r}
 library(Banksy)
 library(igraph)
 library(ggspavis)
 library(BayesSpace)
 library(nnSVG)
+library(HDF5Array) # For loading object
+library(patchwork)
+library(SpatialExperiment)
+library(scran) 
+library(scater)
 ```
 
 # Dimensionality Reduction
@@ -61,6 +76,8 @@ l <- 0.8 # use little spatial information
 a <- "logcounts"
 xy <- c("array_row", "array_col")
 # restrict to selected HVG features
+dec <- modelGeneVarByPoisson(spe)
+hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
 tmp <- spe[hvg, ]
 # compute spatially aware 'Banksy' PCs
 tmp <- computeBanksy(tmp, assay_name=a, coord_names=xy, k_geom=k)
@@ -177,65 +194,4 @@ lapply(tail(names(sort(table(spe$Banksy))), 8), \(k) {
     theme(plot.title=element_text(hjust=0.5), legend.position="none")
 ```
 
-
-###
-Bonus exercise
-####
-
-Run nnSVG and use SVG genes to run PCA and clustering. 
-
-```{r}
-# set random seed for number generation
-# in order to make results reproducible
-set.seed(123)
-# sample 100 spots to decrease runtime in this demo
-# (note: skip this step in full analysis)
-n <- 100
-sub <- spe[, sample(ncol(spe), 100)]
-# filter lowly expressed genes using stringent
-# criteria to decrease runtime in this demo
-# (note: use default criteria in full analysis)
-sub <- filter_genes(sub,     # filter for genes with...
-    filter_genes_ncounts=10, # at least 10 counts in
-    filter_genes_pcspots=3)  # at least 3% of spots
-# re-normalize counts post-filtering
-sub <- logNormCounts(sub)
-
-# run nnSVG
-set.seed(123)
-sub <- nnSVG(sub)
-
-# extract gene-level results
-res_nnSVG <- rowData(sub)
-# show results
-head(res_nnSVG, 3)
-```
-
-
-```{r}
-### find markers
-# differential gene expression analysis
-mgs <- findMarkers(spe, groups=spe$Banksy, direction="up")
-# select for a few markers per cluster
-top <- lapply(mgs, \(df) rownames(df)[df$Top <= 2])
-top <- unique(unlist(top))
-# average expression by clusters
-pbs <- aggregateAcrossCells(spe, 
-                            ids=spe$Banksy, subset.row=top, 
-                            use.assay.type="logcounts", statistics="mean")
-# visualise
-# visualize averages z-scaled across clusters
-pheatmap(
-  mat=t(assay(pbs)), scale="column", breaks=seq(-2, 2, length=101), 
-  cellwidth=10, cellheight=10, treeheight_row=5, treeheight_col=5)
-
-# visualise some of the markers 
-gs <- c("MMP11", "TXNIP", "VIM")
-ps <- lapply(gs, \(.) plotCoords(spe, annotate=., point_shape=15, 
-                                 point_size=0.8, assay_name="logcounts"))
-wrap_plots(ps, nrow=1) & theme(
-  legend.key.width=unit(0.5, "lines"),
-  legend.key.height=unit(1, "lines")) &
-  scale_color_gradientn(colors=rev(hcl.colors(9, "Rocket")))
-```
 

@@ -282,10 +282,10 @@ Both objects have the same dimensions. Our spe object is a subset of tissue slic
 # Save the object
 
 ```{r}
-dir.create("results/day1", showWarnings = FALSE)
+dir.create("results/day1",  showWarnings = FALSE, recursive=TRUE)
 #gc()
 #qs_save(spe, file = "results/day1/01_spe.qs2")
-saveHDF5SummarizedExperiment(spe, dir="results/day1", prefix="01.1_spe", replace=FALSE,
+saveHDF5SummarizedExperiment(spe, dir="results/day1", prefix="01.1_spe", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
 ```
