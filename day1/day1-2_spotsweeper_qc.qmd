@@ -7,13 +7,13 @@ editor_options:
 ---
 
 
-## Quality Control at spot-level
+## Quality control at spot-level
 
 In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. This step focuses at removing low-quality spots or technical artifacts from the dataset to avoid biases into downstream analysis.
 
 
 
-## Learning Objectives
+## Learning objectives
 
 By the end of this exercise, you will be able to:
 
@@ -30,11 +30,10 @@ By the end of this exercise, you will be able to:
 #| output: false
 
 library(SpatialExperiment)
-library(qs2)
 library(SpotSweeper)
 library(scuttle)
 library(ggplot2)
-library(escheR) # For spatial plotting
+library(escheR) 
 library(HDF5Array)
 library(ggspavis)
 library(patchwork)
@@ -42,63 +41,58 @@ library(patchwork)
 
 ## Calculate QC metrics
 
-We will start calculating QC metrics that are also used in scRNA-seq data. 
+We will start calculating QC metrics that are also commonly used in scRNA-seq data (total counts, number of detected genes, mitochondrial percentage). These metrics will be used to identify low-quality spots.  
 
-We will start by loading our `SpatialExperiment` object, which has been saved as a `.qs2` file, and prepare it for quality control analysis.
+We will start by loading our `SpatialExperiment` object, which has been saved in the previous exercise, and prepare it for quality control analysis.  
 
-> Juna: Maybe ask them what interesting functions can do scuttle package
 
 ```{r}
-# Load the SpatialExperiment object from the .qs2 file.
-# This object contains the processed spatial transcriptomics data.
-#spe <- qs_read("results/01_spe.qs2", nthreads = 1)
+# Load the SpatialExperiment object
 spe <- loadHDF5SummarizedExperiment(dir="results/day1/", prefix="01.1_spe")
 
-# Identify mitochondrial transcripts. These are often used as a QC metric.
-# Genes starting with "MT-" are from the mitochondrial genome.
+# Identify mitochondrial genes (genes starting with "MT-")
 is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
-
-# Calculate per-spot QC metrics using scuttle's addPerCellQCMetrics function.
-# This adds metrics like sum (total counts), detected (number of detected genes),
-# and mitochondrial gene percentage to the colData of the SpatialExperiment object.
-spe <- scuttle::addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
-
 ```
 
+Now, we will calculate per-spot QC metrics using the `scuttle` package. The function `addPerCellQCMetrics` adds metrics mitochondrial gene percentage to the `colData` of the `SpatialExperiment` object.
 
-Next, have a look at the newly added metadata columns 
+Run the following code to compute these metrics and inspect the results. 
 
 ```{r}
-
-# Display the column names of the colData to see the newly added QC metrics.
-colnames(colData(spe))
+spe <- addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
 ```
 
-What represent the new columns? 
+**Question 1: Which metadata has been added to `colData`?**
+
 :::{.callout-tip collapse="true"}
 ### Answer
+
+```{r}
+# Display the colData to see the newly added QC metrics.
+colData(spe)
+```
 
 - The `sum` column contains the total number of unique molecular identifiers (UMIs) for each spot
 - The `detected` column contains the number of unique genes detected per spot
 - The `subsets_mito_percent` contains the percentage of transcripts mapping to mitochondrial genes per spot
 :::
 
-# GLobal Outlier Detection
 
-We will start using QC methods adapted from snRNA-seq analysis to identify potential low-quality spots.  
-A simple option is to apply fixed thresholds to each QC metric across all spots, and remove the spots that do not pass the filering criteria applied.
+### Global outlier detection
+
+In order to detect low-quality spots and filter them out, QC methods adapted from snRNA-seq analysis can be applied.
+A simple option is to apply a fixed thresholds to each QC metric across all spots, and remove the spots that do not pass the filering criteria applied.
 
 QC metrics:
   
 - Library size: 
 - Number of expressed genes
 - Proportion of Mt reads
-- Number of spots per cell
 
 We can have a look and plot distributions of the values to decide which is the best cutoff:
 
 ```{r}
-# plot library size vs. detected genes
+# Plot library size vs. detected genes
 p1 <- plotObsQC(spe, 
                 plot_type="scatter", 
                 x_metric="detected", 
@@ -106,7 +100,7 @@ p1 <- plotObsQC(spe,
                 y_threshold=600) + 
   ggtitle("Library size vs. detected")
 
-# plot mito proportion vs. detected genes
+# Plot mito proportion vs. detected genes
 p2 <- plotObsQC(spe, 
                 plot_type="scatter", 
                 x_metric="detected", 
@@ -117,28 +111,31 @@ p2 <- plotObsQC(spe,
 p1 + p2
 ```
 
-And further check how many spots would be removed with given thresholds:
+And further check how many spots would be removed with the given thresholds:
 
 ```{r}
+# Flag spots based on fixed thresholds
 spe$qc_lib_size <- spe$sum < 500
 spe$qc_detected <- spe$detected < 400
 spe$qc_mito_prop <- spe$subsets_Mito_percent > 30
 
-# tabulate number of cells kept/flagged by each
+# Tabulate number of spots flagged by each
 qc <- grep("^qc", names(colData(spe)))
 sapply(colData(spe)[qc], table)
 ```
 
-## Question: Have a look at the library.size and detected genes numbers on the tissue section using plotVisium() function. Which spots are more likely to be excluded?
+**Question 2: Have a look at the mitochondrial percentage numbers on the tissue section using plotVisium() function. Which spots are more likely to be excluded?**
 
 :::{.callout-tip collapse="true"}
 ### Answer
 
 ```{r}
-plotVisium(spe, annotate = "sum", zoom = TRUE)
+plotVisium(spe, annotate = "subsets_Mito_percent", zoom = TRUE)
 plotVisium(spe, spots=FALSE, zoom = TRUE)
 ```
 :::
+
+### Visualize spatial pattern of QC metrics (Global outliers)
 
 Very importantly, we want to have a look into the spatial pattern of the QC metrics before deciding on global thresholds:
 
@@ -156,34 +153,29 @@ p3 <- plotObsQC(spe,
                 plot_type="spot", annotate="qc_mito_prop") + 
   ggtitle("Mito proportion (> 30%)")
 
-p1 | p2 | p3
+# plot the three together
+gridExtra::grid.arrange(p1, p2, p3, ncol=2)
 ```
 
 
-We can also address filtering based on local outlier detection, and remove spots that are outliers within their local biological neighborhood.
 
-# Local Outlier Detection
+### Local Outlier Detection
 
-## Quality Control using `SpotSweeper`
+Another approach to identify low-quality spots is to use local outlier detection methods that take into account the spatial context of each spot.
 
+`SpotSweeper` package provides functions to identify common QC metrics (such as the ones we have seen in the previous section: library size, number of detected genes, and mitochondrial percentage) and detect local outliers based on these metrics.
 
-> Using the `SpotSweeper` package, we will learn how to identify and handle low-quality spots and spatial artifacts, which is essential for ensuring the reliability of downstream analyses. We will calculate various QC metrics, detect local outliers, and visualize the results to gain a comprehensive understanding of data quality.
+We will use `localOutliers` from `SpotSweeper` which helps identifying spots that deviate significantly from their local neighborhood.
 
-Here, we identify local outliers based on common QC metrics such as library size, number of detected genes, and mitochondrial percentage. `localOutliers` from `SpotSweeper` helps in identifying spots that deviate significantly from their local neighborhood.
-
-**Note:** this takes about 10 minutes to run. Have a coffee. 
-> Julien: took a few seconds on the subsetted object
 
 ```{r}
 # Identify local outliers based on library size ("sum" of counts).
 # Spots with unusually low library size compared to their neighbors will be flagged.
-
 spe <- localOutliers(spe,
   metric = "sum",
   direction = "lower",
   log = TRUE
 )
-
 
 # Identify local outliers based on the number of unique genes detected ("detected").
 # Spots with an unusually low number of detected genes will be flagged.
@@ -201,7 +193,6 @@ spe <- localOutliers(spe,
   log = FALSE
 )
 
-
 # Combine all individual outlier flags into a single "local_outliers" column.
 # A spot is considered a local outlier if it's flagged by any of the above metrics.
 spe$local_outliers <- as.logical(spe$sum_outliers) |
@@ -209,10 +200,7 @@ spe$local_outliers <- as.logical(spe$sum_outliers) |
   as.logical(spe$subsets_Mito_percent_outliers)
 ```
 
-## Question 1
-
-**How many spots were identified as local outliers based on the combined criteria?**
-> Should we also run an outlier detection similar to scRNA-seq data, without spatial neighbourhood consideration? It would be interesting to discuss the benefit/shortcomnings of the spotSweeper approach (e.g., a whole low-quality region of a sample could be retained) related to naive filtering (e.g., whole cell types/domaisn could be excluded)
+**Question 3: How many spots were identified as local outliers based on the combined criteria?**
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -223,17 +211,19 @@ table(spe$local_outliers)
 ```
 :::
 
-# Visualization of QC Results
 
-Visualizing the QC metrics and detected artifacts is crucial for understanding the quality of your spatial transcriptomics data.
+### Visualize spatial pattern of QC metrics (Local outliers)
 
-> Juna: maybe visualise also the detection measure like in OSTA book? and give first one as example, ask them to do the rest as a question
+As we have seen before, visualizing the QC metrics is crucial for understanding the quality of your spatial transcriptomics data and for deciding on appropriate filtering strategies.  
 
+> Juna: maybe add a visualisation step of the QC metrics on the slide before plotting the outliers?
+
+
+Next, we will visualize the spatial distribution of the local outliers.
+
+Highligh the spots that have been flagged as local outliers based on mitochondrial percentage.
 ```{r}
-# Plot the spatial distribution of local outliers.
-
-
-# Spots flagged as local outliers will be highlighted.
+# Plot the spatial distribution of local outliers for mitochondrial percentage.
 plotQCmetrics(spe,
   metric = "subsets_Mito_percent", outliers = "subsets_Mito_percent_outliers", point_size = 0.4,
   stroke = 0.75
@@ -242,13 +232,32 @@ plotQCmetrics(spe,
 
 ```
 
+**Question 4: Plot the spatial distribution of local outliers for library size and number of detected genes. What do you observe?**
+
+:::{.callout-tip collapse="true"}
+### Answer
+
 ```{r}
+# Plot the spatial distribution of local outliers for library size.
 plotQCmetrics(spe,
   metric = "sum_log", outliers = "sum_outliers", point_size = 0.4,
   stroke = 0.75
 ) +
   ggtitle("Local outliers for number of UMIs")
 ```
+
+```{r}
+# Plot the spatial distribution of local outliers for number of detected genes.
+plotQCmetrics(spe,
+  metric = "detected_log", outliers = "detected_outliers", point_size = 0.4,
+  stroke = 0.75
+) +
+  ggtitle("Local outliers for number of UMIs")
+```
+
+:::
+
+Plot the three metrics together:
 
 ```{r}
 plotQCmetrics(spe,
@@ -259,11 +268,15 @@ plotQCmetrics(spe,
 ```
 
 
-> Juna: add visualisation of z-scores as violin? Reflect how does are different than the common QC violins in scRNAseq? 
-# Identify technical artifacts
 
+> Juna: add visualisation of z-scores as violin? Reflect how those are different than the common QC violins in scRNAseq? 
+
+
+## Compare and combine global and local outliers and apply filtering
 
 > Juna: potentially add a comparison of filtering and adjust the global cutoffs:
+
+Adjust global filtering cutoffs based on previous plots (apply less stringent cutoffs)
 
 ```{r}
 # adjust global filtering cutoff
@@ -272,43 +285,49 @@ spe$qc_detected <- spe$detected < 10
 spe$qc_mito_prop <- spe$subsets_Mito_percent > 35
 ```
 
-# Evaluate global/local outliers
+Compare global and local outliers being flagged
 
 ```{r}
 spe$global_outliers <- spe$qc_lib_size | spe$qc_detected | spe$qc_mito_prop
-plotObsQC(spe, plot_type="spot", annotate="global_outliers")
-plotObsQC(spe, plot_type="spot", annotate="local_outliers")
-plotVisium(spe,zoom=TRUE, annotate="global_outliers")
+p1 <- plotObsQC(spe, plot_type="spot", annotate="global_outliers")
+p2 <- plotObsQC(spe, plot_type="spot", annotate="local_outliers")
+gridExtra::grid.arrange(p1, p2, ncol=2)
 ```
 
 Combine both and filter out genes with 0 counts
 
 ```{r}
-# combine local and global outliers &
-# remove combined set of low-quality spots
-spe$discard <- 
-    spe$global_outliers | 
-    spe$local_outliers
+# combine local and global outliers to create a final discard flag
+spe$discard <- spe$global_outliers | spe$local_outliers
+```
+
+**Question 5: Visualise the spots that will be discarded based on the combined criteria. How many spots will be removed?**
+
+:::{.callout-tip collapse="true"}
+### Answer
+```{r}
+# check how many spots will be discarded
 table(spe$discard)
 
 # have a final look to the spots that we will discard
 plotVisium(spe, zoom=T, annotate="discard")
+```
+:::
 
-#save the non-filtered object for later
-spe_nofilt <- spe
+Finally, we can filter out the low-quality spots from the `SpatialExperiment` object based on the combined criteria of global and local outliers. Additionally, we will remove any features (genes) that have zero counts across all remaining spots.
+
+```{r}
 # remove the spots considered of low quality based on both global and local metrics
 spe <- spe[, !spe$discard]
 
 # remove features with all 0 counts
-#spe <- spe[rowSums(counts(spe)) > 0, ]
-dim(spe)
-```
+spe <- spe[rowSums(counts(spe)) > 0, ]
+``` 
+
 
 ## Technical artifacts
 
 Technical artifacts can arise during tissue preparation, for example tissue dissection can cause mechanical damage, leading to areas with artificially low biological heterogeneity. These can be detected wiht the `findArtifacts` function of the `spotSweeper` package.
-
-> Juna: quite slow the findArtifacts
 
 ```{r}
 # find artifacts using SpotSweeper
@@ -320,14 +339,13 @@ spe <- findArtifacts(spe,
 )
 ```
 
-## Question 2 
-What is the `findArtifacts` function performing and what are the (potentially) problematic assumptions?
+**Question 6: What is the `findArtifacts` function performing and what are the (potentially) problematic assumptions?**
+
 
 > Juna: there is no answer
 
-## Question 3
 
-**Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`. What do you observe?**
+**Question 7: Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`. What do you observe?**
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -344,17 +362,16 @@ plotQCmetrics(spe,
 :::
 
 
+## Save the object
 
-# Save the object
-
+Save the filtered `SpatialExperiment` object for the next steps:
 ```{r}
 saveHDF5SummarizedExperiment(spe, dir="results/day1", prefix="01.2_spe", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
 ```
 
-Clear your environment
-
+Clear your environment:
 ```{r}
 #| eval: false
 rm(list = ls())
