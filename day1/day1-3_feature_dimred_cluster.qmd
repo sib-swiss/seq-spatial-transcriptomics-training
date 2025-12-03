@@ -6,6 +6,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+> Juna: This part needs to be updated
+
 ## Feature Selection, Dimensionality Reduction, and Clustering
 
 In this third exercise, we will explore the essential techniques of feature selection, dimensionality reduction, and clustering to uncover meaningful biological insights from spatial transcriptomics data. We will learn how to identify the most informative genes, visualize complex high-dimensional data in lower-dimensional spaces using methods like PCA and UMAP, and group spots into clusters representing distinct spatial domains. These steps are fundamental for interpreting the underlying biological structure of the tissue.
@@ -27,57 +29,63 @@ By the end of this exercise, you will be able to:
 #| output: false
 
 library(SpatialExperiment)
-library(qs2)
-library(scran) # For feature selection and clustering
-library(scater) # For dimensionality reduction
+library(scran) 
+library(scater) 
 library(ggplot2)
-library(patchwork) # For combining plots
-library(bluster) # For clustering
-library(escheR) # For spatial plotting
-library(pheatmap) # For clustering heatmap
-library(HDF5Array) # For loading object
+library(patchwork) 
+library(bluster)
+library(escheR) 
+library(pheatmap)
+library(HDF5Array) 
 library(ggspavis)
 library(nnSVG)
 library(Banksy)
 ```
 
-## Load and Prepare Data
+## Load SpatialExperiment Object
 
-We will start by loading the `SpatialExperiment` object and performing the necessary preprocessing steps, including subsetting for demonstration purposes, similar to the previous exercise.
+We will start by loading the `SpatialExperiment` object from the previous exercise, which contains only filtered spots and genes with more than 1 count across all spots.
 
 ```{r}
 # Load the SpatialExperiment object from the .qs2 file.
 spe <- loadHDF5SummarizedExperiment(dir="results/day1/", prefix="01.2_spe")
+```
 
+## Normalization
+
+Normalization is a critical step in preprocessing spatial transcriptomics data to account for technical variations and make gene expression levels comparable across spots. We will log normalise raw counts with `scuttle::logNormCounts()`
+
+```{r}
 # Log-normalize counts for downstream analysis
 spe <- logNormCounts(spe)
 ```
 
-### Spatially-Aware Normalization (Optional)
-While `logNormCounts` provides a general-purpose normalization, specialized spatially-aware normalization methods exist (e.g., `SpaNorm` package). These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.
+**Question 1: What is the name of the new assay added for normalized counts?**
 
-### Size Factor Analysis
-- After log-normalization, we can inspect the computed size factors.
-- Size factors account for differences in sequencing depth between spots.
+::: {.callout-tip collapse="true"}
+### Answer
+```{r}
+# Have a look at the assays
+spe@assays
+# Directly get the assay names(x)
+assayNames(spe)
+```
+:::
+
+
+After log-normalization, we can inspect the computed size factors. Size factors are used to account for differences in sequencing depth between spots.
 
 ```{r}
 # Display a summary of the calculated size factors.
 summary(sizeFactors(spe))
 
-# Visualize the distribution of size factors using a histogram.
-hist(sizeFactors(spe),
-  breaks = 50, main = "Histogram of Size Factors",
-  xlab = "Size Factor"
-)
-
-# Display the dimensions of the prepared object
-dim(spe)
-
-# Julien: what do we want to convey here? It's impprtant to show that size factors are also correlated to biology/cell types, so it's nice to show them on the slide too:
+# Visualise the spatial distribution of size factors on the tissue slide.
 colData(spe)$sizeFactors <- sizeFactors(spe)
 plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
-## We can then ask a question and explore other ways to normalize?
 ```
+
+**Question 2: Based on the spatial distribution of size factors, do you observe any spatial patterns or gradients across the tissue section? Do you think they reflect technical or biological patterns?**
+
 
 ## Feature Selection
 
@@ -85,8 +93,7 @@ plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
 
 Feature selection is a crucial step to reduce noise and focus on genes that show significant biological variation across spots. We typically identify Highly Variable Genes (HVGs) as these are more likely to distinguish different cell types or spatial domains.
 
-
-Before defining the top HVG, we can remove mitochondrial genes, since those genes tend to be highly variable and often not of biological interest.
+Before defining the top HVG, we will remove mitochondrial genes, since those genes tend to be highly variable and often not of biological interest.
 
 ```{r}
 # identify mitochondrial genes
@@ -97,12 +104,12 @@ table(mt)
 spe <- spe[!mt, ]
 ```
 
+In order to identify HVGs, we will first model the gene variance using a Poisson noise model with `scran::modelGeneVarByPoisson()`
 
 ```{r}
 # Model gene variance to identify highly variable genes.
-# This function fits a trend to the technical noise and calculates biological variance.
+# This function fits a mean-variance trend to the log-normalized counts.
 dec <- modelGeneVarByPoisson(spe)
-## Julien: I personally prefer to account for the mean-variance trend corresponding to Poisson noise
 
 # Visualize the mean-variance relationship and the fitted trend.
 # This plot helps to understand how gene variability changes with expression level.
@@ -112,23 +119,23 @@ plot(dec$mean, dec$total,
   main = "Mean-Variance Trend"
 )
 curve(metadata(dec)$trend(x), add = TRUE, col = "dodgerblue", lwd = 2)
-
 ```
 
-
-Next, we proceed to define the top 5 HVG, and visualise their normalised counts on the tissue slide
+Once we have modelled the gene variance, we can proceed to select the top HVGs. 
+For demonstration purposes, we will select the top 5 HVGs and visualise their expression patterns on the tissue slide.
 
 ```{r}
-## Top 10 HVGs
+# Top 5 HVGs
 top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:5]
+top_HVG
 
+# Create a plot for each gene in top_HVG
 ps <- lapply(top_HVG, \(.) {
     plotCoords(spe, 
         annotate = ., 
-        feature_names = "Symbol", 
-        assay_name = "logcounts") })
+        assay_name = "logcounts") }) # use "logcounts" assay to visualise log normalised counts
 
-# figure arrangement
+# figure arrangement and change colors
 patchwork::wrap_plots(ps, nrow = 2) & 
   theme(legend.key.width = unit(0.4, "lines"), 
         legend.key.height = unit(0.8, "lines")) & 
@@ -152,9 +159,7 @@ sum(rowData(spe)$hvg)
 rowData(spe)
 ```
 
-
-
-# save data for later
+## Save data for later
 
 ```{r}
 spe_HVG <- spe
@@ -163,8 +168,6 @@ saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe_tmp",
                                 verbose=NA)
 
 #To avoid large computational time, we will subset the dataset to the HVG
-
-
 tmp <- spe[hvg, ]
 saveHDF5SummarizedExperiment(tmp, dir="results/day1", prefix="01.3_spe_tmp_tmp", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
@@ -172,3 +175,5 @@ saveHDF5SummarizedExperiment(tmp, dir="results/day1", prefix="01.3_spe_tmp_tmp",
 
 ```
 
+### Spatially-Aware Normalization (Optional)
+While `logNormCounts` provides a general-purpose normalization, specialized spatially-aware normalization methods exist (e.g., `SpaNorm` package). These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.
