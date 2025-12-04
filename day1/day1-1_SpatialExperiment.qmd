@@ -102,9 +102,10 @@ spe <- spe[, spatialCoords(spe)[, 1] * scaleFactors(spe) > 70 &
 
 
 ::: callout-important
-## Exercise
+## Exercise 1
 
-What other bin size do we have available?
+**What other bin size do we have available?**
+
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -130,7 +131,7 @@ In this first exercise, we will dive into the `SpatialExperiment` object, a corn
 The different slots of the `SpatialExperiment` object can be approached with several accessor functions that correspond to their names. As the `SpatialExperiment` is an extension of the `SingleCellExperiment` class, many of the functions are shared. 
 
 ::: callout-important
-## Exercise
+## Exercise 2
 
 Check out the outputs of the following functions:
 
@@ -214,7 +215,11 @@ And with spots:
 plotVisium(spe, point_shape = 22, point_size = 0.5) 
 ```
 
-Question: Why do we see only spots in a specific area?
+::: callout-important
+## Exercise 3
+
+Why do we see only spots in a specific area?
+:::
 
 ::: {.callout-tip collapse="true"}
 ## Answer
@@ -233,7 +238,7 @@ plotVisium(spe,
            point_shape = 22)
 ```
 ::: callout-important
-## Exercise
+## Exercise 4
 
 Check out the usage of `plotVisium` with `?plotVisium`. Create a plot that zooms in into the spots, and colors the spots according to column `array_row`.
 
@@ -255,33 +260,39 @@ p
 
 
 
-## retain only observations that map to tissue 
+## Retain only observations that map to tissue 
 
-Subset the SpatialExperiment object to retain only spots that are within the tissue area
+::: callout-important
+## Exercise 5
 
-sub <- spe[, colData(spe)$in_tissue]
+Subset the SpatialExperiment object (and save it into a new object) to retain only spots that are within the tissue area
 
 How many spots were present in "spe" object? And how many are left after selecting for in-tissue spots only (object sub)?
+:::
 
 ::: {.callout-tip collapse="true"}
 ## Answer
 
 ```{r}
+#Subset to in-tissue spots only
+sub <- spe[, colData(spe)$in_tissue]
+```
+
+```{r}
+# Check dimensions of original and subsetted objects
 dim(spe)
 dim(sub)
 ```
 
 Both objects have the same dimensions. Our spe object is a subset of tissue slice were all spots map tissue. Therefore the filtering here is not relevant. 
-
 :::
 
 
-# Save the object
+## Save the object
 
+Save the filtered `SpatialExperiment` object for the next steps:
 ```{r}
 dir.create("results/day1",  showWarnings = FALSE, recursive=TRUE)
-#gc()
-#qs_save(spe, file = "results/day1/01_spe.qs2")
 saveHDF5SummarizedExperiment(spe, dir="results/day1", prefix="01.1_spe", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
