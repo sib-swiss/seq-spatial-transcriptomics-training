@@ -12,7 +12,6 @@ editor_options:
 In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. This step focuses at removing low-quality spots or technical artifacts from the dataset to avoid biases into downstream analysis.
 
 
-
 ## Learning objectives
 
 By the end of this exercise, you will be able to:
@@ -62,7 +61,11 @@ Run the following code to compute these metrics and inspect the results.
 spe <- addPerCellQCMetrics(spe, subsets = list(Mito = is.mito))
 ```
 
-**Question 1: Which metadata has been added to `colData`?**
+::: callout-important
+## Exercise 1
+
+Check which metadata has been added to `colData`. Do you recognize the different metrics?
+:::
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -124,7 +127,10 @@ qc <- grep("^qc", names(colData(spe)))
 sapply(colData(spe)[qc], table)
 ```
 
-**Question 2: Have a look at the mitochondrial percentage numbers on the tissue section using plotVisium() function. Which spots are more likely to be excluded?**
+::: callout-important
+## Exercise 2
+Have a look at the mitochondrial percentage numbers on the tissue section using plotVisium() function. Which spots are more likely to be excluded?
+:::
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -200,11 +206,14 @@ spe$local_outliers <- as.logical(spe$sum_outliers) |
   as.logical(spe$subsets_Mito_percent_outliers)
 ```
 
-**Question 3: How many spots were identified as local outliers based on the combined criteria?**
+::: callout-important
+## Exercise 3
+How many spots were identified as local outliers based on the combined criteria?
+:::
+
 
 :::{.callout-tip collapse="true"}
 ### Answer
-
 ```{r}
 # Count the number of spots flagged as local outliers.
 table(spe$local_outliers)
@@ -217,7 +226,6 @@ table(spe$local_outliers)
 As we have seen before, visualizing the QC metrics is crucial for understanding the quality of your spatial transcriptomics data and for deciding on appropriate filtering strategies.  
 
 > Juna: maybe add a visualisation step of the QC metrics on the slide before plotting the outliers?
-
 
 Next, we will visualize the spatial distribution of the local outliers.
 
@@ -232,7 +240,10 @@ plotQCmetrics(spe,
 
 ```
 
-**Question 4: Plot the spatial distribution of local outliers for library size and number of detected genes. What do you observe?**
+::: callout-important
+## Exercise 4
+Plot the spatial distribution of local outliers for library size and number of detected genes. What do you observe?
+:::
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -301,7 +312,10 @@ Combine both and filter out genes with 0 counts
 spe$discard <- spe$global_outliers | spe$local_outliers
 ```
 
-**Question 5: Visualise the spots that will be discarded based on the combined criteria. How many spots will be removed?**
+::: callout-important
+## Exercise 5
+Visualise the spots that will be discarded based on the combined criteria. How many spots will be removed?
+:::
 
 :::{.callout-tip collapse="true"}
 ### Answer
@@ -339,13 +353,15 @@ spe <- findArtifacts(spe,
 )
 ```
 
-**Question 6: What is the `findArtifacts` function performing and what are the (potentially) problematic assumptions?**
+::: callout-important
+## Exercise 6
+What is the `findArtifacts` function performing and what are the (potentially) problematic assumptions?
+:::
 
 
-> Juna: there is no answer
-
-
-**Question 7: Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`. What do you observe?**
+::: callout-important
+## Exercise 7
+Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`. What do you observe?
 
 :::{.callout-tip collapse="true"}
 ### Answer

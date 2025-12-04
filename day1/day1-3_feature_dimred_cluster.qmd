@@ -6,20 +6,18 @@ editor_options:
   chunk_output_type: console
 ---
 
-> Juna: This part needs to be updated
+## Normalisation, Feature Selection and Dimensionality Reduction
 
-## Feature Selection, Dimensionality Reduction, and Clustering
-
-In this third exercise, we will explore the essential techniques of feature selection, dimensionality reduction, and clustering to uncover meaningful biological insights from spatial transcriptomics data. We will learn how to identify the most informative genes, visualize complex high-dimensional data in lower-dimensional spaces using methods like PCA and UMAP, and group spots into clusters representing distinct spatial domains. These steps are fundamental for interpreting the underlying biological structure of the tissue.
+In this section we will focus on normalisation, feature selection and dimensionality reduction of spatial transcriptomics data, which are important preprocessing steps before downstream analysis such as clustering and marker gene identification. We will focus on the specific challenges and considerations when dealing with spatially-resolved transcriptomics data, as opposed to traditional single-cell RNA-seq data.
 
 ## Learning Objectives
 
 By the end of this exercise, you will be able to:
 
+-   Normalize spatial transcriptomics data to account for technical variations.
 -   Perform feature selection to identify highly variable genes (HVGs).
--   Apply dimensionality reduction techniques like PCA and UMAP.
--   Perform clustering to identify distinct spatial domains or cell populations.
--   Visualize the results of dimensionality reduction and clustering in both reduced dimension space and spatial context.
+-   Apply dimensionality reduction techniques like PCA.
+-   Visualize the results of dimensionality reduction in both reduced dimension space and spatial context.
 
 ## Libraries
 
@@ -40,6 +38,7 @@ library(HDF5Array)
 library(ggspavis)
 library(nnSVG)
 library(Banksy)
+library(igraph)
 ```
 
 ## Load SpatialExperiment Object
@@ -60,7 +59,10 @@ Normalization is a critical step in preprocessing spatial transcriptomics data t
 spe <- logNormCounts(spe)
 ```
 
-**Question 1: What is the name of the new assay added for normalized counts?**
+::: callout-important
+## Exercise 1
+What is the name of the new assay added for normalized counts?
+:::
 
 ::: {.callout-tip collapse="true"}
 ### Answer
@@ -84,8 +86,10 @@ colData(spe)$sizeFactors <- sizeFactors(spe)
 plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
 ```
 
-**Question 2: Based on the spatial distribution of size factors, do you observe any spatial patterns or gradients across the tissue section? Do you think they reflect technical or biological patterns?**
-
+::: callout-important
+## Exercise 2
+Based on the spatial distribution of size factors, do you observe any spatial patterns or gradients across the tissue section? Do you think they reflect technical or biological patterns?
+:::
 
 ## Feature Selection
 
@@ -159,21 +163,170 @@ sum(rowData(spe)$hvg)
 rowData(spe)
 ```
 
+
+## Dimensionality Reduction (DR)
+Once we have identified highly variable genes (HVGs), we can proceed to perform dimensionality reduction and later on clustering.
+
+### Non-spatially aware DR:
+
+#### PCA
+
+We can perform dimensionality reduction using Principal Component Analysis (PCA) on the log-normalized expression values of the HVGs. This method is agnostic to spatial information, and focuses solely on capturing the main axes of variation in the gene expression data.
+
+```{r}
+# Run PCA on the log-normalized counts of the HVGs
+spe <- runPCA(spe, ncomponents = 30, subset_row = rowData(spe)$hvg)
+
+# Visualize the explained variance by each principal component.
+# This helps in determining how many PCs capture most of the variance.
+plot(attr(reducedDim(spe, "PCA"), "percentVar"),
+  xlab = "PC", ylab = "Proportion of variance explained",
+  main = "PCA Scree Plot"
+)
+```
+
+::: callout-important
+## Exercise 3
+Based on the scree plot, how many principal components would you consider for downstream analysis? Why?
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+We can select the first 10 PCs for downstream analysis, as they capture a significant proportion of the variance in the data before the explained variance starts to level off.
+::: 
+
+Choose the number of PCs accordingly for downstream analysis. Visualize the PCs on the tissue slice coordinates.
+
+```{r}
+# Run PCA on the log-normalized counts of the HVGs using 10 PCs
+spe <- runPCA(spe, ncomponents = 10, subset_row = rowData(spe)$hvg)
+
+# Get the PCA results 
+pcs <- reducedDim(spe, "PCA")
+# Visualize PCs on the tissue slice coordinates
+ps <- lapply(colnames(pcs), \(.) {
+    spe[[.]] <- pcs[, .]
+    plotCoords(spe, annotate = .)
+}) 
+# Arrange the plots and customize colors
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+
+```
+
+### Spatially aware DR:
+
+#### Banksy
+
+We can also perform spatially aware dimensionality reduction using the `Banksy` method, which integrates spatial coordinates and gene expression into the PCA framework. This allows us to capture spatial patterns in the data while reducing dimensionality. 
+
+```{r}
+# Clustering with Banksy
+set.seed(112358)
+
+# 'Banksy' parameter settings
+k <- 20   # consider first order neighbors
+l <- 0.8 # use spatial information with weight lambda
+a <- "logcounts" # assay to use
+xy <- c("array_row", "array_col")  # spatial coordinate names
+
+# restrict to selected HVG features
+dec <- modelGeneVarByPoisson(spe)
+hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
+tmp <- spe[hvg, ] # subset to HVGs
+
+# compute spatially aware 'Banksy' PCs
+tmp <- computeBanksy(tmp, assay_name=a, coord_names=xy, k_geom=k)
+tmp <- runBanksyPCA(tmp, lambda=l, npcs=10)
+reducedDim(spe, "PCA_banksy") <- reducedDim(tmp) # store 'Banksy' PCs in original object
+```
+
+::: callout-important
+## Exercise 4
+Have a look at the spe object to see the dimensionality reduction slots. How many dimensionality reductions are stored now? What are their names and what do they represnt?
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+
+```{r}
+spe
+reducedDimNames(spe)
+```
+
+There are now three dimensionality reductions stored in the `spe` object: :"PCA_artifacts", "PCA" and "PCA_banksy". "PCA_artifacts" was computed to capture technical artifacts in a previous exercise (QC step).
+
+"PCA" represents the non-spatially aware principal components, while "PCA_banksy" represents the spatially aware principal components computed using the Banksy method. Both methods have used HVGs for dimensionality reduction.
+:::
+
+In the same way as before, we can visualise the Banksy PCs on the tissue slice coordinates.
+
+::: callout-important
+## Exercise 5
+Select pcs from Banksy dimensionality reduction space and visualise them on the tissue slice. Do you observe any spatial patterns? How do they compare to the non-spatial PCA?
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+
+```{r}
+## Visualize PCs on the tissue slice coordinates
+pcs <- reducedDim(spe, "PCA_banksy")
+#pcs <- pcs[, seq_len(10)]
+ps <- lapply(colnames(pcs), \(.) {
+    spe[[.]] <- pcs[, .]
+    plotCoords(spe, annotate = .)
+}) 
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+```
+:::
+
+
+::: callout-important
+## Bonus Exercise
+Try to change Banksy parameters k and lambda, how it affects the results?
+:::
+
+
+## Run UMAP
+
+Run UMAP (for visualization purposes only) based on both, spatially aware and not spatially aware dimensionality reduction
+
+```{r}
+# UMAP
+spe <- runUMAP(spe, dimred="PCA", name="UMAP_tx")
+spe <- runUMAP(spe, dimred="PCA_banksy", name="UMAP_banksy")
+```
+
+```{r}
+# Visualise
+plotReducedDim(spe, dimred = "UMAP_tx", colour_by = "sum") 
+plotReducedDim(spe, dimred = "UMAP_banksy", colour_by = "sum")
+```
+
+
+::: callout-important
+## Bonus question
+If you tried different parameters for Banksy, how does it affect the UMAP results?
+:::
+
+
 ## Save data for later
 
 ```{r}
 spe_HVG <- spe
-saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe_tmp", replace=TRUE,
+saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe", replace=TRUE,
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
-
-#To avoid large computational time, we will subset the dataset to the HVG
-tmp <- spe[hvg, ]
-saveHDF5SummarizedExperiment(tmp, dir="results/day1", prefix="01.3_spe_tmp_tmp", replace=TRUE,
-                                chunkdim=NULL, level=NULL, as.sparse=NA,
-                                verbose=NA)
-
 ```
 
 ### Spatially-Aware Normalization (Optional)
 While `logNormCounts` provides a general-purpose normalization, specialized spatially-aware normalization methods exist (e.g., `SpaNorm` package). These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.
+
+
+

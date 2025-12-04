@@ -23,152 +23,27 @@ library(scran)
 library(scater)
 ```
 
-## Dimensionality Reduction (DR)
 
-Once we have identified highly variable genes (HVGs), we can procesd to perform dimensionality reduction and clustering.
+## Clustering and Spatially-aware clustering
 
-Load the previously saved `SpatialExperiment` object which contains information on the HVGs.
+In the next section we will explore clustering methods for spatial transcriptomics data, including both non-spatially aware and spatially-aware approaches. 
 
-> To avoid large computational time, we will load the new subset containing 2000 HVG
+## Learning Objectives
+By the end of this exercise, you will be able to:
+
+-  Perform non-spatially aware clustering using graph-based methods (Leiden clustering).
+-  Perform spatially-aware clustering using Bayesian modeling (BayesSpace) and graph-based methods (Banksy + Leiden).
+-  Visualize and compare clustering results from different methods on tissue slides.
+
+## Clustering
+
+Load the previously saved `SpatialExperiment` object which contains information on the HVGs and dimensionationality reduction computed with Banksy and PCA.
 
 ```{r}
 #spe.hvg <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe_tmp_tmp")
-spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe_tmp_tmp")
+spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe")
 ```
 
-
-### Non-spatially aware DR:
-
-#### PCA
-
-We can perform dimensionality reduction using Principal Component Analysis (PCA) on the log-normalized expression values of the HVGs. This method is agnostic to spatial information, and focuses solely on capturing the main axes of variation in the gene expression data.
-
-```{r}
-# Run PCA on the log-normalized counts of the HVGs
-spe <- runPCA(spe, ncomponents = 30, subset_row = rowData(spe)$hvg)
-
-# Visualize the explained variance by each principal component.
-# This helps in determining how many PCs capture most of the variance.
-plot(attr(reducedDim(spe, "PCA"), "percentVar"),
-  xlab = "PC", ylab = "Proportion of variance explained",
-  main = "PCA Scree Plot"
-)
-```
-
-**Question 1: Based on the scree plot, how many principal components would you consider for downstream analysis? Why?**
-
-::: {.callout-tip collapse="true"}
-### Answer
-We can select the first 10 PCs for downstream analysis, as they capture a significant proportion of the variance in the data before the explained variance starts to level off.
-::: 
-
-Choose the number of PCs accordingly for downstream analysis. Visualize the PCs on the tissue slice coordinates.
-
-```{r}
-# Run PCA on the log-normalized counts of the HVGs using 10 PCs
-spe <- runPCA(spe, ncomponents = 10, subset_row = rowData(spe)$hvg)
-
-# Get the PCA results 
-pcs <- reducedDim(spe, "PCA")
-# Visualize PCs on the tissue slice coordinates
-ps <- lapply(colnames(pcs), \(.) {
-    spe[[.]] <- pcs[, .]
-    plotCoords(spe, annotate = .)
-}) 
-# Arrange the plots and customize colors
-patchwork::wrap_plots(ps, nrow = 2) & 
-  theme(legend.key.width = unit(0.4, "lines"), 
-        legend.key.height = unit(0.8, "lines")) & 
-  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
-
-```
-
-### Spatially aware DR:
-
-#### Banksy
-
-We can also perform spatially aware dimensionality reduction using the `Banksy` method, which integrates spatial coordinates and gene expression into the PCA framework. This allows us to capture spatial patterns in the data while reducing dimensionality. 
-
-```{r}
-# Clustering with Banksy
-set.seed(112358)
-
-# 'Banksy' parameter settings
-k <- 20   # consider first order neighbors
-l <- 0.8 # use spatial information with weight lambda
-a <- "logcounts" # assay to use
-xy <- c("array_row", "array_col")  # spatial coordinate names
-
-# restrict to selected HVG features
-dec <- modelGeneVarByPoisson(spe)
-hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
-tmp <- spe[hvg, ] # subset to HVGs
-
-# compute spatially aware 'Banksy' PCs
-tmp <- computeBanksy(tmp, assay_name=a, coord_names=xy, k_geom=k)
-tmp <- runBanksyPCA(tmp, lambda=l, npcs=10)
-reducedDim(spe, "PCA_banksy") <- reducedDim(tmp) # store 'Banksy' PCs in original object
-```
-
-**Question 2: Have a look at the spe object to see the dimensionality reduction slots. How many are dimensionality reductions are stored now? What are their names and what do they represnt?**
-
-::: {.callout-tip collapse="true"}
-### Answer
-
-```{r}
-spe
-reducedDimNames(spe)
-```
-
-There are now three dimensionality reductions stored in the `spe` object: :"PCA_artifacts", "PCA" and "PCA_banksy". "PCA_artifacts" was computed to capture technical artifacts in a previous exercise (QC step).
-
-"PCA" represents the non-spatially aware principal components, while "PCA_banksy" represents the spatially aware principal components computed using the Banksy method. Both methods have used HVGs for dimensionality reduction.
-:::
-
-In the same way as before, we can visualise the Banksy PCs on the tissue slice coordinates.
-
-**Question 3: select pcs from Banksy dimensionality reduction space and visualise them on the tissue slice. Do you observe any spatial patterns? How do they compare to the non-spatial PCA?**
-
-> Juna: bonus question: change banksy parameters (k and lambda) and see how the results change
-
-::: {.callout-tip collapse="true"}
-### Answer
-
-```{r}
-## Visualize PCs on the tissue slice coordinates
-pcs <- reducedDim(spe, "PCA_banksy")
-#pcs <- pcs[, seq_len(10)]
-ps <- lapply(colnames(pcs), \(.) {
-    spe[[.]] <- pcs[, .]
-    plotCoords(spe, annotate = .)
-}) 
-patchwork::wrap_plots(ps, nrow = 2) & 
-  theme(legend.key.width = unit(0.4, "lines"), 
-        legend.key.height = unit(0.8, "lines")) & 
-  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
-```
-:::
-
-
-## Run UMAP
-
-Run UMAP (for visualization purposes only) based on both, spatially aware and not spatially aware dimensionality reduction
-
-```{r}
-# UMAP
-spe <- runUMAP(spe, dimred="PCA", name="UMAP_tx")
-spe <- runUMAP(spe, dimred="PCA_banksy", name="UMAP_banksy")
-```
-
-```{r}
-# Visualise
-plotReducedDim(spe, dimred = "UMAP_tx", colour_by = "sum") 
-plotReducedDim(spe, dimred = "UMAP_banksy", colour_by = "sum")
-```
-
-
-
-## Clustering
 
 ### Non-spatial aware clustering
 
@@ -207,7 +82,7 @@ table(spe$BayesSpace <- factor(spe$spatial.cluster))
 ```
 
 
-#### graph-based: Banksy
+#### Graph-based: Banksy
 
 We have computed a principal components using Banksy mathod already in the previous step. We will now used them (use Banksy dimentionality reduction space) to perdoem SNN graph-based Leiden clustering based on them, in order to obtain spatially-aware clusters.
 When building the SNN graph, we will use the same parameters we have used before for the non-spatially aware graph, but using banksy PCs.
@@ -220,7 +95,6 @@ k <- cluster_leiden(g, objective_function="modularity", resolution=0.6)
 table(spe$Banksy <- factor(k$membership))
 ```
 
-> Juna: Try running Banksy on PCA instead of PCA_banksy and see how the results change
 
 ## Visualisation of the different clustering methods:
 
@@ -262,7 +136,10 @@ lapply(tail(names(sort(table(spe$Banksy))), 8), \(k) {
 ```
 
 
-> Bonus question: Do the same for the other methods
+::: callout-important
+## Bonus question
+Visualise the clusters obtained with BayesSpace and Leiden methods one by one, and compare their spatial distribution to the Banksy clusters. Do you observe any similarities or differences in the spatial patterns?
+:::   
 
 
 ## Save the object
