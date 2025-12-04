@@ -6,6 +6,19 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+## Clustering and Spatially-aware clustering
+
+In the next section we will explore clustering methods for spatial transcriptomics data, including both non-spatially aware and spatially-aware approaches. 
+
+## Learning Objectives
+By the end of this exercise, you will be able to:
+
+-  Perform non-spatially aware clustering using graph-based methods (Leiden clustering).
+-  Perform spatially-aware clustering using Bayesian modeling (BayesSpace) and graph-based methods (Banksy + Leiden).
+-  Visualize and compare clustering results from different methods on tissue slides.
+
+## Libraries
 ```{r}
 #| message: false
 #| warning: false
@@ -24,16 +37,6 @@ library(scater)
 ```
 
 
-## Clustering and Spatially-aware clustering
-
-In the next section we will explore clustering methods for spatial transcriptomics data, including both non-spatially aware and spatially-aware approaches. 
-
-## Learning Objectives
-By the end of this exercise, you will be able to:
-
--  Perform non-spatially aware clustering using graph-based methods (Leiden clustering).
--  Perform spatially-aware clustering using Bayesian modeling (BayesSpace) and graph-based methods (Banksy + Leiden).
--  Visualize and compare clustering results from different methods on tissue slides.
 
 ## Clustering
 
