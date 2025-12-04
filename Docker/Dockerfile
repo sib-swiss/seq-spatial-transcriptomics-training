@@ -1,9 +1,11 @@
 FROM rocker/rstudio:4.5.1
 
-# Avoid cross-architecture contamination inside renv cache
-ENV RENV_CONFIG_CACHE_ENABLED=FALSE
+# Script for to set up multiple users
+# COPY batch_user_creation.sh /rocker_scripts/experimental/batch_user_creation.sh
 
-# Install system dependencies
+# CMD [ "sh", "-c", "/rocker_scripts/experimental/batch_user_creation.sh && /init" ]
+
+# Install system dependencies required for R packages
 RUN apt-get update && apt-get install -y \
     libxt6 \
     libgl1 \
@@ -23,15 +25,13 @@ RUN apt-get update && apt-get install -y \
     libfribidi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy renv lockfile
+
 COPY renv.lock ./
 
-# Install renv (auto-selects correct binary or source per architecture)
-RUN Rscript -e 'install.packages("renv", repos="https://cloud.r-project.org")'
+RUN Rscript -e 'install.packages("renv", repos="https://cloud.r-project.org", type="source")'
 
-# Rebuild R package library from renv.lock
+
+
 RUN Rscript -e 'renv::restore()'
-
-# Install remaining packages
-RUN Rscript -e 'install.packages("arrow", type="source")'
-RUN Rscript -e 'BiocManager::install(c("Banksy","igraph","BayesSpace","nnSVG","RColorBrewer"), ask=FALSE)'
+RUN Rscript -e "install.packages('arrow')"
+RUN Rscript -e 'BiocManager::install(c("Banksy","igraph","BayesSpace","nnSVG","RColorBrewer"))'  
