@@ -29,9 +29,8 @@ website:
       - text: "day 2"
         menu: 
           - href: "day2/day2-1_spatial_stats.qmd"
-          - href: "day2/day2-2_despace.qmd"
-          - href: "day2/day2-3_differential.qmd"
-          - href: "day2/day2-4_deconvolution.qmd"
+          - href: "day2/day2-2_svg_feature_set_signatures.qmd"
+          - href: "day2/day2-3_differential_spatial_pattern.qmd"
     right:
       - icon: github
         href: https://github.com/sib-swiss/seq-spatial-transcriptomics-training
