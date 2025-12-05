@@ -9,7 +9,7 @@ editor_options:
 
 ## Quality control at spot-level
 
-In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. This step focuses at removing low-quality spots or technical artifacts from the dataset to avoid biases into downstream analysis.
+In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. This step focuses on removing low-quality spots or technical artifacts from the dataset to avoid biases into downstream analysis.
 
 
 ## Learning objectives
@@ -31,6 +31,8 @@ By the end of this exercise, you will be able to:
 library(SpatialExperiment)
 library(SpotSweeper)
 library(scuttle)
+library(scater)
+library(ggside)
 library(ggplot2)
 library(escheR) 
 library(HDF5Array)
@@ -40,16 +42,16 @@ library(patchwork)
 
 ## Calculate QC metrics
 
-We will start calculating QC metrics that are also commonly used in scRNA-seq data (total counts, number of detected genes, mitochondrial percentage). These metrics will be used to identify low-quality spots.  
+We will start by calculating QC metrics that are also commonly used in scRNA-seq data analysis (number of UMI counts per cell, number of detected genes per cell, percentage of UMIs originating from mitochondrial genes). Here these metrics will be calculated per sport, and used to identify low-quality spots.  
 
-We will start by loading our `SpatialExperiment` object, which has been saved in the previous exercise, and prepare it for quality control analysis.  
+We will start by loading our `SpatialExperiment` object, which was saved in the previous exercise, and prepare it for quality control analysis.  
 
 
 ```{r}
 # Load the SpatialExperiment object
 spe <- loadHDF5SummarizedExperiment(dir="results/day1/", prefix="01.1_spe")
 
-# Identify mitochondrial genes (genes starting with "MT-")
+# Identify mitochondrial genes (genes with symbol starting with "MT-")
 is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
 ```
 
@@ -83,32 +85,38 @@ colData(spe)
 
 ### Global outlier detection
 
-In order to detect low-quality spots and filter them out, QC methods adapted from snRNA-seq analysis can be applied.
-A simple option is to apply a fixed thresholds to each QC metric across all spots, and remove the spots that do not pass the filering criteria applied.
+In order to detect low-quality spots and filter them out, QC methods adapted from scRNA-seq analysis can be applied. A simple option is to apply a fixed (upper or lower-bound) threshold to a metric across all spots, and remove the spots that do not pass the filtering criteria applied.
 
-QC metrics:
-  
-- Library size: 
-- Number of expressed genes
-- Proportion of Mt reads
+To set up these threshold we can look for information from 10X and the community, for example https://github.com/10XGenomics/HumanColonCancer_VisiumHD/issues/28. Based on this discussion the authors of the OSTA book wrote (see "Remove bins overlaying empty tissue" section in https://lmweber.org/OSTA/pages/seq-workflow-visium-hd-bin.html#dependencies): 
 
-We can have a look and plot distributions of the values to decide which is the best cutoff:
+> Based on a discussion with the original author at 10x Genomics, in this dataset, 8 µm bins with a library size below 100 are removed. Since we expect a 4-fold increase in library size across all bins at 16 µm, we can set the filtering threshold to 400.
+
+We can also have a look and plot distributions of the values to decide which is the best cutoff:
 
 ```{r}
 # Plot library size vs. detected genes
-p1 <- plotObsQC(spe, 
-                plot_type="scatter", 
-                x_metric="detected", 
-                y_metric="sum",
-                y_threshold=600) + 
+p1 <- ggcells(spe, aes(x=detected, y=sum)) + 
+  geom_point() +
+  geom_density_2d() +
+  scale_x_log10() +
+  scale_y_log10() +
+  geom_xsidehistogram() + 
+  geom_ysidehistogram() + 
+  geom_vline(xintercept = 300, col="red", lty=2) +
+  geom_hline(yintercept = 400, col="red", lty=2) +
+  labs(y="Number of UMIs", x="Number of detected genes") +
   ggtitle("Library size vs. detected")
 
 # Plot mito proportion vs. detected genes
-p2 <- plotObsQC(spe, 
-                plot_type="scatter", 
-                x_metric="detected", 
-                y_metric="subsets_Mito_percent", 
-                y_threshold=30) + 
+p2 <- ggcells(spe, aes(x=detected, y=subsets_Mito_percent)) + 
+  geom_point() +
+  geom_density_2d() +
+  scale_x_log10() +
+  geom_xsidehistogram() + 
+  geom_ysidehistogram() + 
+  geom_vline(xintercept = 300, col="red", lty=2) +
+  geom_hline(yintercept = 20, col="red", lty=2) +
+  labs(y="% mitochondrial reads", x="Number of detected genes") +
   ggtitle("Mito proportion vs. genes detected")
 
 p1 + p2
@@ -118,9 +126,9 @@ And further check how many spots would be removed with the given thresholds:
 
 ```{r}
 # Flag spots based on fixed thresholds
-spe$qc_lib_size <- spe$sum < 500
-spe$qc_detected <- spe$detected < 400
-spe$qc_mito_prop <- spe$subsets_Mito_percent > 30
+spe$qc_lib_size <- spe$sum < 400
+spe$qc_detected <- spe$detected < 300
+spe$qc_mito_prop <- spe$subsets_Mito_percent > 20
 
 # Tabulate number of spots flagged by each
 qc <- grep("^qc", names(colData(spe)))
@@ -129,7 +137,9 @@ sapply(colData(spe)[qc], table)
 
 ::: callout-important
 ## Exercise 2
-Have a look at the mitochondrial percentage numbers on the tissue section using plotVisium() function. Which spots are more likely to be excluded?
+What do you think about this intial filtering? 
+
+Have a look at the mitochondrial percentage numbers on the tissue section using `plotVisium()` function. Which spots are more likely to be excluded? 
 :::
 
 :::{.callout-tip collapse="true"}
@@ -137,27 +147,26 @@ Have a look at the mitochondrial percentage numbers on the tissue section using 
 
 ```{r}
 plotVisium(spe, annotate = "subsets_Mito_percent", zoom = TRUE)
-plotVisium(spe, spots=FALSE, zoom = TRUE)
 ```
 :::
 
 ### Visualize spatial pattern of QC metrics (Global outliers)
 
-Very importantly, we want to have a look into the spatial pattern of the QC metrics before deciding on global thresholds:
+Very importantly, we want to have a look into the spatial pattern of using a fixed threshold for QC metrics :
 
 ```{r}
 # check spatial pattern of discarded spots
 p1 <- plotObsQC(spe, 
                 plot_type="spot", annotate="qc_lib_size") + 
-  ggtitle("Library size (< 600 UMI)")
+  ggtitle("Library size (< 400 UMI)")
 
 p2 <- plotObsQC(spe, 
                 plot_type="spot", annotate="qc_detected") + 
-  ggtitle("Detected genes (< 400 genes)")
+  ggtitle("Detected genes (< 300 genes)")
 
 p3 <- plotObsQC(spe, 
                 plot_type="spot", annotate="qc_mito_prop") + 
-  ggtitle("Mito proportion (> 30%)")
+  ggtitle("Mito proportion (> 20%)")
 
 # plot the three together
 gridExtra::grid.arrange(p1, p2, p3, ncol=2)
@@ -167,7 +176,7 @@ gridExtra::grid.arrange(p1, p2, p3, ncol=2)
 
 ### Local Outlier Detection
 
-Another approach to identify low-quality spots is to use local outlier detection methods that take into account the spatial context of each spot.
+To avoid discarding whole layers of tissues, another approach to identify low-quality spots is to use local outlier detection methods that take into account the spatial context of each spot.
 
 `SpotSweeper` package provides functions to identify common QC metrics (such as the ones we have seen in the previous section: library size, number of detected genes, and mitochondrial percentage) and detect local outliers based on these metrics.
 
@@ -208,7 +217,11 @@ spe$local_outliers <- as.logical(spe$sum_outliers) |
 
 ::: callout-important
 ## Exercise 3
-How many spots were identified as local outliers based on the combined criteria?
+How many spots were identified as local outliers based on the combined criteria? 
+
+As we have seen before, visualizing the QC metrics is crucial for understanding the quality of your spatial transcriptomics data and for deciding on appropriate filtering strategies, so look at their spatial localization using the `plotObsQC` function.
+
+What do you think?
 :::
 
 
@@ -217,27 +230,20 @@ How many spots were identified as local outliers based on the combined criteria?
 ```{r}
 # Count the number of spots flagged as local outliers.
 table(spe$local_outliers)
+
+plotObsQC(spe, 
+          plot_type="spot", annotate="local_outliers") + 
+  ggtitle("All local outliers")
 ```
-:::
 
 
-### Visualize spatial pattern of QC metrics (Local outliers)
-
-As we have seen before, visualizing the QC metrics is crucial for understanding the quality of your spatial transcriptomics data and for deciding on appropriate filtering strategies.  
-
-> Juna: maybe add a visualisation step of the QC metrics on the slide before plotting the outliers?
-
-Next, we will visualize the spatial distribution of the local outliers.
-
-Highligh the spots that have been flagged as local outliers based on mitochondrial percentage.
+Even better, we can visualize the spatial distribution of the local outliers together with the QC metrics, for example plot the spatial distribution of local outliers for mitochondrial percentage.
 ```{r}
-# Plot the spatial distribution of local outliers for mitochondrial percentage.
 plotQCmetrics(spe,
   metric = "subsets_Mito_percent", outliers = "subsets_Mito_percent_outliers", point_size = 0.4,
   stroke = 0.75
 ) +
   ggtitle("Local outliers for %MT")
-
 ```
 
 ::: callout-important
@@ -266,33 +272,25 @@ plotQCmetrics(spe,
   ggtitle("Local outliers for number of UMIs")
 ```
 
+Very few spots seem to be flagged as outliers!
 :::
 
-Plot the three metrics together:
 
+We can visualisaze the z-scores from the local outlier detection test, and compare it to the global threshold used earlier. How do you interpret this?  
 ```{r}
-plotQCmetrics(spe,
-  metric = "local_outliers", outliers = "local_outliers", point_size = 0.4,
-  stroke = 0.75
-) +
-  ggtitle("Local outliers excluded based on 3 criteria")
+plotObsQC(spe, plot_type = "violin", x_metric = "subsets_Mito_percent_z", annotate = "qc_mito_prop")
 ```
-
-
-
-> Juna: add visualisation of z-scores as violin? Reflect how those are different than the common QC violins in scRNAseq? 
-
 
 ## Compare and combine global and local outliers and apply filtering
 
-> Juna: potentially add a comparison of filtering and adjust the global cutoffs:
+Based on the comparison of global and local outliers, we choose here to adjust the global cutoffs to be less stringent:
 
 Adjust global filtering cutoffs based on previous plots (apply less stringent cutoffs)
 
 ```{r}
 # adjust global filtering cutoff
-spe$qc_lib_size <- spe$sum < 50
-spe$qc_detected <- spe$detected < 10
+spe$qc_lib_size <- spe$sum < 120
+spe$qc_detected <- spe$detected < 100
 spe$qc_mito_prop <- spe$subsets_Mito_percent > 35
 ```
 
@@ -305,7 +303,7 @@ p2 <- plotObsQC(spe, plot_type="spot", annotate="local_outliers")
 gridExtra::grid.arrange(p1, p2, ncol=2)
 ```
 
-Combine both and filter out genes with 0 counts
+Combine both:
 
 ```{r}
 # combine local and global outliers to create a final discard flag
@@ -328,20 +326,9 @@ plotVisium(spe, zoom=T, annotate="discard")
 ```
 :::
 
-Finally, we can filter out the low-quality spots from the `SpatialExperiment` object based on the combined criteria of global and local outliers. Additionally, we will remove any features (genes) that have zero counts across all remaining spots.
-
-```{r}
-# remove the spots considered of low quality based on both global and local metrics
-spe <- spe[, !spe$discard]
-
-# remove features with all 0 counts
-spe <- spe[rowSums(counts(spe)) > 0, ]
-``` 
-
-
 ## Technical artifacts
 
-Technical artifacts can arise during tissue preparation, for example tissue dissection can cause mechanical damage, leading to areas with artificially low biological heterogeneity. These can be detected wiht the `findArtifacts` function of the `spotSweeper` package.
+Technical artifacts can arise during tissue preparation, for example tissue dissection can cause mechanical damage, leading to large areas with artificially low biological heterogeneity. These can be detected with the `findArtifacts` function of the `spotSweeper` package.
 
 ```{r}
 # find artifacts using SpotSweeper
@@ -355,9 +342,8 @@ spe <- findArtifacts(spe,
 
 ::: callout-important
 ## Exercise 6
-What is the `findArtifacts` function performing and what are the (potentially) problematic assumptions?
+What is the `findArtifacts` function performing and what are the (potentially problematic) assumptions?
 :::
-
 
 ::: callout-important
 ## Exercise 7
@@ -377,6 +363,18 @@ plotQCmetrics(spe,
 ```
 :::
 
+## Filtering 
+We decide to filter out the low-quality spots from the `SpatialExperiment` object based on the combined criteria of global thresholds and local outliers. Additionally, we will remove any features (genes) that have zero counts across all remaining spots.
+
+```{r}
+# remove the spots considered of low quality based on both global and local metrics
+spe <- spe[, !spe$discard]
+
+# remove features with all 0 counts
+spe <- spe[rowSums(counts(spe)) > 0, ]
+``` 
+
+What is the size of the dataset after filtering?
 
 ## Save the object
 
