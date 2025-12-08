@@ -9,7 +9,7 @@ editor_options:
 
 ## Differential analysis with multi-sample
 
-In this exercise, we extend our analysis to multi-sample, multi-condition spatial transcriptomics data. With multiple samples per condition (e.g., 2 CRC and 2 normal tissues), we can ask not only: 
+In this exercise, we extend our analysis to multi-sample, multi-condition spatial transcriptomics data. With multiple samples per condition (e.g., 2 colorectal carcinoma (CRC) and 2 normal adjacent tissues), we can ask not only: 
 
 > "Is a gene spatially variable within a tissue?" 
 
@@ -17,7 +17,7 @@ but also:
 
 > "Does its spatial pattern change between conditions?" 
 
-Genes showing such changes are called **differential spatial pattern (DSP)** genes. Using the `DESpace` package, we will learn how to identify such genes, that may be spatially variable in one condition but not in another, or it could be spatially variable in both conditions, but with different spatial patterns.
+Genes showing such changes are called **differential spatial patterns (DSP)** genes. Using the `DESpace` package, we will learn how to identify such genes, that may be spatially variable in one condition but not in another, or it could be spatially variable in both conditions, but with different spatial patterns.
 
 
 ## Learning Objectives
@@ -44,6 +44,8 @@ library(DESpace)
 
 ## Load preprocessed data
 
+We will work with the same VisiumHD dataset from the human colon cancer study [recently published](https://www.nature.com/articles/s41588-025-02193-3). Here we use a preprocessed dataset containing 4 VisiumHD slides from three patients (P1CRC, P5CRC, P3NAT, and P5NAT), representing either colorectal carcinoma (CRC) or normal adjacent tissues (NAT), all with pre-computed clusters.
+
 ```{r}
 spe <- loadHDF5SummarizedExperiment(dir="data/", prefix="02.3_spe_tmp")
 spe <- scuttle::logNormCounts(spe)
@@ -64,12 +66,15 @@ table(spe$condition)
 Visualize clusters for each sample.
 
 ```{r}
+#| fig-width: 4
+#| fig-height: 4
+
 samples <- sort(unique(spe$sample_id))
 lapply(samples, \(.)
        plotCoords(spe[, spe$sample_id == .],
                   annotate="cluster",
                   in_tissue=NULL,
-                  point_size = 0.05) +
+                  point_size = 0.1) +
          ggtitle(.)) |>
   wrap_plots(nrow = 2) &
   scale_color_manual(values=unname(pals::trubetskoy())) &
@@ -80,11 +85,11 @@ lapply(samples, \(.)
 
 ## DESpace
 
-### global test
+### Global test
 
 To answer the question: does the expression of a gene change between conditions, but change differently for some domains compared to others?
 
-`DESpace::dsp_test()` first aggregate spot- or cell-level counts into pseudobulk counts for each (sample, domain) combination, then test whether the interaction term (condition X domain) in the model are different from zero.
+`DESpace::dsp_test()` first aggregates spot- or cell-level counts into pseudobulk counts for each (sample, domain) combination, then tests whether the interaction term (condition x domain) in the model is different from zero.
 
 ```{r}
 # Take few minutes to run
@@ -99,12 +104,12 @@ res_edgeR <- dsp_test(spe,
 ::: callout-important
 ## Exercise 1
 
-Checkout the results:
+Check out the results:
 
 - Extract gene-level results.
 - Count how many DSP genes are significant at 5\% FDR.
-- Take the top 3 DSP genes and visualize their spatial expression across all samples `ggspavis::plotCoords()`.
-- How would you interpret these patterns?
+- Take the top 3 DSP genes and visualize their spatial expression across all samples using `ggspavis::plotCoords()`.
+- How would you describe the spatial expression patterns of these genes? To help with interpretation, try looking up information about these genes (e.g., UniProt or the Human Protein Atlas) to get clues about which cell types or tissue domains they may highlight.
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -125,7 +130,7 @@ gs
 
 ```{r}
 #| fig-width: 9
-#| fig-height: 8
+#| fig-height: 9
 
 plots <- lapply(samples, \(s) {
   # Subset to sample s
@@ -151,7 +156,7 @@ plots <- lapply(samples, \(s) {
       assay_name = "logcounts",
       feature_names = "Symbol"
     ) +
-      scale_color_gradientn(colors = pals::parula())
+      scale_color_gradientn(colors = pals::brewer.reds(n=12))
   })
   
   # combine the cluster plot and 3 gene plots
@@ -161,8 +166,6 @@ plots <- lapply(samples, \(s) {
 plots_flat <- unlist(plots, recursive = FALSE)
 wrap_plots(plots_flat, ncol = 4)
 ```
-
-**UBE2C** is a marker of cell proliferation and tends to show broad, strong expression in tumor epithelium but limited to crypt bases in normal tissue. **SPIB** is associated with B cells and dendritic cells, often appears in immune cell aggregates that become more prominent in cancer tissue. **TGFBI**, cancer-associated fibroblasts and ECM remodeling, and typically appears stronger and more localized in tumor stroma than in healthy colon. 
 :::
 
 ### Individual domain test
@@ -202,7 +205,6 @@ head(dsp_clu[[id_clu]], 5)
 
 # Select the 4th top DSP genes
 (gs <- rownames(dsp_clu[[id_clu]])[4])
-
 ```
 
 ```{r}
