@@ -245,7 +245,7 @@ Based on the scree plot, how many principal components would you consider for do
 ::: {.callout-tip collapse="true"}
 ### Answer
 We can select the first 10 PCs for downstream analysis, as they seem to capture a significant proportion of the variance in the data before the explained variance starts to level off.
-::: 
+:::
 
 Choose the number of PCs accordingly for downstream analysis. Visualize the PCs on the tissue slice coordinates.
 
