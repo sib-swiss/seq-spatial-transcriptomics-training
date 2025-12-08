@@ -21,12 +21,19 @@ library(patchwork)
 library(SpatialExperiment)
 library(scran) 
 library(scater)
+# BiocManager::install("SingleR")
+# BiocManager::install("scrapper")
+library(SingleR)
+library(qs2)
+library(viridis)
+library(RColorBrewer)
+library(pheatmap)
 ```
 
 
 ## Clustering and Spatially-aware clustering
 
-In the next section we will explore clustering methods for spatial transcriptomics data, including both non-spatially aware and spatially-aware approaches. 
+In the next section we will explore clustering methods for spatial transcriptomics data, including classical non-spatially aware and spatially-aware approaches. 
 
 ## Learning Objectives
 By the end of this exercise, you will be able to:
@@ -40,14 +47,13 @@ By the end of this exercise, you will be able to:
 Load the previously saved `SpatialExperiment` object which contains information on the HVGs and dimensionationality reduction computed with Banksy and PCA.
 
 ```{r}
-#spe.hvg <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe_tmp_tmp")
 spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.3_spe")
 ```
 
 
 ### Non-spatial aware clustering
 
-Clustering methods can also be categorized into non-spatially aware and spatially-aware methods. We will first explore non-spatially aware clustering using graph-based methods.
+Clustering methods can be categorized into non-spatially aware, classically used for scRNA-seq analysis, and spatially-aware methods. We will first explore non-spatially aware clustering using graph-based methods.
 
 #### Leiden clustering
 
@@ -59,13 +65,14 @@ g <- buildSNNGraph(spe, use.dimred="PCA", type="jaccard", k=20)
 # cluster using Leiden community detection algorithm
 k <- cluster_leiden(g, objective_function="modularity", resolution=0.6)
 # assign cluster labels to spe object
-table(spe$Leiden <- factor(k$membership))
+spe$Leiden <- factor(k$membership)
+table(spe$Leiden)
 ```
 
 
 ### Spatialy aware clustering
 
-Clustering methods can also incorporate spatial information to identify spatial domains or regions in the tissue. There are different kinds of methods, here we will explore two different approaches: Bayesian modeling (probabilistic) and spatially-aware graph-based clustering.
+Clustering methods can also incorporate spatial information to identify spatial domains or regions in the tissue. Here we will explore two different approaches: Bayesian modeling (probabilistic) and spatially-aware graph-based clustering.
 
 #### Probabilistic: BayesSpace
 
@@ -78,21 +85,23 @@ spe <- spatialPreprocess(spe, skip.PCA=TRUE)
 # perform spatial clustering with 'BayesSpace'
 # using 'd=10' PCs and targeting 'q=8' clusters
 spe <- spatialCluster(spe, q=8, d=10, nrep=1e3, burn.in=100) 
-table(spe$BayesSpace <- factor(spe$spatial.cluster))
+spe$BayesSpace <- factor(spe$spatial.cluster)
+table(spe$BayesSpace)
 ```
 
 
 #### Graph-based: Banksy
 
-We have computed a principal components using Banksy mathod already in the previous step. We will now used them (use Banksy dimentionality reduction space) to perdoem SNN graph-based Leiden clustering based on them, in order to obtain spatially-aware clusters.
-When building the SNN graph, we will use the same parameters we have used before for the non-spatially aware graph, but using banksy PCs.
+We have computed spatially-aware principal components using Banksy already in the previous practical. We will now used these to perform SNN graph-based Leiden clustering, in order to obtain spatially-aware clusters.
+When building the SNN graph, we will use the same parameters we have used before for the non-spatially aware graph.
 
 ```{r}
 # perform SNN graph-based clustering on 'Banksy' PCs using
 g <- buildSNNGraph(spe, use.dimred="PCA_banksy", type="jaccard", k=20)
 # cluster using Leiden community detection algorithm
 k <- cluster_leiden(g, objective_function="modularity", resolution=0.6)
-table(spe$Banksy <- factor(k$membership))
+spe$Banksy <- factor(k$membership)
+table(spe$Banksy)
 ```
 
 
@@ -102,18 +111,16 @@ Let's visualize the clustering results from the different methods on the tissue 
 
 ```{r}
 # Define the three clustering methods to compare
-ks <- c("BayesSpace", "Leiden", "Banksy")#, "CellCharter") 
+ks <- c("BayesSpace", "Leiden", "Banksy") 
 # Plot spatial distribution of clusters for each method
 plots <- c(lapply(ks, \(.) {
-    plt <- plotVisium(spe, annotate=., zoom = T)
-    plt$layers[[1]]$aes_params$stroke <- 0
-    plt$layers[[1]]$aes_params$size <- 0.2
+    plt <- plotVisium(spe, annotate=., zoom = T, point_shape = 22, point_size = 1)
     plt
 }) ,  
   plotVisium(spe, zoom = T,  spots=FALSE )) # add a plot of the tissue without spots
 # combine plots
 plots |>  wrap_plots(nrow=2) &
-    #scale_color_manual(values=unname(pals::trubetskoy())) &
+      scale_fill_brewer(palette = "Set1") &
     theme(legend.key.size=unit(0, "lines"), legend.justification="left")
 ```
 
@@ -131,15 +138,78 @@ lapply(tail(names(sort(table(spe$Banksy))), 8), \(k) {
     plt + ggtitle(k)
 }) |>
     wrap_plots(nrow=3) &
-    scale_color_manual(values=c("lavender", "purple")) &
+    scale_color_manual(values=c("white", "red")) &
     theme(plot.title=element_text(hjust=0.5), legend.position="none")
 ```
 
 
 ::: callout-important
-## Bonus question
-Visualise the clusters obtained with BayesSpace and Leiden methods one by one, and compare their spatial distribution to the Banksy clusters. Do you observe any similarities or differences in the spatial patterns?
+## Exercise 1
+Visualise the clusters obtained with the 3 methods, and compare their spatial distribution. What do you observe?
 :::   
+
+
+## Perform cell-type annotation of the spots
+
+We'll use the annotation of the scRNA-seq dataset (10X FLEX technology) generated along with the VisiumHD used in the practicals (See the record on [GEO](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280311) and the related [Github repository](https://github.com/10XGenomics/HumanColonCancer_VisiumHD/tree/main)). We subsetted this reference dataset to 5,000 cells.
+
+To annotate each spot, we use the `SingleR()` method, which uses a correlation-based approach comparing test cells (here: spots) to reference samples with known cell-type annotation.
+
+
+```{r}
+ref.se = qs_read("data/NatGenetics2025_CRC_5k.SE.qs")
+table(colData(ref.se)$labels)
+
+# Predict cell-type using SingleR 
+pred <- SingleR(test   = logcounts(spe),
+                ref    = assay(ref.se, "data"), # log-normalized counts        
+                labels = ref.se$labels,
+                aggr.ref = TRUE,                # pseudo-bulk aggregation of reference labels  
+                fine.tune = FALSE,              # for faster computation here
+)
+spe$SingleR_label <- pred$pruned.labels
+table(spe$SingleR_label)
+# visualize the predictions on the tissue slide.
+plotCoords(spe, annotate="SingleR_label", point_shape = 15, point_size = 1) + 
+  scale_colour_brewer(palette = "Set1")
+plotVisium(spe, annotate="SingleR_label", zoom = T, point_shape = 22, point_size = 1) + 
+  scale_fill_brewer(palette = "Set1")
+```
+
+::: callout-important
+## Exercise 2
+What do you think about this annotation? Do you identify potentially relevant biological structures? How are these isolated above in the calculated clusters and spatial domains? 
+:::
+
+:::{.callout-tip collapse="true"}
+### Answer
+
+Let's compare to the Leiden cluster for example:
+```{r}
+tab_prop <- prop.table(table(spe$Leiden, spe$SingleR_label), margin = 1)
+## For display: round and remove 0s
+num_mat <- round(tab_prop, 2)
+num_mat[num_mat == 0] <- ""
+
+## Annotation colors
+group_df = data.frame(row.names = colnames(tab_prop), SingleR_label=colnames(tab_prop))
+ann_colors = list(
+  SingleR_label = setNames(object = brewer.pal(9, "Set1"), colnames(tab_prop)))
+
+pheatmap(
+  tab_prop,
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  color = viridis(100, option = "magma", direction = -1)[0:50],
+  display_numbers = num_mat,
+  fontsize_number = 10,
+  fontsize = 12,
+  border_color = NA,
+  main = "Leiden clusters vs. SingleR labels", 
+  annotation_col = group_df,
+  annotation_colors = ann_colors  
+)
+```
 
 
 ## Save the object
