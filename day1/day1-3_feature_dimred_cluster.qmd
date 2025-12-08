@@ -74,7 +74,6 @@ assayNames(spe)
 ```
 :::
 
-
 After log-normalization, we can inspect the computed size factors. Size factors are used to account for differences in sequencing depth between spots.
 
 ```{r}
@@ -88,25 +87,38 @@ plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
 
 ::: callout-important
 ## Exercise 2
-Based on the spatial distribution of size factors, do you observe any spatial patterns or gradients across the tissue section? Do you think they reflect technical or biological patterns?
+Do you observe any spatial patterns or gradients for the size factors across the tissue section? What do you think they reflect?
 :::
+
+### Bonus: accounting for compositional biases
+The `scuttle::computePooledFactors()` implements the strategy introduced by [Lun et al.](https://link.springer.com/article/10.1186/s13059-016-0947-7) to account for compositional biases (which can introduce spurious differences between cells) during normalization. 
+
+::: {.callout-tip collapse="true"}
+### Answer
+```{r}
+# lib.sf.spe <- sizeFactors(spe) ## Store size factors calculated above
+# set.seed(100)
+# clusters <- quickCluster(spe)
+# spe <- computeSumFactors(spe, cluster=clusters, min.mean=0.1)
+# spe <- logNormCounts(spe)
+# 
+# plot(lib.sf.spe, sizeFactors(spe), xlab="Library size factor",
+#     ylab="Deconvolution size factor", log='xy', pch=16,
+#     col=as.integer(factor(clusters)))
+# abline(a=0, b=1, col="red")
+```
+:::
+
+### Bonus: spatially-aware normalization 
+While `logNormCounts` provides a general-purpose normalization, specialized spatially-aware normalization methods exist.  These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.
+
+If time is left at the end of this practical, explore the normalization strategy implemented in the `SpaNorm` package.
 
 ## Feature Selection
 
 ### Highly Variable Genes (HVGs)
 
-Feature selection is a crucial step to reduce noise and focus on genes that show significant biological variation across spots. We typically identify Highly Variable Genes (HVGs) as these are more likely to distinguish different cell types or spatial domains.
-
-Before defining the top HVG, we will remove mitochondrial genes, since those genes tend to be highly variable and often not of biological interest.
-
-```{r}
-# identify mitochondrial genes
-nm <- rowData(spe)$Symbol
-mt <- grepl("^MT-", nm, ignore.case = TRUE)
-table(mt)
-# remove them
-spe <- spe[!mt, ]
-```
+Similar to scRNA-seq analysis, feature selection is a crucial step to focus on genes that show significant biological variation across spots, and thus increase the signal to noise ratio. We typically aim at focusing on "Highly Variable Genes" (HVGs) as these are more likely to distinguish different cell types or spatial domains.
 
 In order to identify HVGs, we will first model the gene variance using a Poisson noise model with `scran::modelGeneVarByPoisson()`
 
@@ -114,6 +126,8 @@ In order to identify HVGs, we will first model the gene variance using a Poisson
 # Model gene variance to identify highly variable genes.
 # This function fits a mean-variance trend to the log-normalized counts.
 dec <- modelGeneVarByPoisson(spe)
+## Sort by biological variance
+dec <- dec[order(dec$bio, decreasing = T), ]
 
 # Visualize the mean-variance relationship and the fitted trend.
 # This plot helps to understand how gene variability changes with expression level.
@@ -125,12 +139,20 @@ plot(dec$mean, dec$total,
 curve(metadata(dec)$trend(x), add = TRUE, col = "dodgerblue", lwd = 2)
 ```
 
-Once we have modelled the gene variance, we can proceed to select the top HVGs. 
-For demonstration purposes, we will select the top 5 HVGs and visualise their expression patterns on the tissue slide.
+::: callout-important
+## Exercise 3
+How do you interpret this plot, compared to similar ones generated from scRNA-seq datasets?
+:::
+
+Once we have modeled the gene variance, we can proceed to select the top HVGs. 
+For demonstration purposes, we will visualize the expression patterns of the top 6 HVGs on the tissue slide. We exclude the mitochondrial genes, since those genes tend to be highly variable but do not provide much information about cell types or spatial domains.
 
 ```{r}
-# Top 5 HVGs
-top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:5]
+# identify mitochondrial genes
+is.mito <- rownames(spe)[grepl("^MT-", rownames(spe))]
+
+# Top 6 HVGs
+top_HVG <- row.names(dec[!row.names(dec) %in% is.mito, ])[1:6]
 top_HVG
 
 # Create a plot for each gene in top_HVG
@@ -146,26 +168,56 @@ patchwork::wrap_plots(ps, nrow = 2) &
   scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
 ```
 
-For downstream analysis, define a larger group of HVG and add the information of whether a genes is in the HVG list or not in rowData
+::: callout-important
+## Exercise 4
+How would you define the spatial expression patterns of these genes? Look a bit for some information on these genes (e.g., on the Uniprot website) to get a hint at which cell types and domains they could highlight.
+:::
+
+For downstream analysis, we define a larger group of HVG and add the information of whether a genes is in the HVG list or not in a `rowData` slot:
 
 ```{r}
-# Select the top N highly variable genes.
-# The number of HVGs can influence downstream dimensionality reduction and clustering.
-hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
+# Select the top 1000 highly variable genes.
+hvg <- getTopHVGs(dec, n = 1000) 
 
 # Store HVG information in rowData
 rowData(spe)$hvg <- rowData(spe)$Symbol %in% hvg
 
-# Display the number of HVGs identified
-sum(rowData(spe)$hvg)
+# Display the range of biological variation for the selected HVGs
+dec[hvg, ]$bio |> summary()
 
 # Have a look a the new column added
 rowData(spe)
 ```
 
+### Spatially Variable Genes (SVGs)
+
+We will go very quickly over this topic, which will be discussed in depth tomorrow. Today, the idea is to get an intuition about the difference between HVGs and SVGs. For this, we select randomly 6 other HVGs from the list, and plot their expression:
+
+```{r}
+# Select randomly 6 HVGs
+set.seed(123)
+random_HVG <- sample(row.names(dec), size = 6)
+
+# Create a plot for each gene in top_HVG
+ps <- lapply(random_HVG, \(.) {
+    plotCoords(spe, 
+        annotate = ., 
+        assay_name = "logcounts") }) # use "logcounts" assay to visualise log normalised counts
+
+# figure arrangement and change colors
+patchwork::wrap_plots(ps, nrow = 2) & 
+  theme(legend.key.width = unit(0.4, "lines"), 
+        legend.key.height = unit(0.8, "lines")) & 
+  scale_color_gradientn(colors = rev(hcl.colors(9, "Rocket")))
+```
+
+::: callout-important
+## Exercise 5
+How would you define the spatial expression patterns of these genes? What is the difference with genes at the top of the list? Which ones would you qualify as SVGs?
+:::
 
 ## Dimensionality Reduction (DR)
-Once we have identified highly variable genes (HVGs), we can proceed to perform dimensionality reduction and later on clustering.
+Thereafter we make use of the highly variable genes (HVGs) to perform dimensionality reduction and clustering.
 
 ### Non-spatially aware DR:
 
@@ -186,19 +238,19 @@ plot(attr(reducedDim(spe, "PCA"), "percentVar"),
 ```
 
 ::: callout-important
-## Exercise 3
-Based on the scree plot, how many principal components would you consider for downstream analysis? Why?
+## Exercise 6
+Based on the scree plot, how many principal components would you consider for downstream analysis? Why? You can also have  look at the `scran::getDenoisedPCs` function to help you make this choice.
 :::
 
 ::: {.callout-tip collapse="true"}
 ### Answer
-We can select the first 10 PCs for downstream analysis, as they capture a significant proportion of the variance in the data before the explained variance starts to level off.
+We can select the first 10 PCs for downstream analysis, as they seem to capture a significant proportion of the variance in the data before the explained variance starts to level off.
 ::: 
 
 Choose the number of PCs accordingly for downstream analysis. Visualize the PCs on the tissue slice coordinates.
 
 ```{r}
-# Run PCA on the log-normalized counts of the HVGs using 10 PCs
+# Run PCA on the log-normalized counts of the HVGs using the top PCs, for example 10 PCs
 spe <- runPCA(spe, ncomponents = 10, subset_row = rowData(spe)$hvg)
 
 # Get the PCA results 
@@ -216,6 +268,27 @@ patchwork::wrap_plots(ps, nrow = 2) &
 
 ```
 
+::: callout-important
+## Exercise 7
+What do you notice? How do you interpret it?
+
+## Bonus Exercise
+Extract the genes most associated with one of these PCs
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+
+We observe a strong correlation between the PCs scores and the expression patterns observed above for the top HVGs, suggesting that they refelct cell type or domain biology.
+
+To extract the 10 genes most associated to PC2: 
+```{r}
+
+attributes(reducedDims(spe)[["PCA"]])$rotation[, "PC2"] |> abs() |> sort(decreasing = TRUE) |> names() |> head(n=10)
+
+```
+
+
 ### Spatially aware DR:
 
 #### Banksy
@@ -223,29 +296,31 @@ patchwork::wrap_plots(ps, nrow = 2) &
 We can also perform spatially aware dimensionality reduction using the `Banksy` method, which integrates spatial coordinates and gene expression into the PCA framework. This allows us to capture spatial patterns in the data while reducing dimensionality. 
 
 ```{r}
-# Clustering with Banksy
-set.seed(112358)
-
 # 'Banksy' parameter settings
 k <- 20   # consider first order neighbors
 l <- 0.8 # use spatial information with weight lambda
 a <- "logcounts" # assay to use
 xy <- c("array_row", "array_col")  # spatial coordinate names
 
-# restrict to selected HVG features
-dec <- modelGeneVarByPoisson(spe)
-hvg <- getTopHVGs(dec, n = 2000) # Selecting top 2000 HVGs
-tmp <- spe[hvg, ] # subset to HVGs
-
-# compute spatially aware 'Banksy' PCs
-tmp <- computeBanksy(tmp, assay_name=a, coord_names=xy, k_geom=k)
-tmp <- runBanksyPCA(tmp, lambda=l, npcs=10)
+# compute spatially aware 'Banksy' PCs, using the HVGs only
+set.seed(112358)
+tmp <- computeBanksy(spe[rowData(spe)$hvg, ], 
+                     assay_name=a, 
+                     coord_names=xy, 
+                     k_geom=k, 
+                     parallel=T,
+                     num_cores=4)
+tmp <- runBanksyPCA(tmp, 
+                    lambda=l, 
+                    npcs=10)
 reducedDim(spe, "PCA_banksy") <- reducedDim(tmp) # store 'Banksy' PCs in original object
 ```
 
 ::: callout-important
-## Exercise 4
-Have a look at the spe object to see the dimensionality reduction slots. How many dimensionality reductions are stored now? What are their names and what do they represnt?
+## Exercise 8
+While this is running, have a look at the [Banksy paper](https://www.nature.com/articles/s41588-024-01664-3) to understand better what the method is doing.
+
+Have a look at the spe object to see the dimensionality reduction slots. How many dimensionality reductions are stored now? What are their names and what do they represent?
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -264,8 +339,8 @@ There are now three dimensionality reductions stored in the `spe` object: :"PCA_
 In the same way as before, we can visualise the Banksy PCs on the tissue slice coordinates.
 
 ::: callout-important
-## Exercise 5
-Select pcs from Banksy dimensionality reduction space and visualise them on the tissue slice. Do you observe any spatial patterns? How do they compare to the non-spatial PCA?
+## Exercise 9
+Select PCs from Banksy dimensionality reduction space and visualise them on the tissue slice. Do you observe any spatial patterns? How do they compare to the non-spatial PCs?
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -274,7 +349,6 @@ Select pcs from Banksy dimensionality reduction space and visualise them on the 
 ```{r}
 ## Visualize PCs on the tissue slice coordinates
 pcs <- reducedDim(spe, "PCA_banksy")
-#pcs <- pcs[, seq_len(10)]
 ps <- lapply(colnames(pcs), \(.) {
     spe[[.]] <- pcs[, .]
     plotCoords(spe, annotate = .)
@@ -289,13 +363,13 @@ patchwork::wrap_plots(ps, nrow = 2) &
 
 ::: callout-important
 ## Bonus Exercise
-Try to change Banksy parameters k and lambda, how it affects the results?
+Try to change Banksy parameters k and lambda. How does it affect the results?
 :::
 
 
 ## Run UMAP
 
-Run UMAP (for visualization purposes only) based on both, spatially aware and not spatially aware dimensionality reduction
+For visualization purposes only, we'll produce UMAPs based on on both spatially aware and not spatially aware PCA results:
 
 ```{r}
 # UMAP
@@ -305,10 +379,13 @@ spe <- runUMAP(spe, dimred="PCA_banksy", name="UMAP_banksy")
 
 ```{r}
 # Visualise
-plotReducedDim(spe, dimred = "UMAP_tx", colour_by = "sum") 
-plotReducedDim(spe, dimred = "UMAP_banksy", colour_by = "sum")
-```
+plotReducedDim(spe, dimred = "UMAP_tx", colour_by = "detected") + 
+  scale_colour_gradient(trans = "log", high = "yellow", low = "red")
 
+plotReducedDim(spe, dimred = "UMAP_banksy", colour_by = "detected") +
+    scale_colour_gradient(trans = "log", high = "yellow", low = "red")
+
+```
 
 ::: callout-important
 ## Bonus question
@@ -324,9 +401,4 @@ saveHDF5SummarizedExperiment(spe_HVG, dir="results/day1", prefix="01.3_spe", rep
                                 chunkdim=NULL, level=NULL, as.sparse=NA,
                                 verbose=NA)
 ```
-
-### Spatially-Aware Normalization (Optional)
-While `logNormCounts` provides a general-purpose normalization, specialized spatially-aware normalization methods exist (e.g., `SpaNorm` package). These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.
-
-
 
