@@ -10,7 +10,7 @@ bibliography: ../references.bib
 
 - Learn the basic principles of exploratory spatial statistics
 - Compute and visualise local and global measures of spatial autocorrelation
-- Compare spatial statistics measures across samples
+- Compare spatial statistics measures across samples using linear mixed models
 - This chapter is based on the `OSTA` online book chapter on spatial statistics and uses heavily the `Voyager` spatial statistics library [@moses2023voyager]
 
 ## Libraries
@@ -22,14 +22,19 @@ bibliography: ../references.bib
 library("SpatialExperiment")
 library("ggplot2")
 library("Voyager")
+library("HDF5Array")
+library("tidyr")
+library("dplyr")
+library("lme4")
+library("lmerTest")
 set.seed(1234)
 ```
 
 ## Load data
 
 ```{r}
-# Load the SpatialExperiment object from the .qs2 file.
-spe <- qs2::qs_read("results/01_spe.qs2", nthreads = 1)
+# Load the SpatialExperiment object
+spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.1_spe")
 ```
 
 In order to use the big spatial statistics library `sf` we convert the `SpatialExperiment` object into a `SpatialFeatureExperiment` object [@Moses2025.02.24.640007]. In addition to the `SpatialExperiment` object it contains simple feature categories such as `Geometries` and `Graphs`. In this 10x Visium Dataset the `Geometries` stored are the points of the spots
@@ -45,7 +50,11 @@ In spatial transcriptomics we differentiate between imaging-based and sequencing
 
 ![Data Modalities in Spatial Transcriptomics [@emons2025harnessing]](https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/53/17/10.1093_nar_gkaf870/1/gkaf870fig1.jpeg?Expires=1766403187&Signature=WxVqrLv3B2ktSO5UWsRogBTtrwQeC3Ol-gM090kNJc8hAakLbV1v~BmiBJ5ae-810EciaTYjbNSvPwAGSzaWQXbh9qSOf4jjkNwJsMp2JEI77MoADpxGWvO17H4PUrzfaRlDZK82fc~Ik2GchhlLaKJvQWAMvIKEAdSwrB74D~sbAKqTL1bngu3xL-Ta4x3254JJJbSdAeHbmXH1e8jpeTTFri63iYHI3yUkhJAYhltRKwlfhCkwO2F7Hj1EcwPrTKJK~oFe2igeODcCkpnpvRqZDgAI3ImcF52nGksXGzqXQTO72RPolepCA1cVdGCcQ8K-VUjTGnsB8Ide89-gJw__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA)
 
-Our dataset was acquired by 10x Visium. The data modality of this technology is best described by a _regular lattice_. This means that the observations are taken at regularly spaced intervals. This is very different to imaging-based approaches where observations are due to a stochastic data generating process that is due to some underlying biological mechanism. 
+Our dataset was acquired using 10x Visium HD. The data modality of this technology is best described by a _regular lattice_. This means that the observations are taken at regularly spaced intervals. This is very different to imaging-based approaches where observations are due to a stochastic data generating process that is due to some underlying biological mechanism. 
+
+Visium HD can provide subcellular resulution. We can segment cells from this regular lattice of pixels and approximate the cells by their centroid. This in turn can be described be an _irregular lattice_ of the cell types in space or even be analysed as a point process of the cell centroid locations. 
+
+In what follows we will focus on analysing the regular lattice of the pixel measurements with techniques from lattice data analysis.
 
 ## Preprocessing and neighbourhood defintion
 
@@ -79,7 +88,7 @@ plotColGraph(sfe,
 
 We notice two things:
 
-- The $y$-coordinate is flipped to before. This is due to the way that visium data is acquired. The visium slide is placed on top of the tissue but the H&E image is acquired from below the tissue. Therefore, we need to invert the $y$-coordinate with `scale_y_reverse()`
+- The $y$-coordinate is flipped to before. This is due to the way that visium data is acquired. The visium slide is placed on top of the tissue but the H&E image is acquired from below the tissue.
 
 - On top of the spots we know see the hexagonal neighbourhood on top of the regular lattice. 
 
@@ -95,14 +104,14 @@ $$
 \sum_i \sum_j f(x_i,x_j) w_{ij}
 $$
 
-A very famous measure of global spatial autocorrelation is called Moran's $I$. It assess correlation of a gene with itself given a defined weight matrix [@moran1950notes]. 
+A very famous measure of global spatial autocorrelation is called Moran's $I$. It assess correlation of a gene with itself given a defined weight matrix $w$ [@moran1950notes]. 
 
 ::: callout-important
 ## Exercise
 
 - Model the variance of the log-transformed expression profiles per gene with `scran::modelGeneVar()` (using the argument `subset.row` will make the fitting faster)
-- Extract the top 5 highly variable genes in this dataset with `scran::getTopHVGs()`
-- Calculate the global Moran's $I$ coefficient with the function `Voyager::runUnivariate()` on these 5 highly variable genes. You can find information and examples on how to run this function by typing `?runUnivariate` in your console
+- Extract the top 200 highly variable genes in this dataset with `scran::getTopHVGs()`
+- Calculate the global Moran's $I$ coefficient with the function `Voyager::runUnivariate()` on these 200 highly variable genes. You can find information and examples on how to run this function by typing `?runUnivariate` in your console
 - Extract the top 3 genes with the highest Moran's $I$ value
 - Plot the expression of these three genes in space using `Voyager::plotSpatialFeature`
 
@@ -112,14 +121,14 @@ A very famous measure of global spatial autocorrelation is called Moran's $I$. I
 ## Answer
 
 First, we model the variance on a subset of the genes for computational reasons
-Then, we extract the 20 most highly variable genes
+Then, we extract the 200 most highly variable genes
 
 ```{r}
 stats <- scran::modelGeneVar(sfe, subset.row = 1:2000)
-hvg <- scran::getTopHVGs(stats, prop = 0.02)
+hvg <- scran::getTopHVGs(stats, n = 200)
 ```
 
-Next, we calculate global Moran's I for these 20 genes
+Next, we calculate global Moran's I for these 200 genes
 
 ```{r}
 sfe <- runUnivariate(sfe, 
@@ -147,7 +156,6 @@ Therefore, we will investigate local indicators of spatial association [@anselin
 
 In the case of Moran's $I$ we will now not calculate one measure for the entire field-of-view but rather one metric per location/spot $i$: $I_i$.
 
-
 ::: callout-important
 ## Exercise
 
@@ -168,7 +176,7 @@ sfe <- runUnivariate(sfe,
                      type = "localmoran")
 ```
 
-Then, we will plot them
+Then, we will plot the local Moran's $I$ values in space. 
 
 ```{r}
 plotLocalResult(sfe, "localmoran",
@@ -205,7 +213,16 @@ sfe <- runUnivariate(
   )
 ```
 
-Then, we will plot them
+We will show the Moran's scatter plot for the gene `PIGR`.
+
+```{r}
+# we will show one Moran's scatterplot
+moranPlot(sfe, topGenes[1], graphName = "visium", swap_rownames = "symbol") + theme_classic()
+```
+
+The grey dashed lines indicate the mean expreession of the "PIGR" expression in the spots themselves and among their neighbours. According to to these means the spots are categorised categorised. 
+
+We can plot the categories mapped back in space. We notice that there s quite a large fraction of regions that constitute as "high-high" for all the genes in the same region.
 
 ```{r}
 plotLocalResult(
@@ -240,7 +257,7 @@ One potentially interesting set of questions one could answer with bivariate spa
 ::: callout-important
 ## Bonus Exercise
 
-- Calculate a bivariate Moran's $I$ for the genes `PIGR` and `OLFM4` using the function `Voyager::runBivariate()`
+- Calculate a bivariate Moran's $I$ for the genes `PIGR` and `CLCA1` using the function `Voyager::runBivariate()`
 
 :::
 
@@ -249,7 +266,7 @@ One potentially interesting set of questions one could answer with bivariate spa
 
 ```{r}
 sfe <- runBivariate(sfe, type = "localmoran_bv",
-                    feature1 = "PIGR", feature2 = "OLFM4",
+                    feature1 = "PIGR", feature2 = "CLCA1",
                     colGraphName = "visium",
                     nsim = 499)
 ```
@@ -261,32 +278,144 @@ plotLocalResult(sfe, "localmoran_bv",
                 colGeometryName = "centroids") 
 ```
 
-We notice that there is one region which shows high bivariate Moran's I. This is also the region where both Moran's scatterplot values were "high-high". The regions which were individually for each gene high do not show up here.
+We notice that there is one region which shows high bivariate Moran's I. This is also the region where both univeriate Moran's I scatterplot values were "high-high". The regions which were individually for each gene high do not show up here.
 
 ::: 
 
-# Multi-sample Analysis
+# Bonus: Multi-sample Analysis
 
 This chapter so far showed how to perform lattice-data analysis for one sample. Lattice data analysis is not yet very common in multi-sample analyses. 
 
 One option we have is to compute a measure of global spatial assocation giving one numerical value per field-of-view. 
 
+First we will load 4 slides from the dataset (2 healthy slides and 2 cancerous slides). 
+
+Due to conversion issues, this code creates a `SpatialFeatureExperiment` via a `SingleCellExperiment`
+
+```{r}
+speMult <- loadHDF5SummarizedExperiment(dir="data/", prefix="02.3_spe_tmp")
+
+speMult$array_row <- speMult$row
+speMult$array_col <- speMult$col
+
+colData(speMult)$sample_id |> unique()
+
+sceMult <- as(speMult, "SingleCellExperiment")
+colData(sceMult) <- colData(sceMult) |> cbind(spatialCoords(speMult))
+
+```
+
+Next, we will convert the `SingelCellExperiment` to a `SpatialFeatureExperiment`. 
+
+```{r}
+sfeMult <- toSpatialFeatureExperiment(sceMult,
+ sample_id = "sample_id",
+ spatialCoordsNames = c("pxl_col_in_fullres", "pxl_row_in_fullres"),
+ loadImage = FALSE)
+sfeMult
+```
+
+## Preprocessing and neighbourhood defintion
+
+We note that the counts in our `SpatialFeatureExperiment` object are still raw counts therefore we will log normalise them with `scuttle::logNormCounts()`
+
+```{r}
+# identify mitochondrial genes
+gn <- rowData(sfeMult)$Symbol
+mt <- grepl("^MT-", gn, ignore.case = TRUE)
+table(mt)
+# remove them
+sfeMult <- sfeMult[!mt, ]
+
+#log-normalise the counts
+sfeMult <- scuttle::logNormCounts(sfeMult)
+sfeMult
+```
+
+Now, we notice a `logcounts` assay in our object.
+
+Next, we will define a neighbourhood on which we want to compute spatial statistics metrics. For computational reasons we will consider a $k$ nearest neighbourhood around the cells.
+
+```{r}
+allGraphs <- findSpatialNeighbors(sfeMult,
+    method = "knearneigh", # wraps the spdep function with the same name
+    k = 5,
+    zero.policy = TRUE,
+    sample_id = "all"
+  )
+
+colGraphs(sfeMult, "knn5", sample_id = "all") <- allGraphs
+```
+
 ::: callout-important
 ## Question
 
-- How would you compare a global indicator of spatial association across conditions, possibly with multiple samples?
+- Given you have now a `SpatialFeatureExperiment` object with four samples, how would you compare a global indicator of spatial association across conditions, possibly with multiple samples? As an example, calculate global univariate Moran's $I$ for the gene "PIGR".
+
+- an important flag in this question is `sample_id = "all"`. For reasons of having isolated cell patches, consider a $k$-NN neighbourhood this time instead of `findVisiumGraph`.
 
 :::
 
 ::: {.callout-tip collapse="true"}
 ## Answer
 
-There is no definit answer to this question. One very simplistic option would be formulate a linear model per gene with the measure of association as response. 
+First, we need to calculate univariate Moran's $I$ for all samples
 
-```{r, eval = FALSE}
-lme4(morans ~ condition + (1|sample_id))
+```{r}
+sfeMult <- runUnivariate(sfeMult,
+                     features = "PIGR",
+                     colGraphName = "knn5",
+                     exprs_values = "logcounts",
+                     sample_id = "all",
+                     type = "moran.mc",
+                     nsim = 200)
 ```
 
-In such multi-sample approaches one has to take care of nested-variance structures in spatial transcriptomics experiments. E.g. if we acquire several fields-of-view per patient, these fields-of-view are not indepedent. We have to account for this dependence with a mixed effects model. 
+```{r}
+res <- rowData(sfeMult)["PIGR",]
+res
+```
+
+In order to model these measures, we have to convert the data into long format
+
+```{r}
+df_long <- res |> as.data.frame() |>
+  tibble::rownames_to_column("gene") |>
+  pivot_longer(
+    cols = starts_with("moran.mc_statistic"),
+    names_to = c("measure", "sample"),
+    names_pattern = "(.*)statistic_(.*)",
+    values_to = "morans"
+  ) |> separate(sample, into = c("condition", "replicate"), sep = "_") |> 
+  select(c( "gene", "condition",  "replicate", "measure", "morans"))
+
+df_long
+```
+
+```{r}
+table(df_long$condition, df_long$replicate)
+```
+
+We see that we have a nested variance structure in this data. We have two conditions "Normal" and "Cancer". We note that the patient identifiers are not unique, meaning that we have some samples from the same patient.
+
+In order to account for this dependence, we have to model the data with a mixed-effects model. One option is the `lme4` package in R.
+
+```{r}
+#convert condition to a factor and relevel to have Normal as comparison group
+df_long$condition <- as.factor(df_long$condition) |>
+  relevel(ref = "Normal")
+mdl <- lmer(morans ~ condition + (1|replicate), data = df_long)
+
+summary(mdl)
+```
+
+We note that in this example there is no difference in the global Moran's $I$ value for the gene "PIGR". This not surprising since a model with 3 independent samples is strongly under-powered.
+
+An important step in interpreting a statistical model is looking at some model diagnostics. We will plot the qq plot of this mixed effects model. We note that the four samples follow the theoretical line well. But we notice again, that having only four samples is a great limitation of this dataset.
+
+```{r}
+qqnorm(resid(mdl), pch = 16)
+qqline(resid(mdl))
+```
 
 :::
