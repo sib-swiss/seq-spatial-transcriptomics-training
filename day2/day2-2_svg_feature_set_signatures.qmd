@@ -1,0 +1,321 @@
+---
+title: "Exercise 2"
+format: html
+editor: source
+editor_options: 
+  chunk_output_type: console
+bibliography: ../references.bib
+---
+
+## Spatial Variable Genes (SVGs) and Feature-set Signatures
+
+In this practical exercise, we focus on spatially structured gene expression, pathway-level signatures, and differential spatial patterns with multi-sample. We will calculate SVGs using two families of methods, compare SVGs with HVGs, understand how spatial information influences downstream analysis, and quantify pathway activities using gene-set scoring.
+
+## Learning Objectives
+
+By the end of this exercise, you will be able to:
+
+- Identify SVGs with two types of SVGs
+- Compare SVGs with HVGs 
+- Score cells/spots with gene-set signatures and interpret spatial pathway patterns
+
+# Libraries
+```{r}
+#| message: false
+#| warning: false
+#| output: false
+library(HDF5Array) 
+library(SpatialExperiment)
+library(scran) # HVG selection
+
+library(nnSVG)   # SVGs
+library(DESpace) # SVGs 
+
+library(AUCell)  # Gene set scoring
+library(msigdbr) # Gene sets
+library(pals)    # Color palette
+
+library(ggplot2)
+library(ggspavis)
+library(patchwork)
+library(pheatmap)
+```
+
+## Load and Prepare Data
+
+We begin by loading the `SpatialExperiment` object prepared in the previous exercise containing clustering results.
+
+```{r}
+spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.4_spe")
+```
+
+## Spatially variable genes (SVGs)
+
+In Day 1, we introduced highly variable genes (HVGs), which capture overall transcriptional variability and are useful for identifying major sources of variation and reducing dimensionality. HVGs reflect global heterogeneity, but they do not use spatial information. 
+
+In spatial transcriptomics, however, we are often interested in genes whose expression changes across tissue in structured spatial patterns. These are called spatially variable genes (SVGs), which conceptually generalize HVGs by adding spatial information.
+
+SVG methods differ in how they use spatial coordinates and what types of spatial structure they detect. They can be broadly grouped into three categories [@yan2025svg]:
+
+- **Overall SVGs** detect any spatial pattern across the tissue; can be used for feature selection for downstream analyses (e.g., spatially-aware clustering)
+
+- **Spatial domain-specific SVGs** identify genes whose expression differs between spatial domains, using domains as a proxy for spatial information
+
+- **Cell type-specific SVGs** use external cell type annotations to identify spatially structures expression within cell types.
+
+In this exercise, we will focus on the first two categories, using `nnSVG`[@weber2023nnsvg] for overall SVGs and `DESpace`[@cai2024despace] for domain-specific SVGs.
+
+
+```{r}
+set.seed(123)
+# Sample 100 spots to decrease runtime in this exercise
+n <- 100
+sub <- spe[, sample(ncol(spe), n)]
+rowData(sub)$gene_name <- rowData(sub)$Symbol
+
+# Subset to HVGs only to further decrease runtime
+hvg_idx <- which(rowData(spe)$hvg)
+sub <- sub[hvg_idx, ]
+
+# Remove empty spots
+keep_spots <- colSums(counts(sub)) > 0
+sub <- sub[, keep_spots]
+
+# Remove genes with all zeros
+keep_genes <- rowSums(counts(sub)) > 0
+sub <- sub[keep_genes, ]
+
+# Remove lowly expressed genes (expressed in ≥1% of spots)
+keep_genes2 <- rowMeans(counts(sub) > 0) >= 0.01 
+sub <- sub[keep_genes2, ]
+
+sub <- logNormCounts(sub)
+dim(sub)
+```
+
+### nnSVG
+
+`nnSVG` detects SVGs by modeling spatial gene expression using Gaussian processes, capturing smooth gradients or spatial trends. 
+
+> Note: `nnSVG` may take up to ~20 minutes to run. Feel free to take a short break and grab a coffee!
+
+```{r}
+set.seed(123)
+sub <- nnSVG(sub)
+```
+
+::: callout-important
+## Exercise 1
+Inspect the nnSVG output stored in `rowData(sub)`. 
+
+- What do the result columns represent? 
+- Select the top SVGs detected by `nnSVG`.
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+```{r}
+# Select top SVGs
+res_nnSVG <- rowData(sub)
+head(res_nnSVG, 3)
+top_nnSVG <- res_nnSVG$gene_name[seq_len(3)]
+```
+
+The main output is in `rowData` of the `SpatialExperiment` object, which includes: the likelihood ratio statistic (`LR_stat`), the gene’s rank based on this statistic (`rank`), raw p-values from a chi-squared test with 2 degrees of freedom (`pval`), p-values adjusted for multiple testing (`padj`), and the estimated effect size (`prop_sv`), defined as the proportion of spatial variance relative to total variance.
+
+> If you did not run `nnSVG` due to runtime constraints, you may use these pre-computed top SVGs:
+```{r}
+#| eval: false
+top_nnSVG <- c("MXRA8", "VWA1", "SKI")
+```
+:::
+
+### DESpace
+
+`DESpace` detects genes that show significantly higher/lower expression in one spatial domain compared to the rest of the tissue. To run `DESpace`, we need cluster labels or manual annotation. Here we use pre-computed spatial clusters from the Day1 exercise 4.
+
+```{r}
+res <- svg_test(sub, cluster_col="Banksy", verbose = TRUE)
+```
+
+::: callout-important
+## Exercise 2
+
+Have a look at the DESpace results.
+
+- What do each element of the returned list represent? 
+- Select top SVGs detected by `DESpace`.
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+```{r}
+head(res_DESpace <- res$gene_results, 3)
+top_DESpace <- res_DESpace$gene_id[seq_len(3)]
+```
+
+The main output is in `gene_results`: a `data.frame` containing: gene name (`gene_id`), likelihood ratio test statistics (`LR`), average (across spots) log-2 counts per million (`logCPM`), raw p-values (`PValue`) and Benjamini-Hochberg adjusted p-values (`FDR`).
+:::
+
+### Comparing HVGs and SVGs
+
+As we did yesterday, we first model gene variance using a Poisson noise model with `scran::modelGeneVarByPoisson()` and select the top HVGs.
+
+```{r}
+dec <- modelGeneVarByPoisson(spe)
+top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:3]
+top_HVG
+```
+
+::: callout-important
+## Exercise 3
+
+- Visualize the expression patterns of the top genes from each list via `ggspavis::plotCoords()`. 
+- What types of biological signals does each category capture?
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+
+```{r}
+gs <- c(
+    nnSVG=top_nnSVG,
+    DESpace=top_DESpace,
+    HVGs=top_HVG)
+# Expression plots for each top gene
+ps <- lapply(seq_along(gs), \(.) {
+    plotCoords(spe,
+        point_size=0,
+        annotate=gs[.],
+        assay_name="logcounts",
+        feature_names="Symbol")
+})
+wrap_plots(ps, nrow=3) & theme(
+    legend.key.width=unit(0.4, "lines"),
+    legend.key.height=unit(0.8, "lines")) &
+    scale_color_gradientn(colors = pals::parula())
+```
+:::
+
+## Feature-set signatures
+
+So far, we have focused on single genes. We now consider gene set signatures, which summarize activity of pathways or biological program.
+
+Here we will use `AUCell`[@aibar2017scenic], which works in two main steps: (i) rank genes for every cell/spot, and (ii) compute an AUC score per (spot, gene set) pair, roughly reflecting the fraction of high-ranking genes that belong to a given set.
+High AUC values correspond to high coordinated expression of the gene set.
+
+### Retrieve `MSigDB` Hallmark gene sets
+
+```{r}
+# Retrieve hallmark gene sets from 'MSigDB'
+db <- msigdbr(species="Homo sapiens", category="H")
+
+# Get list of gene symbols, one element per set
+gs <- split(db$ensembl_gene, db$gs_name)
+
+# Simplify set identifiers (drop prefix, use lower case)
+names(gs) <- tolower(gsub("HALLMARK_", "", names(gs)))
+```
+
+::: callout-important
+## Exercise 4
+
+How many gene sets are there? What is the range of gene counts across these sets?
+:::
+
+::: {.callout-tip collapse="true"}
+### Answer
+
+```{r}
+length(gs)
+```
+
+```{r}
+range(sapply(gs, length))
+```
+:::
+
+### Gene set scoring with `AUCell`
+
+```{r}
+# Realize (sparse) gene expression matrix
+mtx <- as(logcounts(spe), "dgCMatrix") 
+
+# Use ensembl identifiers as feature names
+rownames(mtx) <- rowData(spe)$ID
+
+# Filter for genes represented in panel
+.gs <- lapply(gs, intersect, rownames(mtx))
+# Keep only those with at least 5 genes
+.gs <- .gs[sapply(.gs, length) >= 5]
+
+# Build per-spot gene rankings
+rnk <- AUCell_buildRankings(mtx, plotStats=FALSE, verbose=FALSE)
+
+# Calculate AUC for each gene set in each spot
+auc <- AUCell_calcAUC(geneSets=.gs, rankings=rnk, verbose=FALSE)
+
+# Add results as spot metadata
+colData(spe)[rownames(auc)] <- res <- t(assay(auc)) 
+
+# The percentage of cells with non-zero score across signatures
+fq <- rowMeans(assay(auc) > 0)
+fq <- sort(round(100*fq, 2))
+head(fq) # rarely detected
+tail(fq) # mostly detected
+```
+
+::: callout-important
+## Exercise5
+
+- Which gene set shows the highest score variability across spots?
+- Visualize this top set in tissue space.
+- Visualize how signature scores correlated with one another.
+:::
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| 
+# Subset on highest score variability across spots
+var <- colVars(res) # variance across spots
+top <- names(tail(sort(var), 1)) # top sets
+
+# Scale the rows (genes) for better visualization in the heatmap.
+spe[[top]] <- scale(spe[[top]]) 
+plotCoords(spe, annotate = top) +
+  scale_color_gradientn(
+        name = "q-scaled\nAUCell",
+        colors = hcl.colors(9, "Plasma")
+    ) 
+```
+
+```{r}
+cm <- cor(t(assay(auc)), method="spearman")
+pheatmap(cm, 
+    breaks=seq(-1, 1, 0.1), 
+    color=pals::coolwarm(20), 
+    cellwidth=10, cellheight=10)
+```
+
+Highly correlated sets will exhibit similar spatial patterns.
+:::
+
+Clear your environment:
+```{r}
+#| eval: false
+rm(list = ls())
+gc()
+.rs.restartR()
+```
+
+:::{.callout-important}
+**Key Takeaways:**
+
+- HVGs and SVGs emphasize different aspects of the data: HVGs (global heterogeneity); SVGs (spatially structured patterns).
+- Different SVG methods detect different types of structure.
+- Gene set signatures summarize coordinated activity of biological pathways and can be mapped across the tissue and compared between regions or clusters.
+:::
