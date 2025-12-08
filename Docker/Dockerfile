@@ -28,10 +28,8 @@ RUN apt-get update && apt-get install -y \
 
 COPY renv.lock ./
 
+ENV RENV_INSTALL_THREADS=4
+
 RUN Rscript -e 'install.packages("renv", repos="https://cloud.r-project.org", type="source")'
 
-
-
 RUN Rscript -e 'renv::restore()'
-RUN Rscript -e "install.packages('arrow')"
-RUN Rscript -e 'BiocManager::install(c("Banksy","igraph","BayesSpace","nnSVG","RColorBrewer"))'  
