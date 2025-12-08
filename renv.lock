@@ -4617,7 +4617,7 @@
     },
     "h5mread": {
       "Package": "h5mread",
-      "Version": "1.2.0",
+      "Version": "1.2.1",
       "Source": "Bioconductor",
       "Title": "A fast HDF5 reader",
       "Description": "The main function in the h5mread package is h5mread(), which allows reading arbitrary data from an HDF5 dataset into R, similarly to what the h5read() function from the rhdf5 package does. In the case of h5mread(), the implementation has been optimized to make it as fast and memory-efficient as possible.",
