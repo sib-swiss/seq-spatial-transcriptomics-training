@@ -10,14 +10,14 @@ title: "Course schedule"
 
 | block         | start | end   | topic                                                        | instructor | presentation | exercise |
 |---------------|-------|-------|--------------------------------------------------------------|------------|--------------|----------|
-| introduction  | 9:15  | 9:45  | introduction to the course                                   |            |              |          |
-| block 1       | 9:45  | 10:30 | introduction to spatial omics                                |            |              |          |
+| introduction  | 9:15  | 9:45  | introduction to the course                                   |  Deepak Tanwar  |  [Introduction](../assets/pdf/01_introduction.pdf)        |          |
+| block 1       | 9:45  | 10:30 | introduction to spatial omics                                |  Joana Carlevaro-Fita          |              |          |
 | break         | 10:30 | 10:45 |                                                              |            |              |          |
-| block 2       | 10:45 | 12:30 | Data structure + quality control + normalization and scaling |            |              |          |
+| block 2       | 10:45 | 12:30 | Data structure + quality control + normalization and scaling |  Deepak Tanwar          |              | [Setup](../day1/day1-0_setup.qmd), [Exercise 1](../day1/day1-1_SpatialExperiment.qmd)         |
 | break         | 12:30 | 13:30 |                                                              |            |              |          |
-| block 3       | 1:30  | 3:00  | Exercises quality control                                    |            |              |          |
+| block 3       | 1:30  | 3:00  | Exercises quality control                                    |  Deepak Tanwar          |              | [Exercise 2](../day1/day1-2_spotsweeper_qc.qmd)         |
 | break         | 3:00  | 3:15  |                                                              |            |              |          |
-| block 4       | 3:15  | 5:15  | Feature selection, dimensionality reduction and clustering   |            |              |          |
+| block 4       | 3:15  | 5:15  | Feature selection, dimensionality reduction and clustering   |  Joana Carlevaro-Fita          |              |  [Exercise 3](../day1/day1-3_feature_dimred_cluster.qmd), [Exercise 4](../day1/day1-4_clustering_find_markers.qmd)        |
 
 ## Day 2
 

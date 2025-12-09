@@ -22,6 +22,7 @@ website:
       - href: qmd/course_schedule.qmd
       - text: "day 1"
         menu:
+          - href: "day1/day1-0_setup.qmd"
           - href: "day1/day1-1_SpatialExperiment.qmd"
           - href: "day1/day1-2_spotsweeper_qc.qmd"
           - href: "day1/day1-3_feature_dimred_cluster.qmd"

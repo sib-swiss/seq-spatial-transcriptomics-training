@@ -4,6 +4,8 @@ format: html
 editor: source
 editor_options: 
   chunk_output_type: console
+execute:
+  warning: false
 ---
 
 ## Normalisation, Feature Selection and Dimensionality Reduction
@@ -95,17 +97,17 @@ The `scuttle::computePooledFactors()` implements the strategy introduced by [Lun
 
 ::: {.callout-tip collapse="true"}
 ### Answer
-```{r}
-# lib.sf.spe <- sizeFactors(spe) ## Store size factors calculated above
-# set.seed(100)
-# clusters <- quickCluster(spe)
-# spe <- computeSumFactors(spe, cluster=clusters, min.mean=0.1)
-# spe <- logNormCounts(spe)
-# 
-# plot(lib.sf.spe, sizeFactors(spe), xlab="Library size factor",
-#     ylab="Deconvolution size factor", log='xy', pch=16,
-#     col=as.integer(factor(clusters)))
-# abline(a=0, b=1, col="red")
+```{r, eval=FALSE}
+lib.sf.spe <- sizeFactors(spe) ## Store size factors calculated above
+set.seed(100)
+clusters <- quickCluster(spe)
+spe <- computeSumFactors(spe, cluster=clusters, min.mean=0.1)
+spe <- logNormCounts(spe)
+
+plot(lib.sf.spe, sizeFactors(spe), xlab="Library size factor",
+    ylab="Deconvolution size factor", log='xy', pch=16,
+    col=as.integer(factor(clusters)))
+abline(a=0, b=1, col="red")
 ```
 :::
 
@@ -283,7 +285,6 @@ We observe a strong correlation between the PCs scores and the expression patter
 
 To extract the 10 genes most associated to PC2: 
 ```{r}
-
 attributes(reducedDims(spe)[["PCA"]])$rotation[, "PC2"] |> abs() |> sort(decreasing = TRUE) |> names() |> head(n=10)
 
 ```

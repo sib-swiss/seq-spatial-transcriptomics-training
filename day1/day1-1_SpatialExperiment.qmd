@@ -4,6 +4,8 @@ format: html
 editor: source
 editor_options: 
   chunk_output_type: console
+execute:
+  warning: false
 ---
 
 ## Learning Objectives
@@ -285,8 +287,6 @@ p <- plotVisium(spe, annotate = "array_row", zoom = TRUE, point_shape = 22)
 p
 ```
 :::
-
-
 
 ## Retain only observations that map to tissue 
 

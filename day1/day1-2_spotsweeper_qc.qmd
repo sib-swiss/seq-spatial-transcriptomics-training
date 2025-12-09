@@ -4,6 +4,8 @@ format: html
 editor: source
 editor_options: 
   chunk_output_type: console
+execute:
+  warning: false
 ---
 
 
@@ -173,7 +175,6 @@ gridExtra::grid.arrange(p1, p2, p3, ncol=2)
 ```
 
 
-
 ### Local Outlier Detection
 
 To avoid discarding whole layers of tissues, another approach to identify low-quality spots is to use local outlier detection methods that take into account the spatial context of each spot.
@@ -240,7 +241,8 @@ plotObsQC(spe,
 Even better, we can visualize the spatial distribution of the local outliers together with the QC metrics, for example plot the spatial distribution of local outliers for mitochondrial percentage.
 ```{r}
 plotQCmetrics(spe,
-  metric = "subsets_Mito_percent", outliers = "subsets_Mito_percent_outliers", point_size = 0.4,
+  metric = "subsets_Mito_percent", outliers = "subsets_Mito_percent_outliers",
+  point_size = 0.4,
   stroke = 0.75
 ) +
   ggtitle("Local outliers for %MT")

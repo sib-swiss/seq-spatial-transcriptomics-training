@@ -4,6 +4,8 @@ format: html
 editor: source
 editor_options: 
   chunk_output_type: console
+execute:
+  warning: false
 ---
 
 ```{r}
@@ -156,7 +158,7 @@ To annotate each spot, we use the `SingleR()` method, which uses a correlation-b
 
 
 ```{r}
-ref.se = qs_read("data/NatGenetics2025_CRC_5k.SE.qs")
+ref.se = qs_read("data/Human_Colon_Cancer_P1/NatGenetics2025_CRC_5k.SE.qs")
 table(colData(ref.se)$labels)
 
 # Predict cell-type using SingleR 
