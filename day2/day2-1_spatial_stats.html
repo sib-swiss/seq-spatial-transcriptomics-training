@@ -91,7 +91,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-e0c19abc34f0e04f75bc673f4472a256.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -468,7 +468,7 @@ Answer
 <span>    features<span class="op">=</span><span class="va">hvg</span>, </span>
 <span>    colGraphName<span class="op">=</span><span class="st">"visium"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We order them and plot the gene expression top 3 genes wiht the <code>plotSpatialFeature</code> function from the <code>Voyager</code> package.</p>
+<p>We order them and plot the gene expression top 3 genes with the <code>plotSpatialFeature</code> function from the <code>Voyager</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">I</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sfe</span><span class="op">)</span><span class="op">$</span><span class="va">moran_sample01</span></span>
 <span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">I</span>, decreasing<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
@@ -694,10 +694,10 @@ Answer
 </section><section id="bonus-multi-sample-analysis" class="level1"><h1>Bonus: Multi-sample Analysis</h1>
 <p>This chapter so far showed how to perform lattice-data analysis for one sample. Lattice data analysis is not yet very common in multi-sample analyses.</p>
 <p>One option is to compute a measure of global spatial association giving one numerical value per field-of-view.</p>
-<p>First we will load 4 slides from the dataset (2 healthy slides and 2 cancerous slides).</p>
+<p>First we will load subsetted slides from 4 samples in the dataset (2 healthy slides and 2 cancerous slides).</p>
 <p>Due to conversion issues, this code creates a <code>SpatialFeatureExperiment</code> via a <code>SingleCellExperiment</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">speMult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">loadHDF5SummarizedExperiment</a></span><span class="op">(</span>dir<span class="op">=</span><span class="st">"data/"</span>, prefix<span class="op">=</span><span class="st">"02.3_spe_tmp"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">speMult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">loadHDF5SummarizedExperiment</a></span><span class="op">(</span>dir<span class="op">=</span><span class="st">"data/Human_Colon_Cancer_P1/"</span>, prefix<span class="op">=</span><span class="st">"02.3_spe_tmp"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">speMult</span><span class="op">$</span><span class="va">array_row</span> <span class="op">&lt;-</span> <span class="va">speMult</span><span class="op">$</span><span class="va">row</span></span>
 <span><span class="va">speMult</span><span class="op">$</span><span class="va">array_col</span> <span class="op">&lt;-</span> <span class="va">speMult</span><span class="op">$</span><span class="va">col</span></span>
@@ -855,9 +855,9 @@ PIGR                          201                 0.00497512
      moran.mc_alternative_Normal_P5 moran.mc_method_Normal_P5
                         &lt;character&gt;               &lt;character&gt;
 PIGR                        greater    Monte-Carlo simulati..
-                   moran.mc_res_Normal_P5 moran.mc_statistic_Cancer_P5
-                                   &lt;list&gt;                    &lt;numeric&gt;
-PIGR 0.00364546,0.00024356,0.00120214,...                     0.662601
+                      moran.mc_res_Normal_P5 moran.mc_statistic_Cancer_P5
+                                      &lt;list&gt;                    &lt;numeric&gt;
+PIGR -0.00651143, 0.00199326, 0.00581879,...                     0.662601
      moran.mc_parameter_Cancer_P5 moran.mc_p.value_Cancer_P5
                         &lt;numeric&gt;                  &lt;numeric&gt;
 PIGR                          201                 0.00497512
@@ -866,7 +866,7 @@ PIGR                          201                 0.00497512
 PIGR                        greater    Monte-Carlo simulati..
                       moran.mc_res_Cancer_P5 moran.mc_statistic_Cancer_P1
                                       &lt;list&gt;                    &lt;numeric&gt;
-PIGR -0.00521515,-0.00276429, 0.01003306,...                     0.839516
+PIGR  0.00583179, 0.00653266,-0.00146005,...                     0.839516
      moran.mc_parameter_Cancer_P1 moran.mc_p.value_Cancer_P1
                         &lt;numeric&gt;                  &lt;numeric&gt;
 PIGR                          201                 0.00497512
@@ -875,7 +875,7 @@ PIGR                          201                 0.00497512
 PIGR                        greater    Monte-Carlo simulati..
                       moran.mc_res_Cancer_P1 moran.mc_statistic_Normal_P3
                                       &lt;list&gt;                    &lt;numeric&gt;
-PIGR -0.00500185, 0.00928462, 0.00367372,...                     0.554004
+PIGR -0.00123341, 0.00264815,-0.00555270,...                     0.554004
      moran.mc_parameter_Normal_P3 moran.mc_p.value_Normal_P3
                         &lt;numeric&gt;                  &lt;numeric&gt;
 PIGR                          201                 0.00497512
@@ -884,7 +884,7 @@ PIGR                          201                 0.00497512
 PIGR                        greater    Monte-Carlo simulati..
                       moran.mc_res_Normal_P3
                                       &lt;list&gt;
-PIGR -0.00188827,-0.00658297, 0.00488671,...</code></pre>
+PIGR -0.00299195,-0.00312027, 0.00708293,...</code></pre>
 </div>
 </div>
 <p>In order to model these measures, we have to convert the data into long format</p>
@@ -1074,7 +1074,7 @@ Rao, Anjali, Dalia Barkley, Gustavo S França, and Itai Yanai. 2021. <span>“Ex
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

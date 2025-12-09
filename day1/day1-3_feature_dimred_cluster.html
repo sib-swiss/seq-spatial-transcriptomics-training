@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-e0c19abc34f0e04f75bc673f4472a256.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -216,8 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li>
 <a href="#normalization" id="toc-normalization" class="nav-link" data-scroll-target="#normalization">Normalization</a>
   <ul class="collapse">
-<li><a href="#bonus-accounting-for-compositional-biases" id="toc-bonus-accounting-for-compositional-biases" class="nav-link" data-scroll-target="#bonus-accounting-for-compositional-biases">Bonus: accounting for compositional biases</a></li>
-  <li><a href="#bonus-spatially-aware-normalization" id="toc-bonus-spatially-aware-normalization" class="nav-link" data-scroll-target="#bonus-spatially-aware-normalization">Bonus: spatially-aware normalization</a></li>
+<li><a href="#bonus-spatially-aware-normalization" id="toc-bonus-spatially-aware-normalization" class="nav-link" data-scroll-target="#bonus-spatially-aware-normalization">Bonus: spatially-aware normalization</a></li>
   </ul>
 </li>
   <li>
@@ -231,8 +230,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <a href="#dimensionality-reduction-dr" id="toc-dimensionality-reduction-dr" class="nav-link" data-scroll-target="#dimensionality-reduction-dr">Dimensionality Reduction (DR)</a>
   <ul class="collapse">
 <li><a href="#non-spatially-aware-dr" id="toc-non-spatially-aware-dr" class="nav-link" data-scroll-target="#non-spatially-aware-dr">Non-spatially aware DR:</a></li>
+  <li><a href="#spatially-aware-dr" id="toc-spatially-aware-dr" class="nav-link" data-scroll-target="#spatially-aware-dr">Spatially aware DR:</a></li>
   </ul>
 </li>
+  <li><a href="#run-umap" id="toc-run-umap" class="nav-link" data-scroll-target="#run-umap">Run UMAP</a></li>
+  <li><a href="#save-data-for-later" id="toc-save-data-for-later" class="nav-link" data-scroll-target="#save-data-for-later">Save data for later</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -362,36 +364,7 @@ Exercise 2
 <p>Do you observe any spatial patterns or gradients for the size factors across the tissue section? What do you think they reflect?</p>
 </div>
 </div>
-<section id="bonus-accounting-for-compositional-biases" class="level3"><h3 class="anchored" data-anchor-id="bonus-accounting-for-compositional-biases">Bonus: accounting for compositional biases</h3>
-<p>The <code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html">scuttle::computePooledFactors()</a></code> implements the strategy introduced by <a href="https://link.springer.com/article/10.1186/s13059-016-0947-7">Lun et al.</a> to account for compositional biases (which can introduce spurious differences between cells) during normalization.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lib.sf.spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">sizeFactors</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="co">## Store size factors calculated above</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/quickCluster.html">quickCluster</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
-<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/computeSumFactors.html">computeSumFactors</a></span><span class="op">(</span><span class="va">spe</span>, cluster<span class="op">=</span><span class="va">clusters</span>, min.mean<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span>
-<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lib.sf.spe</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">sizeFactors</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Library size factor"</span>,</span>
-<span>    ylab<span class="op">=</span><span class="st">"Deconvolution size factor"</span>, log<span class="op">=</span><span class="st">'xy'</span>, pch<span class="op">=</span><span class="fl">16</span>,</span>
-<span>    col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0</span>, b<span class="op">=</span><span class="fl">1</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</section><section id="bonus-spatially-aware-normalization" class="level3"><h3 class="anchored" data-anchor-id="bonus-spatially-aware-normalization">Bonus: spatially-aware normalization</h3>
+<section id="bonus-spatially-aware-normalization" class="level3"><h3 class="anchored" data-anchor-id="bonus-spatially-aware-normalization">Bonus: spatially-aware normalization</h3>
 <p>While <code>logNormCounts</code> provides a general-purpose normalization, specialized spatially-aware normalization methods exist. These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.</p>
 <p>If time is left at the end of this practical, explore the normalization strategy implemented in the <code>SpaNorm</code> package.</p>
 </section></section><section id="feature-selection" class="level2"><h2 class="anchored" data-anchor-id="feature-selection">Feature Selection</h2>
@@ -399,7 +372,7 @@ Answer
 <p>Similar to scRNA-seq analysis, feature selection is a crucial step to focus on genes that show significant biological variation across spots, and thus increase the signal to noise ratio. We typically aim at focusing on “Highly Variable Genes” (HVGs) as these are more likely to distinguish different cell types or spatial domains.</p>
 <p>In order to identify HVGs, we will first model the gene variance using a Poisson noise model with <code><a href="https://rdrr.io/pkg/scran/man/modelGeneVarByPoisson.html">scran::modelGeneVarByPoisson()</a></code></p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Model gene variance to identify highly variable genes.</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Model gene variance to identify highly variable genes.</span></span>
 <span><span class="co"># This function fits a mean-variance trend to the log-normalized counts.</span></span>
 <span><span class="va">dec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVarByPoisson.html">modelGeneVarByPoisson</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
 <span><span class="co">## Sort by biological variance</span></span>
@@ -415,7 +388,7 @@ Answer
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu">metadata</span><span class="op">(</span><span class="va">dec</span><span class="op">)</span><span class="op">$</span><span class="fu">trend</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"dodgerblue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -435,7 +408,7 @@ Exercise 3
 </div>
 <p>Once we have modeled the gene variance, we can proceed to select the top HVGs. For demonstration purposes, we will visualize the expression patterns of the top 6 HVGs on the tissue slide. We exclude the mitochondrial genes, since those genes tend to be highly variable but do not provide much information about cell types or spatial domains.</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># identify mitochondrial genes</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># identify mitochondrial genes</span></span>
 <span><span class="va">is.mito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^MT-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Top 6 HVGs</span></span>
@@ -444,7 +417,7 @@ Exercise 3
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "IGKC"   "OLFM4"  "IGHG1"  "COL3A1" "PIGR"   "COL1A1"</code></pre>
 </div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a plot for each gene in top_HVG</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a plot for each gene in top_HVG</span></span>
 <span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">top_HVG</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotCoords.html">plotCoords</a></span><span class="op">(</span><span class="va">spe</span>, </span>
 <span>        annotate <span class="op">=</span> <span class="va">.</span>, </span>
@@ -457,7 +430,7 @@ Exercise 3
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -477,7 +450,7 @@ Exercise 4
 </div>
 <p>For downstream analysis, we define a larger group of HVG and add the information of whether a genes is in the HVG list or not in a <code>rowData</code> slot:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select the top 1000 highly variable genes.</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select the top 1000 highly variable genes.</span></span>
 <span><span class="va">hvg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Store HVG information in rowData</span></span>
@@ -489,7 +462,7 @@ Exercise 4
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 0.01648 0.02117 0.02937 0.08625 0.05359 4.55103 </code></pre>
 </div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Have a look a the new column added</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Have a look a the new column added</span></span>
 <span><span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 17952 rows and 5 columns
@@ -511,9 +484,9 @@ MT-CYB  ENSG00000198727      MT-CYB Gene Expression         TRUE      TRUE</code
 </section><section id="spatially-variable-genes-svgs" class="level3"><h3 class="anchored" data-anchor-id="spatially-variable-genes-svgs">Spatially Variable Genes (SVGs)</h3>
 <p>We will go very quickly over this topic, which will be discussed in depth tomorrow. Today, the idea is to get an intuition about the difference between HVGs and SVGs. For this, we select randomly 6 other HVGs from the list, and plot their expression:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select randomly 6 HVGs</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select randomly 6 HVGs</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">random_HVG</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">dec</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">random_HVG</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">hvg</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create a plot for each gene in top_HVG</span></span>
 <span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">random_HVG</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
@@ -528,7 +501,7 @@ MT-CYB  ENSG00000198727      MT-CYB Gene Expression         TRUE      TRUE</code
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -552,7 +525,7 @@ Exercise 5
 <section id="pca" class="level4"><h4 class="anchored">PCA</h4>
 <p>We can perform dimensionality reduction using Principal Component Analysis (PCA) on the log-normalized expression values of the HVGs. This method is agnostic to spatial information, and focuses solely on capturing the main axes of variation in the gene expression data.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run PCA on the log-normalized counts of the HVGs</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run PCA on the log-normalized counts of the HVGs</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">spe</span>, ncomponents <span class="op">=</span> <span class="fl">30</span>, subset_row <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">hvg</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualize the explained variance by each principal component.</span></span>
@@ -563,7 +536,7 @@ Exercise 5
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -578,11 +551,12 @@ Exercise 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Based on the scree plot, how many principal components would you consider for downstream analysis? Why? You can also have look at the <code><a href="https://rdrr.io/pkg/scran/man/denoisePCA.html">scran::getDenoisedPCs</a></code> function to help you make this choice.</p>
+<p>Based on the scree plot, how many principal components would you consider for downstream analysis? Why?</p>
+<p>Bonus: You can also have look at the <code><a href="https://rdrr.io/pkg/scran/man/denoisePCA.html">scran::getDenoisedPCs</a></code> function to help you make this choice.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -591,7 +565,7 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We can select the first 10 PCs for downstream analysis, as they seem to capture a significant proportion of the variance in the data before the explained variance starts to level off.</p>
 </div>
@@ -599,7 +573,7 @@ Answer
 </div>
 <p>Choose the number of PCs accordingly for downstream analysis. Visualize the PCs on the tissue slice coordinates.</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run PCA on the log-normalized counts of the HVGs using the top PCs, for example 10 PCs</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run PCA on the log-normalized counts of the HVGs using the top PCs, for example 10 PCs</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">spe</span>, ncomponents <span class="op">=</span> <span class="fl">10</span>, subset_row <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">hvg</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get the PCA results </span></span>
@@ -616,7 +590,7 @@ Answer
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -638,7 +612,7 @@ Exercise 7
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -647,22 +621,25 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We observe a strong correlation between the PCs scores and the expression patterns observed above for the top HVGs, suggesting that they refelct cell type or domain biology.</p>
 <p>To extract the 10 genes most associated to PC2:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[[</span><span class="st">"PCA"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">rotation</span><span class="op">[</span>, <span class="st">"PC2"</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[[</span><span class="st">"PCA"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">rotation</span><span class="op">[</span>, <span class="st">"PC2"</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "COL3A1" "COL1A1" "COL1A2" "CXCR4"  "CD74"   "IGKC"   "MMP2"   "TXNIP" 
  [9] "A2M"    "SPARC" </code></pre>
 </div>
 </div>
-<section id="spatially-aware-dr" class="level3"><h3 class="anchored" data-anchor-id="spatially-aware-dr">Spatially aware DR:</h3>
+</div>
+</div>
+</div>
+</section></section><section id="spatially-aware-dr" class="level3"><h3 class="anchored" data-anchor-id="spatially-aware-dr">Spatially aware DR:</h3>
 <section id="banksy" class="level4"><h4 class="anchored" data-anchor-id="banksy">Banksy</h4>
 <p>We can also perform spatially aware dimensionality reduction using the <code>Banksy</code> method, which integrates spatial coordinates and gene expression into the PCA framework. This allows us to capture spatial patterns in the data while reducing dimensionality.</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 'Banksy' parameter settings</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 'Banksy' parameter settings</span></span>
 <span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">20</span>   <span class="co"># consider first order neighbors</span></span>
 <span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fl">0.8</span> <span class="co"># use spatial information with weight lambda</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"logcounts"</span> <span class="co"># assay to use</span></span>
@@ -708,7 +685,7 @@ Answer
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SpatialExperiment 
 dim: 17952 12615 
@@ -725,7 +702,7 @@ altExpNames(0):
 spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres
 imgData names(4): sample_id image_id data scaleFactor</code></pre>
 </div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDimNames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDimNames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "PCA_artifacts" "PCA"           "PCA_banksy"   </code></pre>
 </div>
@@ -762,7 +739,7 @@ Answer
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Visualize PCs on the tissue slice coordinates</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Visualize PCs on the tissue slice coordinates</span></span>
 <span><span class="va">pcs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">spe</span>, <span class="st">"PCA_banksy"</span><span class="op">)</span></span>
 <span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">pcs</span><span class="op">)</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">spe</span><span class="op">[[</span><span class="va">.</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pcs</span><span class="op">[</span>, <span class="va">.</span><span class="op">]</span></span>
@@ -774,7 +751,7 @@ Answer
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -795,28 +772,28 @@ Bonus Exercise
 <p>Try to change Banksy parameters k and lambda. How does it affect the results?</p>
 </div>
 </div>
-</section></section><section id="run-umap" class="level2"><h2 class="anchored" data-anchor-id="run-umap">Run UMAP</h2>
+</section></section></section><section id="run-umap" class="level2"><h2 class="anchored" data-anchor-id="run-umap">Run UMAP</h2>
 <p>For visualization purposes only, we’ll produce UMAPs based on on both spatially aware and not spatially aware PCA results:</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">spe</span>, dimred<span class="op">=</span><span class="st">"PCA"</span>, name<span class="op">=</span><span class="st">"UMAP_tx"</span><span class="op">)</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">spe</span>, dimred<span class="op">=</span><span class="st">"PCA_banksy"</span>, name<span class="op">=</span><span class="st">"UMAP_banksy"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualise</span></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualise</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">spe</span>, dimred <span class="op">=</span> <span class="st">"UMAP_tx"</span>, colour_by <span class="op">=</span> <span class="st">"detected"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_colour_gradient</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log"</span>, high <span class="op">=</span> <span class="st">"yellow"</span>, low <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">spe</span>, dimred <span class="op">=</span> <span class="st">"UMAP_banksy"</span>, colour_by <span class="op">=</span> <span class="st">"detected"</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">spe</span>, dimred <span class="op">=</span> <span class="st">"UMAP_banksy"</span>, colour_by <span class="op">=</span> <span class="st">"detected"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_colour_gradient</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log"</span>, high <span class="op">=</span> <span class="st">"yellow"</span>, low <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -836,18 +813,14 @@ Bonus question
 </div>
 </section><section id="save-data-for-later" class="level2"><h2 class="anchored" data-anchor-id="save-data-for-later">Save data for later</h2>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe_HVG</span> <span class="op">&lt;-</span> <span class="va">spe</span></span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe_HVG</span> <span class="op">&lt;-</span> <span class="va">spe</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">saveHDF5SummarizedExperiment</a></span><span class="op">(</span><span class="va">spe_HVG</span>, dir<span class="op">=</span><span class="st">"results/day1"</span>, prefix<span class="op">=</span><span class="st">"01.3_spe"</span>, replace<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>                                chunkdim<span class="op">=</span><span class="cn">NULL</span>, level<span class="op">=</span><span class="cn">NULL</span>, as.sparse<span class="op">=</span><span class="cn">NA</span>,</span>
 <span>                                verbose<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-</section>
-</div>
-</div>
-</div>
-</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -919,7 +892,7 @@ Bonus question
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
