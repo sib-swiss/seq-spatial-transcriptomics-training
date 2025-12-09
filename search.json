@@ -32,7 +32,7 @@
     "href": "qmd/course_schedule.html#day-1",
     "title": "Course schedule",
     "section": "Day 1",
-    "text": "Day 1\n\n\n\n\n\n\n\n\n\n\n\n\nblock\nstart\nend\ntopic\ninstructor\npresentation\nexercise\n\n\n\n\nintroduction\n9:15\n9:45\nintroduction to the course\n\n\n\n\n\nblock 1\n9:45\n10:30\nintroduction to spatial omics\n\n\n\n\n\nbreak\n10:30\n10:45\n\n\n\n\n\n\nblock 2\n10:45\n12:30\nData structure + quality control + normalization and scaling\n\n\n\n\n\nbreak\n12:30\n13:30\n\n\n\n\n\n\nblock 3\n1:30\n3:00\nExercises quality control\n\n\n\n\n\nbreak\n3:00\n3:15\n\n\n\n\n\n\nblock 4\n3:15\n5:15\nFeature selection, dimensionality reduction and clustering"
+    "text": "Day 1\n\n\n\nblock\nstart\nend\ntopic\ninstructor\npresentation\nexercise\n\n\n\n\nintroduction\n9:15\n9:45\nintroduction to the course\nDeepak Tanwar\nIntroduction\n\n\n\nblock 1\n9:45\n10:30\nintroduction to spatial omics\nJoana Carlevaro-Fita\n\n\n\n\nbreak\n10:30\n10:45\n\n\n\n\n\n\nblock 2\n10:45\n12:30\nData structure + quality control + normalization and scaling\nDeepak Tanwar\n\nSetup, Exercise 1\n\n\nbreak\n12:30\n13:30\n\n\n\n\n\n\nblock 3\n1:30\n3:00\nExercises quality control\nDeepak Tanwar\n\nExercise 2\n\n\nbreak\n3:00\n3:15\n\n\n\n\n\n\nblock 4\n3:15\n5:15\nFeature selection, dimensionality reduction and clustering\nJoana Carlevaro-Fita\n\nExercise 3, Exercise 4"
   },
   {
     "objectID": "qmd/course_schedule.html#day-2",
