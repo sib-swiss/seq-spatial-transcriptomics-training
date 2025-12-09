@@ -303,13 +303,10 @@ Answer
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Data exists, please proceed to next steps!"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Data exists, please proceed to next steps!</code></pre>
-</div>
 </div>
 <p>We will import the dataset into a <code>SpatialExperiment</code> object. For these exercises, we choose to use the largest bin size of 16 µm, and we will subset the dataset for faster processing during the practicals:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Import Visium HD data from Space Ranger output into a SpatialExperiment object.</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Import Visium HD data from Space Ranger output into a SpatialExperiment object.</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VisiumIO/man/TENxVisiumHD-class.html">TENxVisiumHD</a></span><span class="op">(</span></span>
 <span>  spacerangerOut <span class="op">=</span> <span class="st">"data/Human_Colon_Cancer_P1/"</span>,</span>
 <span>  processing <span class="op">=</span> <span class="st">"filtered"</span>,</span>
@@ -410,7 +407,7 @@ Answer
 <div class="callout-body-container callout-body">
 <p>The slot <code>colData</code> contains metadata of each of the 14207 spots:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 6 rows and 6 columns
                                     barcode in_tissue array_row array_col
@@ -430,14 +427,14 @@ s_016um_00111_00233-1         016    sample01
 s_016um_00202_00235-1         016    sample01
 s_016um_00102_00186-1         016    sample01</code></pre>
 </div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 14207</code></pre>
 </div>
 </div>
 <p>We have a column <code>in_tissue</code> here, and we can check whether spots are covered by the tissue:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">in_tissue</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>number <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -450,7 +447,7 @@ s_016um_00102_00186-1         016    sample01</code></pre>
 </div>
 <p>The slot <code>rowData</code> contains metadata about the 18085 genes for which we measured expression:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 6 rows and 3 columns
                              ID      Symbol            Type
@@ -462,14 +459,14 @@ ENSG00000187583 ENSG00000187583     PLEKHN1 Gene Expression
 ENSG00000187642 ENSG00000187642       PERM1 Gene Expression
 ENSG00000188290 ENSG00000188290        HES4 Gene Expression</code></pre>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18085</code></pre>
 </div>
 </div>
 <p>The assay is the core count matrix of the object, corresponding to all genes (rows) and all spots (columns):</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">assay</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">assay</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;18085 x 14207&gt; sparse DelayedMatrix object of type "integer":
                 s_016um_00144_00175-1 ... s_016um_00109_00223-1
@@ -488,7 +485,7 @@ ENSG00000198727                    11   .                    11</code></pre>
 </div>
 <p>The slot for <code>reducedDims</code> is empty for now, as we didn’t perform any dimensionality reduction calculations yet:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of length 0
 names(0): </code></pre>
@@ -496,7 +493,7 @@ names(0): </code></pre>
 </div>
 <p>The slot <code>spatialCoords</code> maps each spot to the full resolution image:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">spatialCoords</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">spatialCoords</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      pxl_col_in_fullres pxl_row_in_fullres
 s_016um_00144_00175-1          10076.365           28256.34
@@ -509,7 +506,7 @@ s_016um_00102_00186-1          10696.244           30716.82</code></pre>
 </div>
 <p>The slot <code>imgData</code> lists all available images linked to the dataset, their resolution and a scaling factor used to convert pixels coordinates relative to the full resolution image coordinates (above).</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">imgData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">imgData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 1 row and 4 columns
     sample_id    image_id   data scaleFactor
@@ -519,7 +516,7 @@ s_016um_00102_00186-1          10696.244           30716.82</code></pre>
 </div>
 <p>The H&amp;E image can be exported asa raster image for plotting using:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">imgRaster</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html">imgRaster</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/day1-1-SpatialExperiment-12-1.png" class="img-fluid figure-img" width="672"></p>
@@ -532,11 +529,11 @@ s_016um_00102_00186-1          10696.244           30716.82</code></pre>
 </div>
 <p>We saw that the rownames of the object were Ensembl IDs. However, it’s more convenient to have gene symbols. Therefore, we replace the Ensembl IDs, with the symbols stored in <code>rowData</code> (making sure to keep the ensembl ID if these are not unique):</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/uniquifyFeatureNames.html">uniquifyFeatureNames</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">ID</span>, names <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">Symbol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/uniquifyFeatureNames.html">uniquifyFeatureNames</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">ID</span>, names <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">Symbol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To get a visual overview the slide we can use <code><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">ggspavis::plotVisium</a></code>. First without spots:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, spots <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, spots <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/day1-1-SpatialExperiment-14-1.png" class="img-fluid figure-img" width="672"></p>
@@ -546,7 +543,7 @@ s_016um_00102_00186-1          10696.244           30716.82</code></pre>
 </div>
 <p>And with spots overlayed:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, point_shape <span class="op">=</span> <span class="fl">22</span>, point_size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, point_shape <span class="op">=</span> <span class="fl">22</span>, point_size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/day1-1-SpatialExperiment-15-1.png" class="img-fluid figure-img" width="672"></p>
@@ -585,19 +582,13 @@ Answer
 </div>
 <p>It’s possible to colour spots according to some variable, e.g., the number of read counts for a selected gene (i.e., PIGR):</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>,</span>
 <span>  annotate <span class="op">=</span> <span class="st">"PIGR"</span>,</span>
 <span>  assay <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>  zoom <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  point_size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  point_shape <span class="op">=</span> <span class="fl">22</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
-✖ Problematic argument:
-• override.aes = list(col = NA, size = 3)
-ℹ Did you misspell an argument name?</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/day1-1-SpatialExperiment-16-1.png" class="img-fluid figure-img" width="672"></p>
@@ -634,14 +625,8 @@ Answer
 <p>The column <code>array_row</code> is stored in <code>colData</code>, it represents in which row the spot is positioned. Of course, plotting this value is not particularly useful for biology. We will visualize more sensible values in the next chapter, when we do the quality control.</p>
 <p>We use the argument <code>annotate</code> to color according to a column in <code>colData</code>, and we zoom in by specifying <code>zoom = TRUE</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, annotate <span class="op">=</span> <span class="st">"array_row"</span>, zoom <span class="op">=</span> <span class="cn">TRUE</span>, point_shape <span class="op">=</span> <span class="fl">22</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
-✖ Problematic argument:
-• override.aes = list(col = NA, size = 3)
-ℹ Did you misspell an argument name?</code></pre>
-</div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, annotate <span class="op">=</span> <span class="st">"array_row"</span>, zoom <span class="op">=</span> <span class="cn">TRUE</span>, point_shape <span class="op">=</span> <span class="fl">22</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="day1-1_SpatialExperiment_files/figure-html/day1-1-SpatialExperiment-17-1.png" class="img-fluid figure-img" width="672"></p>
@@ -680,16 +665,16 @@ Answer
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subset to in-tissue spots only</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subset to in-tissue spots only</span></span>
 <span><span class="va">sub</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span>, <span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">in_tissue</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Check dimensions of original and subsetted objects</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Check dimensions of original and subsetted objects</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18085 14207</code></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">sub</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">sub</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18085 14207</code></pre>
 </div>
@@ -701,7 +686,7 @@ Answer
 </section><section id="save-the-object" class="level2"><h2 class="anchored" data-anchor-id="save-the-object">Save the object</h2>
 <p>Save the filtered <code>SpatialExperiment</code> object for the next steps:</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"results/day1"</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"results/day1"</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">saveHDF5SummarizedExperiment</a></span><span class="op">(</span><span class="va">spe</span>,</span>
 <span>  dir <span class="op">=</span> <span class="st">"results/day1"</span>, prefix <span class="op">=</span> <span class="st">"01.1_spe"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  chunkdim <span class="op">=</span> <span class="cn">NULL</span>, level <span class="op">=</span> <span class="cn">NULL</span>, as.sparse <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -710,7 +695,7 @@ Answer
 </div>
 <p>Clear your environment</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">.rs.restartR</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
