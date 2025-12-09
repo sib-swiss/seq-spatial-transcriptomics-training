@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.32">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Exercise 2 – Sequencing-based Spatial Transcriptomics</title>
 <style>
 code{white-space: pre-wrap;}
@@ -57,7 +54,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-e0c19abc34f0e04f75bc673f4472a256.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,10 +97,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-<!-- Matomo -->
-<script>
+}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+<!-- Matomo --><script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
   _paq.push(['trackPageView']);
@@ -117,18 +110,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
-</script>
-<!-- End Matomo Code -->
-
-
+</script><!-- End Matomo Code -->
 </head>
-
 <body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Sequencing-based Spatial Transcriptomics</span>
@@ -140,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
@@ -156,8 +143,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-1" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">day 1</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">
+<li>
     <a class="dropdown-item" href="../day1/day1-1_SpatialExperiment.html">
  <span class="dropdown-text">Exercise 1</span></a>
   </li>  
@@ -169,46 +156,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../day1/day1-3_feature_dimred_cluster.html">
  <span class="dropdown-text">Exercise 3</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../day1/day1-4_clustering_find_markers.html">
+ <span class="dropdown-text">Exercise 4</span></a>
+  </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-2" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">day 2</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">
+<li>
     <a class="dropdown-item" href="../day2/day2-1_spatial_stats.html">
- <span class="dropdown-text">Exercise</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../day2/day2-2_despace.html">
- <span class="dropdown-text">Exercise</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../day2/day2-3_differential.html">
- <span class="dropdown-text">Exercise</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../day2/day2-4_deconvolution.html">
- <span class="dropdown-text">Exercise</span></a>
+ <span class="dropdown-text">Exercise 1</span></a>
   </li>  
     </ul>
-  </li>
+</li>
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
     <a class="nav-link" href="https://github.com/sib-swiss/seq-spatial-transcriptomics-training"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -216,45 +193,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
+      <img src="../assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
       </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quality-control-using-spotsweeper" id="toc-quality-control-using-spotsweeper" class="nav-link active" data-scroll-target="#quality-control-using-spotsweeper">Quality Control using <code>SpotSweeper</code></a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+<li><a href="#quality-control-at-spot-level" id="toc-quality-control-at-spot-level" class="nav-link active" data-scroll-target="#quality-control-at-spot-level">Quality control at spot-level</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
-  <li><a href="#data-object" id="toc-data-object" class="nav-link" data-scroll-target="#data-object">Data Object</a></li>
-  <li><a href="#local-outlier-detection" id="toc-local-outlier-detection" class="nav-link" data-scroll-target="#local-outlier-detection">Local Outlier Detection</a>
+  <li>
+<a href="#calculate-qc-metrics" id="toc-calculate-qc-metrics" class="nav-link" data-scroll-target="#calculate-qc-metrics">Calculate QC metrics</a>
   <ul class="collapse">
-  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
-  </ul></li>
-  <li><a href="#visualization-of-qc-results" id="toc-visualization-of-qc-results" class="nav-link" data-scroll-target="#visualization-of-qc-results">Visualization of QC Results</a>
-  <ul class="collapse">
-  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
-  </ul></li>
+<li><a href="#global-outlier-detection" id="toc-global-outlier-detection" class="nav-link" data-scroll-target="#global-outlier-detection">Global outlier detection</a></li>
+  <li><a href="#visualize-spatial-pattern-of-qc-metrics-global-outliers" id="toc-visualize-spatial-pattern-of-qc-metrics-global-outliers" class="nav-link" data-scroll-target="#visualize-spatial-pattern-of-qc-metrics-global-outliers">Visualize spatial pattern of QC metrics (Global outliers)</a></li>
+  <li><a href="#local-outlier-detection" id="toc-local-outlier-detection" class="nav-link" data-scroll-target="#local-outlier-detection">Local Outlier Detection</a></li>
   </ul>
-</nav>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Exercise 2</h1>
 </div>
 
@@ -269,201 +234,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header>
-
-
-<section id="quality-control-using-spotsweeper" class="level2">
-<h2 class="anchored" data-anchor-id="quality-control-using-spotsweeper">Quality Control using <code>SpotSweeper</code></h2>
-<p>In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. Using the <code>SpotSweeper</code> package, we will learn how to identify and handle low-quality spots and spatial artifacts, which is essential for ensuring the reliability of downstream analyses. We will calculate various QC metrics, detect local outliers, and visualize the results to gain a comprehensive understanding of data quality.</p>
-</section>
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+</header><section id="quality-control-at-spot-level" class="level2"><h2 class="anchored" data-anchor-id="quality-control-at-spot-level">Quality control at spot-level</h2>
+<p>In this second exercise, we will focus on the critical step of quality control (QC) for spatial transcriptomics data. This step focuses on removing low-quality spots or technical artifacts from the dataset to avoid biases into downstream analysis.</p>
+</section><section id="learning-objectives" class="level2"><h2 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h2>
 <p>By the end of this exercise, you will be able to:</p>
 <ul>
-<li>Load a <code>SpatialExperiment</code> object from a <code>.qs</code> file.</li>
 <li>Calculate per-spot QC metrics.</li>
 <li>Identify local outliers based on various QC metrics.</li>
 <li>Detect spatial artifacts using <code>SpotSweeper</code>.</li>
 <li>Visualize QC metrics and detected artifacts.</li>
-</ul>
-</section>
-<section id="libraries" class="level1">
-<h1>Libraries</h1>
+</ul></section><section id="libraries" class="level2"><h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpatialExperiment)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qs2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpotSweeper)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scuttle)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(escheR) <span class="co"># For spatial plotting</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(HDF5Array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment">SpatialExperiment</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MicTott/SpotSweeper">SpotSweeper</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jtlandis/ggside">ggside</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/boyiguo1/escheR">escheR</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/HDF5Array">HDF5Array</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmweber/ggspavis">ggspavis</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="data-object" class="level1">
-<h1>Data Object</h1>
-<p>In this section, we will load our <code>SpatialExperiment</code> object, which has been saved as a <code>.qs2</code> file, and prepare it for quality control analysis.</p>
+</section><section id="calculate-qc-metrics" class="level2"><h2 class="anchored" data-anchor-id="calculate-qc-metrics">Calculate QC metrics</h2>
+<p>We will start by calculating QC metrics that are also commonly used in scRNA-seq data analysis (number of UMI counts per cell, number of detected genes per cell, percentage of UMIs originating from mitochondrial genes). Here these metrics will be calculated per sport, and used to identify low-quality spots.</p>
+<p>We will start by loading our <code>SpatialExperiment</code> object, which was saved in the previous exercise, and prepare it for quality control analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the SpatialExperiment object from the .qs2 file.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This object contains the processed spatial transcriptomics data.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">qs_read</span>(<span class="st">"results/01_spe.qs2"</span>, <span class="at">nthreads =</span> <span class="dv">1</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Change row names from gene IDs to gene symbols for easier interpretation.</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This assumes 'Symbol' is a column in the rowData of the SpatialExperiment object.</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(spe) <span class="ot">&lt;-</span> <span class="fu">rowData</span>(spe)<span class="sc">$</span>Symbol</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify mitochondrial transcripts. These are often used as a QC metric.</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes starting with "MT-" are typically mitochondrial.</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">rownames</span>(spe)[<span class="fu">grepl</span>(<span class="st">"^MT-"</span>, <span class="fu">rownames</span>(spe))]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate per-spot (per-cell) QC metrics using scuttle's addPerCellQCMetrics function.</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># This adds metrics like sum (total counts), detected (number of detected genes),</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># and mitochondrial gene percentage to the colData of the SpatialExperiment object.</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> scuttle<span class="sc">::</span><span class="fu">addPerCellQCMetrics</span>(spe, <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> is.mito))</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the column names of the colData to see the newly added QC metrics.</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(<span class="fu">colData</span>(spe))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "barcode"               "in_tissue"             "array_row"            
- [4] "array_col"             "bin_size"              "sample_id"            
- [7] "sum"                   "detected"              "subsets_Mito_sum"     
-[10] "subsets_Mito_detected" "subsets_Mito_percent"  "total"                </code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load the SpatialExperiment object</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">loadHDF5SummarizedExperiment</a></span><span class="op">(</span>dir<span class="op">=</span><span class="st">"results/day1/"</span>, prefix<span class="op">=</span><span class="st">"01.1_spe"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Identify mitochondrial genes (genes with symbol starting with "MT-")</span></span>
+<span><span class="va">is.mito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^MT-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<!-- # Subsetting for Demonstration -->
-<!-- For the purpose of this tutorial, and to reduce computation time, we will subset the `SpatialExperiment` object to a smaller number of genes and spots. In a real analysis, you would typically work with the full dataset or apply more sophisticated filtering criteria. -->
-<!-- ```{r} -->
-<!-- # Subset to a smaller number of genes (e.g., top 1000 genes by variance or a random subset). -->
-<!-- # For simplicity, let's take a random subset of 1000 genes. -->
-<!-- set.seed(123) # for reproducibility -->
-<!-- num_genes_to_keep <- 1000 -->
-<!-- if (nrow(spe) > num_genes_to_keep) { -->
-<!--   gene_indices <- sample(seq_len(nrow(spe)), num_genes_to_keep) -->
-<!--   spe_subset <- spe[gene_indices, ] -->
-<!-- } else { -->
-<!--   spe_subset <- spe -->
-<!-- } -->
-<!-- # Subset to a smaller number of spots (e.g., a random subset of 5000 spots). -->
-<!-- num_spots_to_keep <- 5000 -->
-<!-- if (ncol(spe_subset) > num_spots_to_keep) { -->
-<!--   spot_indices <- sample(seq_len(ncol(spe_subset)), num_spots_to_keep) -->
-<!--   spe_subset <- spe_subset[, spot_indices] -->
-<!-- } else { -->
-<!--   spe_subset <- spe_subset -->
-<!-- } -->
-<!-- spe <- spe_subset -->
-<!-- # Display the dimensions of the subsetted object to confirm reduction. -->
-<!-- dim(spe) -->
-<!-- ``` -->
-<!-- ## Question: Impact of Subsetting -->
-<!-- **What are the potential implications of subsetting the data (both genes and spots) for QC analysis in a real-world scenario?** -->
-<!-- :::{.callout-tip collapse="true"} -->
-<!-- ### Answer -->
-<!-- Subsetting the data can significantly speed up computations, which is beneficial for tutorials and initial exploration. However, in a real-world scenario, it has several implications: -->
-<!-- -   **Loss of Information:** Subsetting genes might remove important genes that could be relevant for certain QC metrics or biological insights. Subsetting spots might miss localized artifacts or rare cell populations. -->
-<!-- -   **Altered Statistics:** Metrics like `localOutliers` and `findArtifacts` rely on neighborhood information. Subsetting spots can change the definition of neighborhoods and thus alter the results of these analyses. -->
-<!-- -   **Representativeness:** A small subset might not be representative of the entire dataset, potentially leading to biased conclusions about data quality. -->
-<!-- Therefore, while useful for quick demonstrations, full QC should ideally be performed on the complete dataset. -->
-<!-- ::: -->
-</section>
-<section id="local-outlier-detection" class="level1">
-<h1>Local Outlier Detection</h1>
-<p>Here, we identify local outliers based on common QC metrics such as library size, number of detected genes, and mitochondrial percentage. <code>localOutliers</code> from <code>SpotSweeper</code> helps in identifying spots that deviate significantly from their local neighborhood.</p>
-<p><strong>Note:</strong> this takes about 10 minutes to run. Have a coffee.</p>
+<p>Now, we will calculate per-spot QC metrics using the <code>scuttle</code> package. The function <code>addPerCellQCMetrics</code> adds metrics mitochondrial gene percentage to the <code>colData</code> of the <code>SpatialExperiment</code> object.</p>
+<p>Run the following code to compute these metrics and inspect the results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify local outliers based on library size ("sum" of counts).</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Spots with unusually low library size compared to their neighbors will be flagged.</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">localOutliers</span>(spe,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"sum"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"lower"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">log =</span> <span class="cn">TRUE</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify local outliers based on the number of unique genes detected ("detected").</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Spots with an unusually low number of detected genes will be flagged.</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">localOutliers</span>(spe,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"detected"</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"lower"</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">log =</span> <span class="cn">TRUE</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify local outliers based on the mitochondrial gene percentage.</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Spots with an unusually high mitochondrial percentage will be flagged.</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">localOutliers</span>(spe,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"subsets_Mito_percent"</span>,</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"higher"</span>,</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">log =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all individual outlier flags into a single "local_outliers" column.</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># A spot is considered a local outlier if it's flagged by any of the above metrics.</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>spe<span class="sc">$</span>local_outliers <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(spe<span class="sc">$</span>sum_outliers) <span class="sc">|</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.logical</span>(spe<span class="sc">$</span>detected_outliers) <span class="sc">|</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.logical</span>(spe<span class="sc">$</span>subsets_Mito_percent_outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html">addPerCellQCMetrics</a></span><span class="op">(</span><span class="va">spe</span>, subsets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Mito <span class="op">=</span> <span class="va">is.mito</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="question-1" class="level2">
-<h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
-<p><strong>How many spots were identified as local outliers based on the combined criteria?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+Exercise 1
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of spots flagged as local outliers.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(spe<span class="sc">$</span>local_outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check which metadata has been added to <code>colData</code>. Do you recognize the different metrics?</p>
 </div>
 </div>
-</div>
-</section>
-</section>
-<section id="visualization-of-qc-results" class="level1">
-<h1>Visualization of QC Results</h1>
-<p>Visualizing the QC metrics and detected artifacts is crucial for understanding the quality of your spatial transcriptomics data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the spatial distribution of local outliers.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Spots flagged as local outliers will be highlighted.</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQCmetrics</span>(spe,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"sum_log"</span>, <span class="at">outliers =</span> <span class="st">"subsets_Mito_percent_outliers"</span>, <span class="at">point_size =</span> <span class="fl">0.4</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"purple"</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">stroke =</span> <span class="fl">0.75</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"All Local Outliers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the spatial distribution of local outliers.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Spots flagged as local outliers will be highlighted.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQCmetrics</span>(spe,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"sum_log"</span>, <span class="at">outliers =</span> <span class="st">"local_outliers"</span>, <span class="at">point_size =</span> <span class="fl">0.4</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">stroke =</span> <span class="fl">0.75</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"All Local Outliers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="question-3" class="level2">
-<h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
-<p><strong>Plot the spatial distribution of the <code>artifact</code> column identified by <code>SpotSweeper</code>.</strong></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -476,15 +296,525 @@ Answer
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the spatial distribution of the detected artifacts.</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQCmetrics</span>(spe,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">metric =</span> <span class="st">"subsets_Mito_percent"</span>, <span class="co"># You can choose any relevant metric to display</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">outliers =</span> <span class="st">"artifact"</span>, </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">point_size =</span> <span class="fl">1.1</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Detected Spatial Artifacts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Display the colData to see the newly added QC metrics.</span></span>
+<span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 14207 rows and 12 columns
+                                    barcode in_tissue array_row array_col
+                                &lt;character&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+s_016um_00144_00175-1 s_016um_00144_00175-1         1       144       175
+s_016um_00204_00145-1 s_016um_00204_00145-1         1       204       145
+s_016um_00191_00159-1 s_016um_00191_00159-1         1       191       159
+s_016um_00111_00233-1 s_016um_00111_00233-1         1       111       233
+s_016um_00202_00235-1 s_016um_00202_00235-1         1       202       235
+...                                     ...       ...       ...       ...
+s_016um_00217_00238-1 s_016um_00217_00238-1         1       217       238
+s_016um_00192_00176-1 s_016um_00192_00176-1         1       192       176
+s_016um_00214_00240-1 s_016um_00214_00240-1         1       214       240
+s_016um_00193_00227-1 s_016um_00193_00227-1         1       193       227
+s_016um_00109_00223-1 s_016um_00109_00223-1         1       109       223
+                         bin_size   sample_id       sum  detected
+                      &lt;character&gt; &lt;character&gt; &lt;numeric&gt; &lt;integer&gt;
+s_016um_00144_00175-1         016    sample01       322       202
+s_016um_00204_00145-1         016    sample01       253       203
+s_016um_00191_00159-1         016    sample01      1546       982
+s_016um_00111_00233-1         016    sample01       818       665
+s_016um_00202_00235-1         016    sample01       227       195
+...                           ...         ...       ...       ...
+s_016um_00217_00238-1         016    sample01       291       246
+s_016um_00192_00176-1         016    sample01       626       557
+s_016um_00214_00240-1         016    sample01       330       271
+s_016um_00193_00227-1         016    sample01       802       684
+s_016um_00109_00223-1         016    sample01      1020       794
+                      subsets_Mito_sum subsets_Mito_detected
+                             &lt;numeric&gt;             &lt;integer&gt;
+s_016um_00144_00175-1              109                    10
+s_016um_00204_00145-1               37                     7
+s_016um_00191_00159-1              230                    11
+s_016um_00111_00233-1               51                     8
+s_016um_00202_00235-1                7                     5
+...                                ...                   ...
+s_016um_00217_00238-1               10                     6
+s_016um_00192_00176-1                7                     6
+s_016um_00214_00240-1               10                     6
+s_016um_00193_00227-1               19                     7
+s_016um_00109_00223-1               67                    10
+                      subsets_Mito_percent     total
+                                 &lt;numeric&gt; &lt;numeric&gt;
+s_016um_00144_00175-1             33.85093       322
+s_016um_00204_00145-1             14.62451       253
+s_016um_00191_00159-1             14.87710      1546
+s_016um_00111_00233-1              6.23472       818
+s_016um_00202_00235-1              3.08370       227
+...                                    ...       ...
+s_016um_00217_00238-1              3.43643       291
+s_016um_00192_00176-1              1.11821       626
+s_016um_00214_00240-1              3.03030       330
+s_016um_00193_00227-1              2.36908       802
+s_016um_00109_00223-1              6.56863      1020</code></pre>
 </div>
 </div>
+<ul>
+<li>The <code>sum</code> column contains the total number of unique molecular identifiers (UMIs) for each spot</li>
+<li>The <code>detected</code> column contains the number of unique genes detected per spot</li>
+<li>The <code>subsets_mito_percent</code> contains the percentage of transcripts mapping to mitochondrial genes per spot</li>
+</ul>
+</div>
+</div>
+</div>
+<section id="global-outlier-detection" class="level3"><h3 class="anchored" data-anchor-id="global-outlier-detection">Global outlier detection</h3>
+<p>In order to detect low-quality spots and filter them out, QC methods adapted from scRNA-seq analysis can be applied. A simple option is to apply a fixed (upper or lower-bound) threshold to a metric across all spots, and remove the spots that do not pass the filtering criteria applied.</p>
+<p>To set up these threshold we can look for information from 10X and the community, for example https://github.com/10XGenomics/HumanColonCancer_VisiumHD/issues/28. Based on this discussion the authors of the OSTA book wrote (see “Remove bins overlaying empty tissue” section in https://lmweber.org/OSTA/pages/seq-workflow-visium-hd-bin.html#dependencies):</p>
+<blockquote class="blockquote">
+<p>Based on a discussion with the original author at 10x Genomics, in this dataset, 8 µm bins with a library size below 100 are removed. Since we expect a 4-fold increase in library size across all bins at 16 µm, we can set the filtering threshold to 400.</p>
+</blockquote>
+<p>We can also have a look and plot distributions of the values to decide which is the best cutoff:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot library size vs. detected genes</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/ggsce.html">ggcells</a></span><span class="op">(</span><span class="va">spe</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">detected</span>, y<span class="op">=</span><span class="va">sum</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">geom_density_2d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggside/man/geom_xsidehistogram.html">geom_xsidehistogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggside/man/geom_xsidehistogram.html">geom_ysidehistogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">300</span>, col<span class="op">=</span><span class="st">"red"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">400</span>, col<span class="op">=</span><span class="st">"red"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y<span class="op">=</span><span class="st">"Number of UMIs"</span>, x<span class="op">=</span><span class="st">"Number of detected genes"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Library size vs. detected"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot mito proportion vs. detected genes</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/ggsce.html">ggcells</a></span><span class="op">(</span><span class="va">spe</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">detected</span>, y<span class="op">=</span><span class="va">subsets_Mito_percent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">geom_density_2d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggside/man/geom_xsidehistogram.html">geom_xsidehistogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggside/man/geom_xsidehistogram.html">geom_ysidehistogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">300</span>, col<span class="op">=</span><span class="st">"red"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">20</span>, col<span class="op">=</span><span class="st">"red"</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y<span class="op">=</span><span class="st">"% mitochondrial reads"</span>, x<span class="op">=</span><span class="st">"Number of detected genes"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Mito proportion vs. genes detected"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_xsidebin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_ysidebin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_xsidebin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_ysidebin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And further check how many spots would be removed with the given thresholds:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Flag spots based on fixed thresholds</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">qc_lib_size</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">sum</span> <span class="op">&lt;</span> <span class="fl">400</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">qc_detected</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">detected</span> <span class="op">&lt;</span> <span class="fl">300</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">qc_mito_prop</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">subsets_Mito_percent</span> <span class="op">&gt;</span> <span class="fl">20</span></span>
+<span></span>
+<span><span class="co"># Tabulate number of spots flagged by each</span></span>
+<span><span class="va">qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"^qc"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[</span><span class="va">qc</span><span class="op">]</span>, <span class="va">table</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      qc_lib_size qc_detected qc_mito_prop
+FALSE       11021       11263        12148
+TRUE         3186        2944         2059</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What do you think about this intial filtering?</p>
+<p>Have a look at the mitochondrial percentage numbers on the tissue section using <code><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium()</a></code> function. Which spots are more likely to be excluded?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, annotate <span class="op">=</span> <span class="st">"subsets_Mito_percent"</span>, zoom <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
+✖ Problematic argument:
+• override.aes = list(col = NA, size = 3)
+ℹ Did you misspell an argument name?</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="visualize-spatial-pattern-of-qc-metrics-global-outliers" class="level3"><h3 class="anchored" data-anchor-id="visualize-spatial-pattern-of-qc-metrics-global-outliers">Visualize spatial pattern of QC metrics (Global outliers)</h3>
+<p>Very importantly, we want to have a look into the spatial pattern of using a fixed threshold for QC metrics :</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># check spatial pattern of discarded spots</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, </span>
+<span>                plot_type<span class="op">=</span><span class="st">"spot"</span>, annotate<span class="op">=</span><span class="st">"qc_lib_size"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Library size (&lt; 400 UMI)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, </span>
+<span>                plot_type<span class="op">=</span><span class="st">"spot"</span>, annotate<span class="op">=</span><span class="st">"qc_detected"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Detected genes (&lt; 300 genes)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, </span>
+<span>                plot_type<span class="op">=</span><span class="st">"spot"</span>, annotate<span class="op">=</span><span class="st">"qc_mito_prop"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Mito proportion (&gt; 20%)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot the three together</span></span>
+<span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">p3</span>, ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="local-outlier-detection" class="level3"><h3 class="anchored">Local Outlier Detection</h3>
+<p>To avoid discarding whole layers of tissues, another approach to identify low-quality spots is to use local outlier detection methods that take into account the spatial context of each spot.</p>
+<p><code>SpotSweeper</code> package provides functions to identify common QC metrics (such as the ones we have seen in the previous section: library size, number of detected genes, and mitochondrial percentage) and detect local outliers based on these metrics.</p>
+<p>We will use <code>localOutliers</code> from <code>SpotSweeper</code> which helps identifying spots that deviate significantly from their local neighborhood.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Identify local outliers based on library size ("sum" of counts).</span></span>
+<span><span class="co"># Spots with unusually low library size compared to their neighbors will be flagged.</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/localOutliers.html">localOutliers</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"sum"</span>,</span>
+<span>  direction <span class="op">=</span> <span class="st">"lower"</span>,</span>
+<span>  log <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Identify local outliers based on the number of unique genes detected ("detected").</span></span>
+<span><span class="co"># Spots with an unusually low number of detected genes will be flagged.</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/localOutliers.html">localOutliers</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"detected"</span>,</span>
+<span>  direction <span class="op">=</span> <span class="st">"lower"</span>,</span>
+<span>  log <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Identify local outliers based on the mitochondrial gene percentage.</span></span>
+<span><span class="co"># Spots with an unusually high mitochondrial percentage will be flagged.</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/localOutliers.html">localOutliers</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"subsets_Mito_percent"</span>,</span>
+<span>  direction <span class="op">=</span> <span class="st">"higher"</span>,</span>
+<span>  log <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Combine all individual outlier flags into a single "local_outliers" column.</span></span>
+<span><span class="co"># A spot is considered a local outlier if it's flagged by any of the above metrics.</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">local_outliers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">sum_outliers</span><span class="op">)</span> <span class="op">|</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">detected_outliers</span><span class="op">)</span> <span class="op">|</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">subsets_Mito_percent_outliers</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How many spots were identified as local outliers based on the combined criteria?</p>
+<p>As we have seen before, visualizing the QC metrics is crucial for understanding the quality of your spatial transcriptomics data and for deciding on appropriate filtering strategies, so look at their spatial localization using the <code>plotObsQC</code> function.</p>
+<p>What do you think?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Count the number of spots flagged as local outliers.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html">table</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">local_outliers</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+14036   171 </code></pre>
+</div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, </span>
+<span>          plot_type<span class="op">=</span><span class="st">"spot"</span>, annotate<span class="op">=</span><span class="st">"local_outliers"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"All local outliers"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Even better, we can visualize the spatial distribution of the local outliers together with the QC metrics, for example plot the spatial distribution of local outliers for mitochondrial percentage.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/plotQCmetrics.html">plotQCmetrics</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"subsets_Mito_percent"</span>, outliers <span class="op">=</span> <span class="st">"subsets_Mito_percent_outliers"</span>, point_size <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>  stroke <span class="op">=</span> <span class="fl">0.75</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Local outliers for %MT"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Plot the spatial distribution of local outliers for library size and number of detected genes. What do you observe?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot the spatial distribution of local outliers for library size.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/plotQCmetrics.html">plotQCmetrics</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"sum_log"</span>, outliers <span class="op">=</span> <span class="st">"sum_outliers"</span>, point_size <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>  stroke <span class="op">=</span> <span class="fl">0.75</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Local outliers for number of UMIs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot the spatial distribution of local outliers for number of detected genes.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/plotQCmetrics.html">plotQCmetrics</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"detected_log"</span>, outliers <span class="op">=</span> <span class="st">"detected_outliers"</span>, point_size <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>  stroke <span class="op">=</span> <span class="fl">0.75</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Local outliers for number of UMIs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Very few spots seem to be flagged as outliers!</p>
+</div>
+</div>
+</div>
+<p>We can visualisaze the z-scores from the local outlier detection test, and compare it to the global threshold used earlier. How do you interpret this?</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, plot_type <span class="op">=</span> <span class="st">"violin"</span>, x_metric <span class="op">=</span> <span class="st">"subsets_Mito_percent_z"</span>, annotate <span class="op">=</span> <span class="st">"qc_mito_prop"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="compare-and-combine-global-and-local-outliers-and-apply-filtering" class="level2"><h2 class="anchored" data-anchor-id="compare-and-combine-global-and-local-outliers-and-apply-filtering">Compare and combine global and local outliers and apply filtering</h2>
+<p>Based on the comparison of global and local outliers, we choose here to adjust the global cutoffs to be less stringent:</p>
+<p>Adjust global filtering cutoffs based on previous plots (apply less stringent cutoffs)</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># adjust global filtering cutoff</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">qc_lib_size</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">sum</span> <span class="op">&lt;</span> <span class="fl">120</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">qc_detected</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">detected</span> <span class="op">&lt;</span> <span class="fl">100</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">qc_mito_prop</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">subsets_Mito_percent</span> <span class="op">&gt;</span> <span class="fl">35</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Compare global and local outliers being flagged</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span><span class="op">$</span><span class="va">global_outliers</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">qc_lib_size</span> <span class="op">|</span> <span class="va">spe</span><span class="op">$</span><span class="va">qc_detected</span> <span class="op">|</span> <span class="va">spe</span><span class="op">$</span><span class="va">qc_mito_prop</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, plot_type<span class="op">=</span><span class="st">"spot"</span>, annotate<span class="op">=</span><span class="st">"global_outliers"</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotObsQC.html">plotObsQC</a></span><span class="op">(</span><span class="va">spe</span>, plot_type<span class="op">=</span><span class="st">"spot"</span>, annotate<span class="op">=</span><span class="st">"local_outliers"</span><span class="op">)</span></span>
+<span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Combine both:</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># combine local and global outliers to create a final discard flag</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">discard</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">global_outliers</span> <span class="op">|</span> <span class="va">spe</span><span class="op">$</span><span class="va">local_outliers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Visualise the spots that will be discarded based on the combined criteria. How many spots will be removed?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># check how many spots will be discarded</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html">table</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+12615  1592 </code></pre>
+</div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># have a final look to the spots that we will discard</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, zoom<span class="op">=</span><span class="cn">T</span>, annotate<span class="op">=</span><span class="st">"discard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="technical-artifacts" class="level2"><h2 class="anchored" data-anchor-id="technical-artifacts">Technical artifacts</h2>
+<p>Technical artifacts can arise during tissue preparation, for example tissue dissection can cause mechanical damage, leading to large areas with artificially low biological heterogeneity. These can be detected with the <code>findArtifacts</code> function of the <code>spotSweeper</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># find artifacts using SpotSweeper</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/findArtifacts.html">findArtifacts</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>    mito_percent <span class="op">=</span> <span class="st">"subsets_Mito_percent"</span>,</span>
+<span>    mito_sum <span class="op">=</span> <span class="st">"subsets_Mito_sum"</span>,</span>
+<span>    n_order <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    name <span class="op">=</span> <span class="st">"artifact"</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the <code>findArtifacts</code> function performing and what are the (potentially problematic) assumptions?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Plot the spatial distribution of the <code>artifact</code> column identified by <code>SpotSweeper</code>. What do you observe?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot the spatial distribution of the detected artifacts.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SpotSweeper/man/plotQCmetrics.html">plotQCmetrics</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<span>    metric <span class="op">=</span> <span class="st">"subsets_Mito_percent"</span>, <span class="co"># You can choose any relevant metric to display</span></span>
+<span>    outliers <span class="op">=</span> <span class="st">"artifact"</span>, </span>
+<span>    point_size <span class="op">=</span> <span class="fl">1.1</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Detected Spatial Artifacts"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-2_spotsweeper_qc_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="filtering" class="level2"><h2 class="anchored" data-anchor-id="filtering">Filtering</h2>
+<p>We decide to filter out the low-quality spots from the <code>SpatialExperiment</code> object based on the combined criteria of global thresholds and local outliers. Additionally, we will remove any features (genes) that have zero counts across all remaining spots.</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># remove the spots considered of low quality based on both global and local metrics</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span>, <span class="op">!</span><span class="va">spe</span><span class="op">$</span><span class="va">discard</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># remove features with all 0 counts</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span><span class="fu">rowSums</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What is the size of the dataset after filtering?</p>
+</section><section id="save-the-object" class="level2"><h2 class="anchored" data-anchor-id="save-the-object">Save the object</h2>
+<p>Save the filtered <code>SpatialExperiment</code> object for the next steps:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">saveHDF5SummarizedExperiment</a></span><span class="op">(</span><span class="va">spe</span>, dir<span class="op">=</span><span class="st">"results/day1"</span>, prefix<span class="op">=</span><span class="st">"01.2_spe"</span>, replace<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                                chunkdim<span class="op">=</span><span class="cn">NULL</span>, level<span class="op">=</span><span class="cn">NULL</span>, as.sparse<span class="op">=</span><span class="cn">NA</span>,</span>
+<span>                                verbose<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Clear your environment:</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">.rs.restartR</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -498,9 +828,12 @@ Important
 <div class="callout-body-container callout-body">
 <p><strong>Key Takeaways:</strong></p>
 <ul>
-<li><code>scuttle::addPerCellQCMetrics</code> provides essential per-spot QC metrics.</li>
-<li><code>SpotSweeper::localOutliers</code> helps identify individual problematic spots.</li>
-<li><code>SpotSweeper::findArtifacts</code> is powerful for detecting spatially coherent regions of poor quality.</li>
+<li>
+<code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html">scuttle::addPerCellQCMetrics</a></code> provides essential per-spot QC metrics.</li>
+<li>
+<code><a href="https://rdrr.io/pkg/SpotSweeper/man/localOutliers.html">SpotSweeper::localOutliers</a></code> helps identify individual problematic spots.</li>
+<li>
+<code><a href="https://rdrr.io/pkg/SpotSweeper/man/findArtifacts.html">SpotSweeper::findArtifacts</a></code> is powerful for detecting spatially coherent regions of poor quality.</li>
 <li>Visualizing QC results is critical for data interpretation and downstream analysis decisions.</li>
 </ul>
 </div>
@@ -508,10 +841,13 @@ Important
 
 
 </section>
+</div>
+</div>
 </section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div>
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -583,7 +919,7 @@ Important
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -911,7 +1247,6 @@ Important
   });
   </script>
 </div> <!-- /content -->
-
 
 
 

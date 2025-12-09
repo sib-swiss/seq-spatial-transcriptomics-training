@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.32">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Exercise 3 – Sequencing-based Spatial Transcriptomics</title>
 <style>
 code{white-space: pre-wrap;}
@@ -57,7 +54,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-e0c19abc34f0e04f75bc673f4472a256.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,10 +97,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-<!-- Matomo -->
-<script>
+}</script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+<!-- Matomo --><script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
   _paq.push(['trackPageView']);
@@ -117,18 +110,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
-</script>
-<!-- End Matomo Code -->
-
-
+</script><!-- End Matomo Code -->
 </head>
-
 <body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Sequencing-based Spatial Transcriptomics</span>
@@ -140,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
@@ -156,8 +143,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-1" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">day 1</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">
+<li>
     <a class="dropdown-item" href="../day1/day1-1_SpatialExperiment.html">
  <span class="dropdown-text">Exercise 1</span></a>
   </li>  
@@ -169,46 +156,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../day1/day1-3_feature_dimred_cluster.html">
  <span class="dropdown-text">Exercise 3</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../day1/day1-4_clustering_find_markers.html">
+ <span class="dropdown-text">Exercise 4</span></a>
+  </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-2" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">day 2</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">
+<li>
     <a class="dropdown-item" href="../day2/day2-1_spatial_stats.html">
- <span class="dropdown-text">Exercise</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../day2/day2-2_despace.html">
- <span class="dropdown-text">Exercise</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../day2/day2-3_differential.html">
- <span class="dropdown-text">Exercise</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../day2/day2-4_deconvolution.html">
- <span class="dropdown-text">Exercise</span></a>
+ <span class="dropdown-text">Exercise 1</span></a>
   </li>  
     </ul>
-  </li>
+</li>
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
     <a class="nav-link" href="https://github.com/sib-swiss/seq-spatial-transcriptomics-training"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -216,71 +193,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
+      <img src="../assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
       </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#feature-selection-dimensionality-reduction-and-clustering" id="toc-feature-selection-dimensionality-reduction-and-clustering" class="nav-link active" data-scroll-target="#feature-selection-dimensionality-reduction-and-clustering">Feature Selection, Dimensionality Reduction, and Clustering</a></li>
+<li><a href="#normalisation-feature-selection-and-dimensionality-reduction" id="toc-normalisation-feature-selection-and-dimensionality-reduction" class="nav-link active" data-scroll-target="#normalisation-feature-selection-and-dimensionality-reduction">Normalisation, Feature Selection and Dimensionality Reduction</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
-  <li><a href="#load-and-prepare-data" id="toc-load-and-prepare-data" class="nav-link" data-scroll-target="#load-and-prepare-data">Load and Prepare Data</a>
+  <li><a href="#load-spatialexperiment-object" id="toc-load-spatialexperiment-object" class="nav-link" data-scroll-target="#load-spatialexperiment-object">Load SpatialExperiment Object</a></li>
+  <li>
+<a href="#normalization" id="toc-normalization" class="nav-link" data-scroll-target="#normalization">Normalization</a>
   <ul class="collapse">
-  <li><a href="#spatially-aware-normalization-optional" id="toc-spatially-aware-normalization-optional" class="nav-link" data-scroll-target="#spatially-aware-normalization-optional">Spatially-Aware Normalization (Optional)</a></li>
-  <li><a href="#size-factor-analysis" id="toc-size-factor-analysis" class="nav-link" data-scroll-target="#size-factor-analysis">Size Factor Analysis</a></li>
-  </ul></li>
-  <li><a href="#feature-selection" id="toc-feature-selection" class="nav-link" data-scroll-target="#feature-selection">Feature Selection</a>
-  <ul class="collapse">
-  <li><a href="#highly-variable-genes-hvgs" id="toc-highly-variable-genes-hvgs" class="nav-link" data-scroll-target="#highly-variable-genes-hvgs">Highly Variable Genes (HVGs)</a></li>
-  </ul></li>
-  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a>
-  <ul class="collapse">
-  <li><a href="#spatially-variable-genes-svgs" id="toc-spatially-variable-genes-svgs" class="nav-link" data-scroll-target="#spatially-variable-genes-svgs">Spatially Variable Genes (SVGs)</a></li>
-  </ul></li>
-  <li><a href="#question-1.2" id="toc-question-1.2" class="nav-link" data-scroll-target="#question-1.2">Question 1.2</a></li>
-  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction">Dimensionality Reduction</a>
-  <ul class="collapse">
-  <li><a href="#principal-component-analysis-pca" id="toc-principal-component-analysis-pca" class="nav-link" data-scroll-target="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a></li>
-  </ul></li>
-  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a>
-  <ul class="collapse">
-  <li><a href="#t-distributed-stochastic-neighbor-embedding-t-sne" id="toc-t-distributed-stochastic-neighbor-embedding-t-sne" class="nav-link" data-scroll-target="#t-distributed-stochastic-neighbor-embedding-t-sne">t-Distributed Stochastic Neighbor Embedding (t-SNE)</a></li>
-  </ul></li>
-  <li><a href="#question-2.2" id="toc-question-2.2" class="nav-link" data-scroll-target="#question-2.2">Question 2.2</a>
-  <ul class="collapse">
-  <li><a href="#uniform-manifold-approximation-and-projection-umap" id="toc-uniform-manifold-approximation-and-projection-umap" class="nav-link" data-scroll-target="#uniform-manifold-approximation-and-projection-umap">Uniform Manifold Approximation and Projection (UMAP)</a></li>
-  </ul></li>
-  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
-  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a></li>
-  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
-  <li><a href="#marker-gene-identification" id="toc-marker-gene-identification" class="nav-link" data-scroll-target="#marker-gene-identification">Marker Gene Identification</a></li>
-  <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5">Question 5</a></li>
-  <li><a href="#visualization-of-results" id="toc-visualization-of-results" class="nav-link" data-scroll-target="#visualization-of-results">Visualization of Results</a>
-  <ul class="collapse">
-  <li><a href="#clustering-heatmap" id="toc-clustering-heatmap" class="nav-link" data-scroll-target="#clustering-heatmap">Clustering Heatmap</a></li>
-  </ul></li>
+<li><a href="#bonus-accounting-for-compositional-biases" id="toc-bonus-accounting-for-compositional-biases" class="nav-link" data-scroll-target="#bonus-accounting-for-compositional-biases">Bonus: accounting for compositional biases</a></li>
+  <li><a href="#bonus-spatially-aware-normalization" id="toc-bonus-spatially-aware-normalization" class="nav-link" data-scroll-target="#bonus-spatially-aware-normalization">Bonus: spatially-aware normalization</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#feature-selection" id="toc-feature-selection" class="nav-link" data-scroll-target="#feature-selection">Feature Selection</a>
+  <ul class="collapse">
+<li><a href="#highly-variable-genes-hvgs" id="toc-highly-variable-genes-hvgs" class="nav-link" data-scroll-target="#highly-variable-genes-hvgs">Highly Variable Genes (HVGs)</a></li>
+  <li><a href="#spatially-variable-genes-svgs" id="toc-spatially-variable-genes-svgs" class="nav-link" data-scroll-target="#spatially-variable-genes-svgs">Spatially Variable Genes (SVGs)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#dimensionality-reduction-dr" id="toc-dimensionality-reduction-dr" class="nav-link" data-scroll-target="#dimensionality-reduction-dr">Dimensionality Reduction (DR)</a>
+  <ul class="collapse">
+<li><a href="#non-spatially-aware-dr" id="toc-non-spatially-aware-dr" class="nav-link" data-scroll-target="#non-spatially-aware-dr">Non-spatially aware DR:</a></li>
+  </ul>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Exercise 3</h1>
 </div>
 
@@ -295,213 +247,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header>
-
-
-<section id="feature-selection-dimensionality-reduction-and-clustering" class="level2">
-<h2 class="anchored" data-anchor-id="feature-selection-dimensionality-reduction-and-clustering">Feature Selection, Dimensionality Reduction, and Clustering</h2>
-<p>In this third exercise, we will explore the essential techniques of feature selection, dimensionality reduction, and clustering to uncover meaningful biological insights from spatial transcriptomics data. We will learn how to identify the most informative genes, visualize complex high-dimensional data in lower-dimensional spaces using methods like PCA and UMAP, and group spots into clusters representing distinct spatial domains. These steps are fundamental for interpreting the underlying biological structure of the tissue.</p>
-</section>
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+</header><section id="normalisation-feature-selection-and-dimensionality-reduction" class="level2"><h2 class="anchored" data-anchor-id="normalisation-feature-selection-and-dimensionality-reduction">Normalisation, Feature Selection and Dimensionality Reduction</h2>
+<p>In this section we will focus on normalisation, feature selection and dimensionality reduction of spatial transcriptomics data, which are important preprocessing steps before downstream analysis such as clustering and marker gene identification. We will focus on the specific challenges and considerations when dealing with spatially-resolved transcriptomics data, as opposed to traditional single-cell RNA-seq data.</p>
+</section><section id="learning-objectives" class="level2"><h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <p>By the end of this exercise, you will be able to:</p>
 <ul>
+<li>Normalize spatial transcriptomics data to account for technical variations.</li>
 <li>Perform feature selection to identify highly variable genes (HVGs).</li>
-<li>Apply dimensionality reduction techniques like PCA and UMAP.</li>
-<li>Perform clustering to identify distinct spatial domains or cell populations.</li>
-<li>Visualize the results of dimensionality reduction and clustering in both reduced dimension space and spatial context.</li>
-</ul>
-</section>
-<section id="libraries" class="level2">
-<h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
+<li>Apply dimensionality reduction techniques like PCA.</li>
+<li>Visualize the results of dimensionality reduction in both reduced dimension space and spatial context.</li>
+</ul></section><section id="libraries" class="level2"><h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpatialExperiment)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qs2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran) <span class="co"># For feature selection and clustering</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater) <span class="co"># For dimensionality reduction</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co"># For combining plots</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bluster) <span class="co"># For clustering</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(escheR) <span class="co"># For spatial plotting</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap) <span class="co"># For clustering heatmap</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment">SpatialExperiment</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MarioniLab/scran/">scran</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bluster</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/boyiguo1/escheR">escheR</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pheatmap</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/HDF5Array">HDF5Array</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmweber/ggspavis">ggspavis</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmweber/nnSVG">nnSVG</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/prabhakarlab/Banksy">Banksy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/">igraph</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="load-and-prepare-data" class="level2">
-<h2 class="anchored" data-anchor-id="load-and-prepare-data">Load and Prepare Data</h2>
-<p>We will start by loading the <code>SpatialExperiment</code> object and performing the necessary preprocessing steps, including subsetting for demonstration purposes, similar to the previous exercise.</p>
+</section><section id="load-spatialexperiment-object" class="level2"><h2 class="anchored" data-anchor-id="load-spatialexperiment-object">Load SpatialExperiment Object</h2>
+<p>We will start by loading the <code>SpatialExperiment</code> object from the previous exercise, which contains only filtered spots and genes with more than 1 count across all spots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the SpatialExperiment object from the .qs2 file.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> qs2<span class="sc">::</span><span class="fu">qs_read</span>(<span class="st">"results/01_spe.qs2"</span>, <span class="at">nthreads =</span> <span class="dv">1</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Change row names from gene IDs to gene symbols.</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(spe) <span class="ot">&lt;-</span> <span class="fu">rowData</span>(spe)<span class="sc">$</span>Symbol</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify mitochondrial transcripts.</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">rownames</span>(spe)[<span class="fu">grepl</span>(<span class="st">"^MT-"</span>, <span class="fu">rownames</span>(spe))]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate per-spot QC metrics.</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> scuttle<span class="sc">::</span><span class="fu">addPerCellQCMetrics</span>(spe, <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> is.mito))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required namespace: HDF5Array</code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load the SpatialExperiment object from the .qs2 file.</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">loadHDF5SummarizedExperiment</a></span><span class="op">(</span>dir<span class="op">=</span><span class="st">"results/day1/"</span>, prefix<span class="op">=</span><span class="st">"01.2_spe"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting for Demonstration (to reduce computation time)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># for reproducibility</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>num_genes_to_keep <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(spe) <span class="sc">&gt;</span> num_genes_to_keep) {</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  gene_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(spe)), num_genes_to_keep)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  spe_subset <span class="ot">&lt;-</span> spe[gene_indices, ]</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  spe_subset <span class="ot">&lt;-</span> spe</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>num_spots_to_keep <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">ncol</span>(spe_subset) <span class="sc">&gt;</span> num_spots_to_keep) {</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  spot_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">ncol</span>(spe_subset)), num_spots_to_keep)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  spe_subset <span class="ot">&lt;-</span> spe_subset[, spot_indices]</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  spe_subset <span class="ot">&lt;-</span> spe_subset</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> spe_subset</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove spots with NA/NaN/Inf in mitochondrial QC metrics or spatial coordinates</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>na_mito_percent <span class="ot">&lt;-</span> <span class="fu">is.na</span>(<span class="fu">colData</span>(spe)<span class="sc">$</span>subsets_Mito_percent)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>na_mito_sum <span class="ot">&lt;-</span> <span class="fu">is.na</span>(<span class="fu">colData</span>(spe)<span class="sc">$</span>subsets_Mito_sum)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>spots_to_remove_mito <span class="ot">&lt;-</span> na_mito_percent <span class="sc">|</span> na_mito_sum</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(spots_to_remove_mito)) {</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"Removing "</span>, <span class="fu">sum</span>(spots_to_remove_mito), <span class="st">" spots with NA mitochondrial QC metrics."</span>))</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  spe <span class="ot">&lt;-</span> spe[, <span class="sc">!</span>spots_to_remove_mito]</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>spatial_coords <span class="ot">&lt;-</span> <span class="fu">spatialCoords</span>(spe)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>problematic_spatial_coords <span class="ot">&lt;-</span> <span class="fu">apply</span>(spatial_coords, <span class="dv">1</span>, <span class="cf">function</span>(row) <span class="fu">any</span>(<span class="fu">is.na</span>(row) <span class="sc">|</span> <span class="fu">is.nan</span>(row) <span class="sc">|</span> <span class="fu">is.infinite</span>(row)))</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(problematic_spatial_coords)) {</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"Removing "</span>, <span class="fu">sum</span>(problematic_spatial_coords), <span class="st">" spots with NA/NaN/Inf in spatial coordinates."</span>))</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  spe <span class="ot">&lt;-</span> spe[, <span class="sc">!</span>problematic_spatial_coords]</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove spots with zero total counts, as these can cause issues with size factor calculation during normalization.</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>zero_sum_spots <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">counts</span>(spe)) <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(zero_sum_spots)) {</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"Removing "</span>, <span class="fu">sum</span>(zero_sum_spots), <span class="st">" spots with zero total counts."</span>))</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  spe <span class="ot">&lt;-</span> spe[, <span class="sc">!</span>zero_sum_spots]</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-normalize counts for downstream analysis</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="spatially-aware-normalization-optional" class="level3">
-<h3 class="anchored" data-anchor-id="spatially-aware-normalization-optional">Spatially-Aware Normalization (Optional)</h3>
-<p>While <code>logNormCounts</code> provides a general-purpose normalization, specialized spatially-aware normalization methods exist (e.g., <code>SpaNorm</code> package). These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.</p>
-</section>
-<section id="size-factor-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="size-factor-analysis">Size Factor Analysis</h3>
-<ul>
-<li>After log-normalization, we can inspect the computed size factors.</li>
-<li>Size factors account for differences in sequencing depth between spots.</li>
-</ul>
+</section><section id="normalization" class="level2"><h2 class="anchored" data-anchor-id="normalization">Normalization</h2>
+<p>Normalization is a critical step in preprocessing spatial transcriptomics data to account for technical variations and make gene expression levels comparable across spots. We will log normalise raw counts with <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">scuttle::logNormCounts()</a></code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a summary of the calculated size factors.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">sizeFactors</span>(spe))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-0.00541 0.43998 0.75374 1.00000 1.33257 5.24915 </code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Log-normalize counts for downstream analysis</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the distribution of size factors using a histogram.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">sizeFactors</span>(spe),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">main =</span> <span class="st">"Histogram of Size Factors"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Size Factor"</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the dimensions of the prepared object</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(spe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10000 10000</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="feature-selection" class="level2">
-<h2 class="anchored" data-anchor-id="feature-selection">Feature Selection</h2>
-<section id="highly-variable-genes-hvgs" class="level3">
-<h3 class="anchored" data-anchor-id="highly-variable-genes-hvgs">Highly Variable Genes (HVGs)</h3>
-<p>Feature selection is a crucial step to reduce noise and focus on genes that show significant biological variation across spots. We typically identify Highly Variable Genes (HVGs) as these are more likely to distinguish different cell types or spatial domains.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model gene variance to identify highly variable genes.</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This function fits a trend to the technical noise and calculates biological variance.</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dec <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(spe)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the top N highly variable genes.</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of HVGs can influence downstream dimensionality reduction and clustering.</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>hvg <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec, <span class="at">n =</span> <span class="dv">2000</span>) <span class="co"># Selecting top 2000 HVGs</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Store HVG information in rowData</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(spe)<span class="sc">$</span>hvg <span class="ot">&lt;-</span> <span class="fu">rowData</span>(spe)<span class="sc">$</span>Symbol <span class="sc">%in%</span> hvg</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the number of HVGs identified</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">rowData</span>(spe)<span class="sc">$</span>hvg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2000</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the mean-variance relationship and the fitted trend.</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This plot helps to understand how gene variability changes with expression level.</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dec<span class="sc">$</span>mean, dec<span class="sc">$</span>total,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Mean expression (log-counts)"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Total variance (log-counts)"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Mean-Variance Trend"</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">metadata</span>(dec)<span class="sc">$</span><span class="fu">trend</span>(x), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"dodgerblue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="question-1" class="level2">
-<h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
-<p><strong>Why is it important to perform feature selection (e.g., identifying HVGs) before dimensionality reduction and clustering in spatial transcriptomics data?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+Exercise 1
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Feature selection is important for several reasons:</p>
-<ul>
-<li><strong>Noise Reduction:</strong> It helps to filter out genes that show little variation and are likely dominated by technical noise, thus improving the signal-to-noise ratio.</li>
-<li><strong>Computational Efficiency:</strong> Reducing the number of features (genes) significantly decreases the computational burden for subsequent steps like dimensionality reduction and clustering, especially with large datasets.</li>
-<li><strong>Improved Interpretation:</strong> By focusing on genes with high biological variability, we are more likely to identify meaningful biological patterns and distinctions between cell types or spatial domains.</li>
-<li><strong>Mitigating the Curse of Dimensionality:</strong> High-dimensional data can make it difficult for algorithms to find meaningful patterns; feature selection helps alleviate this.</li>
-</ul>
+<p>What is the name of the new assay added for normalized counts?</p>
 </div>
 </div>
-</div>
-<section id="spatially-variable-genes-svgs" class="level3">
-<h3 class="anchored" data-anchor-id="spatially-variable-genes-svgs">Spatially Variable Genes (SVGs)</h3>
-<p>Beyond simply highly variable genes, in spatial transcriptomics, we are often interested in genes whose expression patterns vary significantly across the spatial dimensions. These are known as Spatially Variable Genes (SVGs).</p>
-<p>Identifying SVGs can reveal genes that define distinct tissue regions, cell types, or biological processes with specific spatial localization.</p>
-<p>While several advanced methods and packages exist for SVG identification (e.g., <code>nnSVG</code>, <code>SPARK-X</code>, <code>Giotto</code>), implementing a full SVG analysis is beyond the scope of this introductory exercise. However, it’s important to be aware of this concept as a crucial step in spatial data analysis.</p>
-</section>
-</section>
-<section id="question-1.2" class="level2">
-<h2 class="anchored" data-anchor-id="question-1.2">Question 1.2</h2>
-<p><strong>How do Spatially Variable Genes (SVGs) differ from Highly Variable Genes (HVGs), and why is identifying SVGs particularly important in spatial transcriptomics?</strong></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -514,105 +309,63 @@ Answer
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ul>
-<li><strong>HVGs (Highly Variable Genes):</strong> Genes that show high variability in expression across all spots/cells in a dataset, regardless of their spatial location. They are informative for distinguishing cell types or states in a general sense.</li>
-<li><strong>SVGs (Spatially Variable Genes):</strong> Genes whose expression levels exhibit a non-random, structured pattern across the spatial coordinates of the tissue. Their variability is specifically linked to their position.</li>
-</ul>
-<p>Identifying SVGs is particularly important in spatial transcriptomics because:</p>
-<ul>
-<li><strong>Reveals Spatial Organization:</strong> SVGs directly highlight genes that contribute to the spatial organization of the tissue, defining distinct anatomical regions or functional domains.</li>
-<li><strong>Biological Insights:</strong> They can pinpoint genes involved in cell-cell communication, developmental gradients, or disease progression within a tissue context.</li>
-<li><strong>Targeted Analysis:</strong> SVGs can be used for more targeted downstream analysis, focusing on genes that are most relevant to the spatial biology of interest.</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="dimensionality-reduction" class="level2">
-<h2 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality Reduction</h2>
-<p>Dimensionality reduction techniques project high-dimensional gene expression data into a lower-dimensional space, making it easier to visualize and analyze. This step is essential for identifying global patterns and preparing data for clustering.</p>
-<section id="principal-component-analysis-pca" class="level3">
-<h3 class="anchored" data-anchor-id="principal-component-analysis-pca">Principal Component Analysis (PCA)</h3>
-<p>PCA is a linear dimensionality reduction technique that transforms the data into a new coordinate system such that the greatest variance by some projection of the data comes to lie on the first coordinate (called the first principal component), the second greatest variance on the second coordinate, and so on.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run PCA on the highly variable genes.</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We use the 'ncomponents' argument to specify the number of principal components to retain.</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(spe, <span class="at">ncomponents =</span> <span class="dv">50</span>, <span class="at">subset_row =</span> <span class="fu">rowData</span>(spe)<span class="sc">$</span>hvg)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the explained variance by each principal component.</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This helps in determining how many PCs capture most of the variance.</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">attr</span>(<span class="fu">reducedDim</span>(spe, <span class="st">"PCA"</span>), <span class="st">"percentVar"</span>),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"PC"</span>, <span class="at">ylab =</span> <span class="st">"Proportion of variance explained"</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"PCA Scree Plot"</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Have a look at the assays</span></span>
+<span><span class="va">spe</span><span class="op">@</span><span class="va">assays</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>An object of class "SimpleAssays"
+Slot "data":
+List of length 2
+names(2): counts logcounts</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Directly get the assay names(x)</span></span>
+<span><span class="fu">assayNames</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "counts"    "logcounts"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>After log-normalization, we can inspect the computed size factors. Size factors are used to account for differences in sequencing depth between spots.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Display a summary of the calculated size factors.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">sizeFactors</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.1179  0.5081  0.7626  1.0000  1.2766  4.9097 </code></pre>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualise the spatial distribution of size factors on the tissue slide.</span></span>
+<span><span class="fu">colData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">sizeFactors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">sizeFactors</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotVisium.html">plotVisium</a></span><span class="op">(</span><span class="va">spe</span>, annotate <span class="op">=</span> <span class="st">"sizeFactors"</span>, zoom <span class="op">=</span> <span class="cn">TRUE</span>, point_shape <span class="op">=</span> <span class="fl">22</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in guide(title = annotate, order = 1, override.aes = list(col = NA, : Arguments in `...` must be used.
+✖ Problematic argument:
+• override.aes = list(col = NA, size = 3)
+ℹ Did you misspell an argument name?</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the PCA embedding.</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This helps to see the main sources of variation in the data.</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPCA</span>(spe, <span class="at">colour_by =</span> <span class="st">"sum"</span>) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"PCA colored by Library Size"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
-</div>
-</div>
-</section>
-</section>
-<section id="question-2" class="level2">
-<h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
-<p><strong>Based on the PCA scree plot, how would you determine an appropriate number of principal components to retain for downstream analysis? What are the trade-offs of choosing too few or too many PCs?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+Exercise 2
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>An appropriate number of principal components (PCs) can often be determined by looking for an “elbow point” in the scree plot, where the explained variance starts to level off. This point suggests that subsequent PCs explain much less variance and might represent noise rather than meaningful biological signal.</p>
-<ul>
-<li><strong>Too few PCs:</strong> Might lead to a loss of important biological signal, as significant sources of variation could be discarded.</li>
-<li><strong>Too many PCs:</strong> Can retain too much noise, potentially obscuring true biological patterns and increasing computational complexity for downstream steps like clustering.</li>
-</ul>
+<p>Do you observe any spatial patterns or gradients for the size factors across the tissue section? What do you think they reflect?</p>
 </div>
 </div>
-</div>
-<section id="t-distributed-stochastic-neighbor-embedding-t-sne" class="level3">
-<h3 class="anchored" data-anchor-id="t-distributed-stochastic-neighbor-embedding-t-sne">t-Distributed Stochastic Neighbor Embedding (t-SNE)</h3>
-<p>t-SNE is another non-linear dimensionality reduction technique particularly well-suited for visualizing high-dimensional datasets. It aims to place similar data points close together in a low-dimensional map, while dissimilar points are placed far apart. It is especially good at revealing local structures in the data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run t-SNE on the PCA-reduced data.</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Similar to UMAP, using PCA output as input to t-SNE is a common practice.</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(spe, <span class="at">dimred =</span> <span class="st">"PCA"</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the t-SNE embedding.</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(spe, <span class="at">colour_by =</span> <span class="st">"sum"</span>) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"t-SNE colored by Library Size"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="question-2.2" class="level2">
-<h2 class="anchored" data-anchor-id="question-2.2">Question 2.2</h2>
-<p><strong>How does t-SNE differ from UMAP in its approach to dimensionality reduction, and what are the implications for interpreting their respective visualizations?</strong></p>
+<section id="bonus-accounting-for-compositional-biases" class="level3"><h3 class="anchored" data-anchor-id="bonus-accounting-for-compositional-biases">Bonus: accounting for compositional biases</h3>
+<p>The <code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html">scuttle::computePooledFactors()</a></code> implements the strategy introduced by <a href="https://link.springer.com/article/10.1186/s13059-016-0947-7">Lun et al.</a> to account for compositional biases (which can introduce spurious differences between cells) during normalization.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -625,330 +378,46 @@ Answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>t-SNE and UMAP are both non-linear dimensionality reduction techniques that aim to preserve local and global data structures. However, they differ in their underlying algorithms and how they balance these aspects:</p>
-<ul>
-<li><strong>t-SNE:</strong> Focuses heavily on preserving local neighborhoods. It tends to create tightly packed clusters, but the distances between clusters in a t-SNE plot are often not meaningful. It can be computationally more intensive for very large datasets.</li>
-<li><strong>UMAP:</strong> Aims to preserve both local and global structures more effectively than t-SNE. Distances between clusters in a UMAP plot are generally considered more meaningful, and it is often faster and scales better to larger datasets.</li>
-</ul>
-<p><strong>Implications for interpretation:</strong></p>
-<ul>
-<li><strong>t-SNE:</strong> Excellent for revealing distinct, compact clusters. However, the relative sizes of clusters and distances between them should be interpreted with caution.</li>
-<li><strong>UMAP:</strong> Often provides a more faithful representation of the overall data topology, making inter-cluster distances and relative densities more interpretable. It can sometimes produce more diffuse clusters than t-SNE.</li>
-</ul>
-<p>Choosing between them often depends on the specific goals of the visualization and the characteristics of the data.</p>
-</div>
-</div>
-</div>
-<section id="uniform-manifold-approximation-and-projection-umap" class="level3">
-<h3 class="anchored" data-anchor-id="uniform-manifold-approximation-and-projection-umap">Uniform Manifold Approximation and Projection (UMAP)</h3>
-<p>UMAP is a non-linear dimensionality reduction technique that is particularly effective at preserving both local and global data structure, making it popular for visualizing complex single-cell and spatial transcriptomics data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run UMAP on the PCA-reduced data.</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Using PCA output as input to UMAP is a common practice to denoise the data first.</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>spe <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(spe, <span class="at">dimred =</span> <span class="st">"PCA"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the UMAP embedding.</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># We can color the points by various metadata, for example, by library size.</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotUMAP</span>(spe, <span class="at">colour_by =</span> <span class="st">"sum"</span>) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"UMAP colored by Library Size"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># lib.sf.spe &lt;- sizeFactors(spe) ## Store size factors calculated above</span></span>
+<span><span class="co"># set.seed(100)</span></span>
+<span><span class="co"># clusters &lt;- quickCluster(spe)</span></span>
+<span><span class="co"># spe &lt;- computeSumFactors(spe, cluster=clusters, min.mean=0.1)</span></span>
+<span><span class="co"># spe &lt;- logNormCounts(spe)</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># plot(lib.sf.spe, sizeFactors(spe), xlab="Library size factor",</span></span>
+<span><span class="co">#     ylab="Deconvolution size factor", log='xy', pch=16,</span></span>
+<span><span class="co">#     col=as.integer(factor(clusters)))</span></span>
+<span><span class="co"># abline(a=0, b=1, col="red")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="bonus-spatially-aware-normalization" class="level3"><h3 class="anchored" data-anchor-id="bonus-spatially-aware-normalization">Bonus: spatially-aware normalization</h3>
+<p>While <code>logNormCounts</code> provides a general-purpose normalization, specialized spatially-aware normalization methods exist. These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.</p>
+<p>If time is left at the end of this practical, explore the normalization strategy implemented in the <code>SpaNorm</code> package.</p>
+</section></section><section id="feature-selection" class="level2"><h2 class="anchored" data-anchor-id="feature-selection">Feature Selection</h2>
+<section id="highly-variable-genes-hvgs" class="level3"><h3 class="anchored" data-anchor-id="highly-variable-genes-hvgs">Highly Variable Genes (HVGs)</h3>
+<p>Similar to scRNA-seq analysis, feature selection is a crucial step to focus on genes that show significant biological variation across spots, and thus increase the signal to noise ratio. We typically aim at focusing on “Highly Variable Genes” (HVGs) as these are more likely to distinguish different cell types or spatial domains.</p>
+<p>In order to identify HVGs, we will first model the gene variance using a Poisson noise model with <code><a href="https://rdrr.io/pkg/scran/man/modelGeneVarByPoisson.html">scran::modelGeneVarByPoisson()</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Model gene variance to identify highly variable genes.</span></span>
+<span><span class="co"># This function fits a mean-variance trend to the log-normalized counts.</span></span>
+<span><span class="va">dec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVarByPoisson.html">modelGeneVarByPoisson</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
+<span><span class="co">## Sort by biological variance</span></span>
+<span><span class="va">dec</span> <span class="op">&lt;-</span> <span class="va">dec</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">dec</span><span class="op">$</span><span class="va">bio</span>, decreasing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Visualize the mean-variance relationship and the fitted trend.</span></span>
+<span><span class="co"># This plot helps to understand how gene variability changes with expression level.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dec</span><span class="op">$</span><span class="va">mean</span>, <span class="va">dec</span><span class="op">$</span><span class="va">total</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Mean expression (log-counts)"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Total variance (log-counts)"</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Mean-Variance Trend"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fu">metadata</span><span class="op">(</span><span class="va">dec</span><span class="op">)</span><span class="op">$</span><span class="fu">trend</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"dodgerblue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="question-3" class="level2">
-<h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
-<p><strong>Compare and contrast PCA and UMAP. In what scenarios would you prefer to use one over the other for visualizing spatial transcriptomics data?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>PCA (Principal Component Analysis):</strong> A linear method that identifies directions of maximal variance. It’s good for understanding global variance and can be interpreted as a denoising step. It preserves large-scale structures but can compress complex non-linear relationships.</li>
-<li><strong>UMAP (Uniform Manifold Approximation and Projection):</strong> A non-linear method that aims to preserve both local and global data structure. It’s excellent for visualizing complex, high-dimensional data in 2D or 3D, often revealing distinct clusters more clearly.</li>
-</ul>
-<p><strong>When to use which:</strong></p>
-<ul>
-<li><strong>Prefer PCA:</strong> For initial data exploration, denoising, and when linearity is assumed or desired. It’s also useful for understanding the main sources of variation.</li>
-<li><strong>Prefer UMAP:</strong> For visualizing complex relationships, identifying distinct clusters, and when non-linear structures are expected. It’s often used after PCA to further reduce dimensions for visualization.</li>
-</ul>
-<p>For spatial transcriptomics, UMAP is often preferred for visualization due to its ability to reveal distinct spatial domains or cell types that might have non-linear relationships in gene expression.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="clustering" class="level2">
-<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
-<p>Clustering aims to group spots with similar gene expression profiles, which can correspond to distinct cell types or tissue regions. We will use a graph-based clustering approach, which is common in single-cell and spatial analyses. Other methods like k-means or hierarchical clustering are also available but may have different assumptions or computational properties.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a Shared Nearest Neighbor (SNN) graph based on the PCA-reduced data.</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The k parameter defines the number of nearest neighbors to consider.</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>snn_graph <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(spe, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">"PCA"</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform clustering on the SNN graph using the Walktrap algorithm.</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'cluster_walktrap' function from igraph (used via bluster) is a common choice.</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(snn_graph)<span class="sc">$</span>membership</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the cluster assignments to the colData of the SpatialExperiment object.</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(spe)<span class="sc">$</span>clusters <span class="ot">&lt;-</span> <span class="fu">factor</span>(clusters)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the number of spots in each cluster</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">colData</span>(spe)<span class="sc">$</span>clusters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-   1    2    3    4    5    6    7    8    9   10   11 
- 235 1998 2062  991  512  733 1357 1366  458  221   67 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Evaluating Cluster Quality with Silhouette Scores</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Silhouette scores provide a measure of how similar an object is to its own cluster</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># compared to other clusters. Values range from -1 (poor) to +1 (good).</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate silhouette scores. Requires the 'cluster' package.</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>sil <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(clusters, <span class="fu">dist</span>(<span class="fu">reducedDim</span>(spe, <span class="st">"PCA"</span>)))</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize silhouette scores</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Silhouette of 10000 units in 11 clusters from silhouette.default(x = clusters, dist = dist(reducedDim(spe, "PCA"))) :
- Cluster sizes and average silhouette widths:
-        235        1998        2062         991         512         733 
--0.12632615  0.34663760 -0.12868280  0.15177343  0.26975473 -0.01154519 
-       1357        1366         458         221          67 
- 0.02833106  0.27146987  0.07149400  0.26075708  0.26281112 
-Individual silhouette widths:
-    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
--0.62501 -0.04244  0.11495  0.11949  0.29973  0.50526 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot silhouette scores (optional, can be very dense for many spots)</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(sil, main = "Silhouette Plot")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="question-4" class="level2">
-<h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
-<p><strong>How might you determine an optimal number of clusters for your spatial transcriptomics data? What are the challenges in interpreting clusters in a spatial context?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Determining the optimal number of clusters is often an iterative process and can involve:</p>
-<ul>
-<li><strong>Visual Inspection:</strong> Plotting clusters on UMAP and in spatial coordinates to see if they form coherent groups.</li>
-<li><strong>Biological Knowledge:</strong> Aligning clusters with known tissue structures or cell types.</li>
-<li><strong>Statistical Metrics:</strong> Using metrics like silhouette scores, Davies-Bouldin index, or gap statistics. The <code>bluster</code> package, for instance, provides functions like <code>pairwiseRand</code> or <code>pairwiseJaccard</code> to compare different clusterings, and <code>silhouette</code> from <code>cluster</code> package can be used to evaluate cluster cohesion and separation. While a full implementation is beyond this exercise, these metrics provide quantitative ways to assess cluster quality.</li>
-<li><strong>Resolution Parameter:</strong> For graph-based clustering, adjusting the resolution parameter can influence the number of clusters.</li>
-</ul>
-<p><strong>Challenges in interpreting clusters in a spatial context:</strong></p>
-<ul>
-<li><strong>Spatial Heterogeneity:</strong> Clusters might not always correspond to perfectly contiguous spatial regions, especially if cell types are intermingled.</li>
-<li><strong>Technical Artifacts:</strong> Clusters might sometimes reflect technical variations (e.g., batch effects, poor quality regions) rather than true biological differences.</li>
-<li><strong>Resolution Mismatch:</strong> The resolution of clustering might not perfectly match the biological resolution of the tissue.</li>
-<li><strong>Defining Boundaries:</strong> It can be challenging to define clear boundaries between spatially adjacent clusters.</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="marker-gene-identification" class="level2">
-<h2 class="anchored" data-anchor-id="marker-gene-identification">Marker Gene Identification</h2>
-<p>After identifying clusters, a crucial step is to characterize them by finding marker genes – genes that are highly expressed or uniquely expressed in one cluster compared to others. This helps in assigning biological identities to the discovered spatial domains.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify marker genes for each cluster using findMarkers from scran.</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We compare each cluster against all other clusters.</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>markers <span class="ot">&lt;-</span> <span class="fu">findMarkers</span>(spe, <span class="at">groups =</span> <span class="fu">colData</span>(spe)<span class="sc">$</span>clusters, <span class="at">test.type =</span> <span class="st">"wilcox"</span>, <span class="at">direction =</span> <span class="st">"up"</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display top markers for the first few clusters.</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># For example, top 5 markers for Cluster 1.</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: The output structure of findMarkers can be complex; this is a simplified view.</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"1"</span> <span class="sc">%in%</span> <span class="fu">names</span>(markers)) {</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(markers[[<span class="st">"1"</span>]], <span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>DataFrame with 5 rows and 14 columns
-             Top      p.value          FDR summary.AUC     AUC.2     AUC.3
-       &lt;integer&gt;    &lt;numeric&gt;    &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-MT-CO2         1 2.45080e-110 1.22540e-106    0.949868  0.569729  0.905002
-MT-CO3         1 1.58426e-119 1.58426e-115    0.975429  0.500902  0.901311
-IGKC           1  4.65032e-16  7.75053e-13    0.693328  0.677618  0.500462
-TMSB4X         2  6.34331e-09  7.92914e-06    0.631404  0.600278  0.432046
-CCDC80         3  9.37865e-03  1.00000e+00    0.511814  0.503497  0.438020
-           AUC.4     AUC.5     AUC.6     AUC.7     AUC.8     AUC.9    AUC.10
-       &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-MT-CO2 0.9505271  0.780544  0.903062  0.949868  0.949917  0.953768  0.128632
-MT-CO3 0.9733345  0.621351  0.843311  0.971506  0.975429  0.956787  0.105950
-IGKC   0.0138759  0.658108  0.615756  0.453315  0.478047  0.478593  0.693328
-TMSB4X 0.5463662  0.631815  0.631404  0.461340  0.328879  0.533564  0.596996
-CCDC80 0.3714387  0.511814  0.491338  0.270440  0.460905  0.410262  0.512766
-          AUC.11
-       &lt;numeric&gt;
-MT-CO2  0.966116
-MT-CO3  0.989362
-IGKC    0.748936
-TMSB4X  0.533757
-CCDC80  0.474690</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To visualize marker genes, one common approach is a heatmap of top markers across clusters.</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity, let's select the top 3 markers for each cluster and plot their expression.</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get top markers for each cluster</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>top_markers_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">names</span>(markers), <span class="cf">function</span>(cl_id) {</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  current_markers <span class="ot">&lt;-</span> markers[[cl_id]]</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(current_markers) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    current_markers <span class="ot">&lt;-</span> current_markers[<span class="fu">order</span>(current_markers<span class="sc">$</span>FDR,</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                                             <span class="sc">-</span>current_markers<span class="sc">$</span>summary.AUC), ]</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="fu">rownames</span>(current_markers), <span class="dv">3</span>)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NULL</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the list and remove NULLs</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>top_markers <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">unlist</span>(top_markers_list))</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure we have some markers to plot</span></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(top_markers) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get expression for these top markers</span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  marker_expr <span class="ot">&lt;-</span> <span class="fu">logcounts</span>(spe)[top_markers, ]</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Order spots by cluster for better visualization</span></span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>  spot_order <span class="ot">&lt;-</span> <span class="fu">order</span>(<span class="fu">colData</span>(spe)<span class="sc">$</span>clusters)</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  marker_expr_ordered <span class="ot">&lt;-</span> marker_expr[, spot_order]</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>  cluster_labels_ordered <span class="ot">&lt;-</span> <span class="fu">colData</span>(spe)<span class="sc">$</span>clusters[spot_order]</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create annotation for heatmap</span></span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>  annotation_col <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Cluster =</span> cluster_labels_ordered)</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(annotation_col) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(marker_expr_ordered)</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot heatmap</span></span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pheatmap</span>(marker_expr_ordered,</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_cols =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_colnames =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">annotation_col =</span> annotation_col,</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Top Marker Gene Expression per Cluster"</span></span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"No marker genes found to plot."</span>)</span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="question-5" class="level2">
-<h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
-<p><strong>How can identifying marker genes help in the biological interpretation of the discovered spatial clusters?</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Identifying marker genes is crucial for biological interpretation because:</p>
-<ul>
-<li><strong>Assigning Identity:</strong> Marker genes can be used to assign biological identities (e.g., cell types, tissue regions) to the computationally derived clusters by comparing them to known gene expression signatures.</li>
-<li><strong>Understanding Function:</strong> The functions of marker genes can provide insights into the biological processes or pathways active within each cluster.</li>
-<li><strong>Validation:</strong> Marker genes can be used to validate the clustering results against existing biological knowledge or independent experiments.</li>
-<li><strong>Further Research:</strong> They can serve as starting points for further investigation into the unique characteristics and roles of each spatial domain.</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="visualization-of-results" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-of-results">Visualization of Results</h2>
-<p>Visualizing the dimensionality reduction and clustering results is crucial for interpreting the biological insights from your spatial transcriptomics data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize clusters on the UMAP embedding.</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This helps to see how well distinct clusters are separated in the reduced dimension space.</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotUMAP</span>(spe, <span class="at">colour_by =</span> <span class="st">"clusters"</span>) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"UMAP colored by Clusters"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize clusters in the spatial context.</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This allows us to see the spatial distribution of the identified clusters.</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We use escheR for enhanced spatial plotting.</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>escheR<span class="sc">::</span><span class="fu">make_escheR</span>(spe) <span class="sc">|&gt;</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  escheR<span class="sc">::</span><span class="fu">add_fill</span>(<span class="at">var =</span> <span class="st">"clusters"</span>, <span class="at">point_size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Spatial Clusters"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="clustering-heatmap" class="level3">
-<h3 class="anchored" data-anchor-id="clustering-heatmap">Clustering Heatmap</h3>
-<p>A heatmap of gene expression across the identified clusters can help to visualize the distinct transcriptional profiles that define each cluster. We will plot the expression of the top highly variable genes (HVGs) across the clusters.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average expression of HVGs per cluster.</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First, get the expression matrix for HVGs.</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>hvg_expr <span class="ot">&lt;-</span> <span class="fu">logcounts</span>(spe)[<span class="fu">rowData</span>(spe)<span class="sc">$</span>hvg, ]</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate expression by cluster.</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to ensure that the cluster labels are correctly aligned with the columns of hvg_expr.</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>cluster_avg_expr <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(<span class="fu">t</span>(hvg_expr), <span class="at">by =</span> <span class="fu">list</span>(<span class="at">cluster =</span> <span class="fu">colData</span>(spe)<span class="sc">$</span>clusters), <span class="at">FUN =</span> mean)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a matrix and set row names to cluster IDs.</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(cluster_avg_expr) <span class="ot">&lt;-</span> cluster_avg_expr<span class="sc">$</span>cluster</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>cluster_avg_expr <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(cluster_avg_expr[, <span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Transpose the matrix so genes are rows and clusters are columns for pheatmap.</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>cluster_avg_expr <span class="ot">&lt;-</span> <span class="fu">t</span>(cluster_avg_expr)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale the rows (genes) for better visualization in the heatmap.</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>cluster_avg_expr_scaled <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">scale</span>(<span class="fu">t</span>(cluster_avg_expr)))</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap.</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(cluster_avg_expr_scaled,</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">cluster_rows =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">cluster_cols =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_rownames =</span> <span class="cn">FALSE</span>, <span class="co"># Don't show all gene names if there are many</span></span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Average HVG Expression per Cluster"</span></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -959,27 +428,515 @@ Answer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Exercise 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Key Takeaways:</strong></p>
-<ul>
-<li>Feature selection (HVGs) reduces noise and improves computational efficiency.</li>
-<li>PCA provides a linear view of major variance, while UMAP and t-SNE offer a non-linear, often more visually distinct, representations.</li>
-<li>Graph-based clustering helps identify groups of spots with similar gene expression.</li>
-<li>Identifying marker genes helps in the biological interpretation and annotation of clusters.</li>
-<li>Visualizing clusters in both reduced dimension space and spatial context is essential for biological interpretation.</li>
-</ul>
+<p>How do you interpret this plot, compared to similar ones generated from scRNA-seq datasets?</p>
 </div>
+</div>
+<p>Once we have modeled the gene variance, we can proceed to select the top HVGs. For demonstration purposes, we will visualize the expression patterns of the top 6 HVGs on the tissue slide. We exclude the mitochondrial genes, since those genes tend to be highly variable but do not provide much information about cell types or spatial domains.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># identify mitochondrial genes</span></span>
+<span><span class="va">is.mito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^MT-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Top 6 HVGs</span></span>
+<span><span class="va">top_HVG</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">dec</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">dec</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">is.mito</span>, <span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span><span class="va">top_HVG</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "IGKC"   "OLFM4"  "IGHG1"  "COL3A1" "PIGR"   "COL1A1"</code></pre>
+</div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a plot for each gene in top_HVG</span></span>
+<span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">top_HVG</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotCoords.html">plotCoords</a></span><span class="op">(</span><span class="va">spe</span>, </span>
+<span>        annotate <span class="op">=</span> <span class="va">.</span>, </span>
+<span>        assay_name <span class="op">=</span> <span class="st">"logcounts"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span> <span class="co"># use "logcounts" assay to visualise log normalised counts</span></span>
+<span></span>
+<span><span class="co"># figure arrangement and change colors</span></span>
+<span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">ps</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"lines"</span><span class="op">)</span>, </span>
+<span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="st">"lines"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How would you define the spatial expression patterns of these genes? Look a bit for some information on these genes (e.g., on the Uniprot website) to get a hint at which cell types and domains they could highlight.</p>
+</div>
+</div>
+<p>For downstream analysis, we define a larger group of HVG and add the information of whether a genes is in the HVG list or not in a <code>rowData</code> slot:</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select the top 1000 highly variable genes.</span></span>
+<span><span class="va">hvg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Store HVG information in rowData</span></span>
+<span><span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">hvg</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">Symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">hvg</span></span>
+<span></span>
+<span><span class="co"># Display the range of biological variation for the selected HVGs</span></span>
+<span><span class="va">dec</span><span class="op">[</span><span class="va">hvg</span>, <span class="op">]</span><span class="op">$</span><span class="va">bio</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.01635 0.02102 0.02920 0.08604 0.05336 4.55223 </code></pre>
+</div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Have a look a the new column added</span></span>
+<span><span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 17952 rows and 5 columns
+                     ID      Symbol            Type subsets_Mito       hvg
+            &lt;character&gt; &lt;character&gt;        &lt;factor&gt;    &lt;logical&gt; &lt;logical&gt;
+SAMD11  ENSG00000187634      SAMD11 Gene Expression        FALSE     FALSE
+NOC2L   ENSG00000188976       NOC2L Gene Expression        FALSE     FALSE
+KLHL17  ENSG00000187961      KLHL17 Gene Expression        FALSE     FALSE
+PLEKHN1 ENSG00000187583     PLEKHN1 Gene Expression        FALSE     FALSE
+PERM1   ENSG00000187642       PERM1 Gene Expression        FALSE     FALSE
+...                 ...         ...             ...          ...       ...
+MT-ND4L ENSG00000212907     MT-ND4L Gene Expression         TRUE      TRUE
+MT-ND4  ENSG00000198886      MT-ND4 Gene Expression         TRUE      TRUE
+MT-ND5  ENSG00000198786      MT-ND5 Gene Expression         TRUE      TRUE
+MT-ND6  ENSG00000198695      MT-ND6 Gene Expression         TRUE      TRUE
+MT-CYB  ENSG00000198727      MT-CYB Gene Expression         TRUE      TRUE</code></pre>
+</div>
+</div>
+</section><section id="spatially-variable-genes-svgs" class="level3"><h3 class="anchored" data-anchor-id="spatially-variable-genes-svgs">Spatially Variable Genes (SVGs)</h3>
+<p>We will go very quickly over this topic, which will be discussed in depth tomorrow. Today, the idea is to get an intuition about the difference between HVGs and SVGs. For this, we select randomly 6 other HVGs from the list, and plot their expression:</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select randomly 6 HVGs</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">random_HVG</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">dec</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a plot for each gene in top_HVG</span></span>
+<span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">random_HVG</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotCoords.html">plotCoords</a></span><span class="op">(</span><span class="va">spe</span>, </span>
+<span>        annotate <span class="op">=</span> <span class="va">.</span>, </span>
+<span>        assay_name <span class="op">=</span> <span class="st">"logcounts"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span> <span class="co"># use "logcounts" assay to visualise log normalised counts</span></span>
+<span></span>
+<span><span class="co"># figure arrangement and change colors</span></span>
+<span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">ps</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"lines"</span><span class="op">)</span>, </span>
+<span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="st">"lines"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How would you define the spatial expression patterns of these genes? What is the difference with genes at the top of the list? Which ones would you qualify as SVGs?</p>
+</div>
+</div>
+</section></section><section id="dimensionality-reduction-dr" class="level2"><h2 class="anchored" data-anchor-id="dimensionality-reduction-dr">Dimensionality Reduction (DR)</h2>
+<p>Thereafter we make use of the highly variable genes (HVGs) to perform dimensionality reduction and clustering.</p>
+<section id="non-spatially-aware-dr" class="level3"><h3 class="anchored">Non-spatially aware DR:</h3>
+<section id="pca" class="level4"><h4 class="anchored">PCA</h4>
+<p>We can perform dimensionality reduction using Principal Component Analysis (PCA) on the log-normalized expression values of the HVGs. This method is agnostic to spatial information, and focuses solely on capturing the main axes of variation in the gene expression data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run PCA on the log-normalized counts of the HVGs</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">spe</span>, ncomponents <span class="op">=</span> <span class="fl">30</span>, subset_row <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">hvg</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualize the explained variance by each principal component.</span></span>
+<span><span class="co"># This helps in determining how many PCs capture most of the variance.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">spe</span>, <span class="st">"PCA"</span><span class="op">)</span>, <span class="st">"percentVar"</span><span class="op">)</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"PC"</span>, ylab <span class="op">=</span> <span class="st">"Proportion of variance explained"</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"PCA Scree Plot"</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Based on the scree plot, how many principal components would you consider for downstream analysis? Why? You can also have look at the <code><a href="https://rdrr.io/pkg/scran/man/denoisePCA.html">scran::getDenoisedPCs</a></code> function to help you make this choice.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We can select the first 10 PCs for downstream analysis, as they seem to capture a significant proportion of the variance in the data before the explained variance starts to level off.</p>
+</div>
+</div>
+</div>
+<p>Choose the number of PCs accordingly for downstream analysis. Visualize the PCs on the tissue slice coordinates.</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run PCA on the log-normalized counts of the HVGs using the top PCs, for example 10 PCs</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">spe</span>, ncomponents <span class="op">=</span> <span class="fl">10</span>, subset_row <span class="op">=</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">hvg</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get the PCA results </span></span>
+<span><span class="va">pcs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">spe</span>, <span class="st">"PCA"</span><span class="op">)</span></span>
+<span><span class="co"># Visualize PCs on the tissue slice coordinates</span></span>
+<span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">pcs</span><span class="op">)</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">spe</span><span class="op">[[</span><span class="va">.</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pcs</span><span class="op">[</span>, <span class="va">.</span><span class="op">]</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotCoords.html">plotCoords</a></span><span class="op">(</span><span class="va">spe</span>, annotate <span class="op">=</span> <span class="va">.</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> </span>
+<span><span class="co"># Arrange the plots and customize colors</span></span>
+<span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">ps</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"lines"</span><span class="op">)</span>, </span>
+<span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="st">"lines"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What do you notice? How do you interpret it?</p>
+<section id="bonus-exercise" class="level2"><h2 class="anchored" data-anchor-id="bonus-exercise">Bonus Exercise</h2>
+<p>Extract the genes most associated with one of these PCs</p>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We observe a strong correlation between the PCs scores and the expression patterns observed above for the top HVGs, suggesting that they refelct cell type or domain biology.</p>
+<p>To extract the 10 genes most associated to PC2:</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[[</span><span class="st">"PCA"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">rotation</span><span class="op">[</span>, <span class="st">"PC2"</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "COL3A1" "COL1A1" "COL1A2" "CXCR4"  "CD74"   "IGKC"   "MMP2"   "TXNIP" 
+ [9] "A2M"    "SPARC" </code></pre>
+</div>
+</div>
+<section id="spatially-aware-dr" class="level3"><h3 class="anchored" data-anchor-id="spatially-aware-dr">Spatially aware DR:</h3>
+<section id="banksy" class="level4"><h4 class="anchored" data-anchor-id="banksy">Banksy</h4>
+<p>We can also perform spatially aware dimensionality reduction using the <code>Banksy</code> method, which integrates spatial coordinates and gene expression into the PCA framework. This allows us to capture spatial patterns in the data while reducing dimensionality.</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 'Banksy' parameter settings</span></span>
+<span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">20</span>   <span class="co"># consider first order neighbors</span></span>
+<span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fl">0.8</span> <span class="co"># use spatial information with weight lambda</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="st">"logcounts"</span> <span class="co"># assay to use</span></span>
+<span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"array_row"</span>, <span class="st">"array_col"</span><span class="op">)</span>  <span class="co"># spatial coordinate names</span></span>
+<span></span>
+<span><span class="co"># compute spatially aware 'Banksy' PCs, using the HVGs only</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">112358</span><span class="op">)</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Banksy/man/computeBanksy.html">computeBanksy</a></span><span class="op">(</span><span class="va">spe</span><span class="op">[</span><span class="fu">rowData</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">hvg</span>, <span class="op">]</span>, </span>
+<span>                     assay_name<span class="op">=</span><span class="va">a</span>, </span>
+<span>                     coord_names<span class="op">=</span><span class="va">xy</span>, </span>
+<span>                     k_geom<span class="op">=</span><span class="va">k</span>, </span>
+<span>                     parallel<span class="op">=</span><span class="cn">T</span>,</span>
+<span>                     num_cores<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Computing neighbors...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Spatial mode is kNN_median</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parameters: k_geom=20</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Done
+Done</code></pre>
+</div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Banksy/man/runBanksyPCA.html">runBanksyPCA</a></span><span class="op">(</span><span class="va">tmp</span>, </span>
+<span>                    lambda<span class="op">=</span><span class="va">l</span>, </span>
+<span>                    npcs<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">spe</span>, <span class="st">"PCA_banksy"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span> <span class="co"># store 'Banksy' PCs in original object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While this is running, have a look at the <a href="https://www.nature.com/articles/s41588-024-01664-3">Banksy paper</a> to understand better what the method is doing.</p>
+<p>Have a look at the spe object to see the dimensionality reduction slots. How many dimensionality reductions are stored now? What are their names and what do they represent?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: SpatialExperiment 
+dim: 17952 12615 
+metadata(2): resources spatialList
+assays(2): counts logcounts
+rownames(17952): SAMD11 NOC2L ... MT-ND6 MT-CYB
+rowData names(5): ID Symbol Type subsets_Mito hvg
+colnames(12615): s_016um_00144_00175-1 s_016um_00204_00145-1 ...
+  s_016um_00193_00227-1 s_016um_00109_00223-1
+colData names(36): barcode in_tissue ... sizeFactor sizeFactors
+reducedDimNames(3): PCA_artifacts PCA PCA_banksy
+mainExpName: Gene Expression
+altExpNames(0):
+spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres
+imgData names(4): sample_id image_id data scaleFactor</code></pre>
+</div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDimNames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PCA_artifacts" "PCA"           "PCA_banksy"   </code></pre>
+</div>
+</div>
+<p>There are now three dimensionality reductions stored in the <code>spe</code> object: :“PCA_artifacts”, “PCA” and “PCA_banksy”. “PCA_artifacts” was computed to capture technical artifacts in a previous exercise (QC step).</p>
+<p>“PCA” represents the non-spatially aware principal components, while “PCA_banksy” represents the spatially aware principal components computed using the Banksy method. Both methods have used HVGs for dimensionality reduction.</p>
+</div>
+</div>
+</div>
+<p>In the same way as before, we can visualise the Banksy PCs on the tissue slice coordinates.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Select PCs from Banksy dimensionality reduction space and visualise them on the tissue slice. Do you observe any spatial patterns? How do they compare to the non-spatial PCs?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Visualize PCs on the tissue slice coordinates</span></span>
+<span><span class="va">pcs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">spe</span>, <span class="st">"PCA_banksy"</span><span class="op">)</span></span>
+<span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">pcs</span><span class="op">)</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">spe</span><span class="op">[[</span><span class="va">.</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pcs</span><span class="op">[</span>, <span class="va">.</span><span class="op">]</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotCoords.html">plotCoords</a></span><span class="op">(</span><span class="va">spe</span>, annotate <span class="op">=</span> <span class="va">.</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> </span>
+<span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">ps</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"lines"</span><span class="op">)</span>, </span>
+<span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="st">"lines"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">hcl.colors</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Rocket"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.
+Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bonus Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to change Banksy parameters k and lambda. How does it affect the results?</p>
+</div>
+</div>
+</section></section><section id="run-umap" class="level2"><h2 class="anchored" data-anchor-id="run-umap">Run UMAP</h2>
+<p>For visualization purposes only, we’ll produce UMAPs based on on both spatially aware and not spatially aware PCA results:</p>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">spe</span>, dimred<span class="op">=</span><span class="st">"PCA"</span>, name<span class="op">=</span><span class="st">"UMAP_tx"</span><span class="op">)</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">spe</span>, dimred<span class="op">=</span><span class="st">"PCA_banksy"</span>, name<span class="op">=</span><span class="st">"UMAP_banksy"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualise</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">spe</span>, dimred <span class="op">=</span> <span class="st">"UMAP_tx"</span>, colour_by <span class="op">=</span> <span class="st">"detected"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_colour_gradient</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log"</span>, high <span class="op">=</span> <span class="st">"yellow"</span>, low <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">spe</span>, dimred <span class="op">=</span> <span class="st">"UMAP_banksy"</span>, colour_by <span class="op">=</span> <span class="st">"detected"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_colour_gradient</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log"</span>, high <span class="op">=</span> <span class="st">"yellow"</span>, low <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="day1-3_feature_dimred_cluster_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bonus question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you tried different parameters for Banksy, how does it affect the UMAP results?</p>
+</div>
+</div>
+</section><section id="save-data-for-later" class="level2"><h2 class="anchored" data-anchor-id="save-data-for-later">Save data for later</h2>
+<div class="cell">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe_HVG</span> <span class="op">&lt;-</span> <span class="va">spe</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">saveHDF5SummarizedExperiment</a></span><span class="op">(</span><span class="va">spe_HVG</span>, dir<span class="op">=</span><span class="st">"results/day1"</span>, prefix<span class="op">=</span><span class="st">"01.3_spe"</span>, replace<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                                chunkdim<span class="op">=</span><span class="cn">NULL</span>, level<span class="op">=</span><span class="cn">NULL</span>, as.sparse<span class="op">=</span><span class="cn">NA</span>,</span>
+<span>                                verbose<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
 </section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div>
+</div>
+</div>
+</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1051,7 +1008,7 @@ Important
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1379,7 +1336,6 @@ Important
   });
   </script>
 </div> <!-- /content -->
-
 
 
 
