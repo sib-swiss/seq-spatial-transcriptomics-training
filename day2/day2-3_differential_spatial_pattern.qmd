@@ -37,6 +37,7 @@ By the end of this exercise, you will be able to:
 
 library(HDF5Array) 
 library(SingleCellExperiment)
+library(SpatialExperiment)
 library(ggspavis)
 library(patchwork)
 library(DESpace)
@@ -48,6 +49,33 @@ We will work with the same VisiumHD dataset from the human colon cancer study [r
 
 ```{r}
 spe <- loadHDF5SummarizedExperiment(dir="data/Human_Colon_Cancer_P1/", prefix="02.3_spe_tmp")
+
+# Remove mitochondrial genes
+gn <- rowData(spe)$Symbol
+mt <- grepl("^MT-", gn, ignore.case = TRUE)
+table(mt)
+spe <- spe[!mt, ]
+
+# Extract sample labels
+sample_id <- colData(spe)[["sample_id"]]
+
+# Create a sample indicator matrix
+# Each column represents a sample; entries are 1 if the spot belongs to that sample
+sample_mat <- model.matrix(~ sample_id - 1)
+ 
+# Total counts of each gene in each sample
+gene_counts <- counts(spe)
+counts_per_sample <- gene_counts %*% sample_mat
+
+# Number of non-zero spots per gene per sample
+nonzero_per_sample <- (gene_counts > 0) %*% sample_mat 
+
+# Keep only genes that pass the filter in all samples
+sel_matrix <- t(counts_per_sample >= 50 & nonzero_per_sample >= 20)
+sel <- colMeans(sel_matrix) == 1
+spe <- spe[sel, ]
+
+# Normalization
 spe <- scuttle::logNormCounts(spe)
 spe
 ```
@@ -91,13 +119,13 @@ To answer the question: does the expression of a gene change between conditions,
 
 `DESpace::dsp_test()` first aggregates spot- or cell-level counts into pseudobulk counts for each (sample, domain) combination, then tests whether the interaction term (condition x domain) in the model is different from zero.
 
+> Take few minutes to run. While it is running, take a look at the [package vignette](https://peicai.github.io/DESpace/articles/DSP.html).
+
 ```{r}
-# Take few minutes to run
 res_edgeR <- dsp_test(spe,
                       cluster_col = "cluster",
                       sample_col = "sample_id",
                       condition_col = "condition",
-                      filter_gene = TRUE,
                       verbose = TRUE)
 ```
 
@@ -180,7 +208,9 @@ spe$c8 <- factor(ifelse(spe$cluster == "8", 1, 0))
 dsp_clu <- individual_dsp(spe,
                       cluster_col = "c8",
                       sample_col = "sample_id",
-                      condition_col = "condition")
+                      condition_col = "condition",
+                      filter_gene = FALSE,
+                      test = "LRT")
 ```
 
 ::: callout-important
@@ -211,6 +241,11 @@ head(dsp_clu[[id_clu]], 5)
 #| fig-width: 8
 #| fig-height: 6
 
+# Rotate slices
+colData(spe) <- colData(spe) |> cbind(spatialCoords(spe))
+spe$row <- spe$pxl_col_in_fullres
+spe$col <- -spe$pxl_row_in_fullres
+
 # Visualization
 plots <- lapply(samples, \(.) {
   # Subset sample
@@ -218,6 +253,7 @@ plots <- lapply(samples, \(.) {
   # FeaturePlot for cluster 8
   plot <- FeaturePlot(spe_j, 
                       feature = gs, 
+                      coordinates = c("pxl_row_in_fullres", "pxl_col_in_fullres"),
                       cluster_col = "c8", # binary cluster column
                       cluster = "1",      # plot on cluster 8
                       platform = "VisiumHD",
@@ -225,7 +261,6 @@ plots <- lapply(samples, \(.) {
                       diverging = TRUE,
                       point_size = 0.05,
                       linewidth = 0.6) +
-    #scale_y_reverse() +
     theme(legend.position = "right") +
     labs(color = "") + ggtitle(.) 
   
@@ -239,6 +274,11 @@ In normal samples, its expression is weaker and more limited.
 
 Cluster 8 might correspond to a stromal region that becomes expanded or remodeled in CRC.
 `individual_dsp()` helps identify which spatial domain shows condition-specific changes in gene expression.
+:::
+
+::: callout-important
+## Bonus question
+Try running the individual domain test using the default setting `test = "QLF`. How do the results change? (Hint: check the number of significant genes.) Why might this happen?
 :::
 
 Clear your environment:
