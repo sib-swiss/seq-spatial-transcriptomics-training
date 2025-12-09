@@ -297,7 +297,7 @@ tmp <- computeBanksy(spe[rowData(spe)$hvg, ],
 tmp <- runBanksyPCA(tmp, 
                     lambda=l, 
                     npcs=10)
-reducedDim(spe, "PCA_banksy") <- reducedDim(tmp) # store 'Banksy' PCs in original object
+reducedDim(spe, "PCA_banksy") <- reducedDim(tmp, "PCA_M0_lam0.8") # store 'Banksy' PCs in original object
 ```
 
 ::: callout-important
