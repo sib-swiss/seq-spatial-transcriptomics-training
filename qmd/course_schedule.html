@@ -138,10 +138,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../day1/day1-3_feature_dimred_cluster.html">
  <span class="dropdown-text">Exercise 3</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../day1/day1-4_clustering_find_markers.html">
- <span class="dropdown-text">Exercise 4</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -150,8 +146,20 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">    
         <li>
+    <a class="dropdown-item" href="../day1/day1-4_clustering_find_markers.html">
+ <span class="dropdown-text">Exercise 4</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../day2/day2-1_spatial_stats.html">
- <span class="dropdown-text">Exercise 1</span></a>
+ <span class="dropdown-text">Exercise 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../day2/day2-2_svg_feature_set_signatures.html">
+ <span class="dropdown-text">Exercise 6</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../day2/day2-3_differential_spatial_pattern.html">
+ <span class="dropdown-text">Exercise 7</span></a>
   </li>  
     </ul>
   </li>
@@ -266,13 +274,13 @@ Note
 <td>10:30</td>
 <td>introduction to spatial omics</td>
 <td>Joana Carlevaro-Fita</td>
-<td></td>
+<td><a href="../assets/pdf/02_introduction_spatial_omics.pdf">Spatial omics</a></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>break</td>
 <td>10:30</td>
-<td>10:45</td>
+<td>11:00</td>
 <td></td>
 <td></td>
 <td></td>
@@ -282,9 +290,9 @@ Note
 <td>block 2</td>
 <td>10:45</td>
 <td>12:30</td>
-<td>Data structure + quality control + normalization and scaling</td>
+<td>Setup, Space-ranger, and Data structure</td>
 <td>Deepak Tanwar</td>
-<td><a href="../assets/pdf/03_space_ranger_spe.pdf">space</a></td>
+<td><a href="../assets/pdf/03_space_ranger_spe.pdf">Space-ranger and <code>SpatialExperiment</code></a></td>
 <td><a href="../day1/day1-0_setup.html">Setup</a>, <a href="../day1/day1-1_SpatialExperiment.html">Exercise 1</a></td>
 </tr>
 <tr class="odd">
@@ -300,15 +308,15 @@ Note
 <td>block 3</td>
 <td>1:30</td>
 <td>3:00</td>
-<td>Exercises quality control</td>
+<td>Quality control and normalization</td>
 <td>Deepak Tanwar</td>
-<td></td>
+<td><a href="../assets/pdf/04_qc_norm.pdf">QC and normalization</a></td>
 <td><a href="../day1/day1-2_spotsweeper_qc.html">Exercise 2</a></td>
 </tr>
 <tr class="odd">
 <td>break</td>
 <td>3:00</td>
-<td>3:15</td>
+<td>3:30</td>
 <td></td>
 <td></td>
 <td></td>
@@ -316,12 +324,12 @@ Note
 </tr>
 <tr class="even">
 <td>block 4</td>
-<td>3:15</td>
+<td>3:30</td>
 <td>5:15</td>
-<td>Feature selection, dimensionality reduction and clustering</td>
+<td>Feature selection, dimensionality reduction</td>
 <td>Joana Carlevaro-Fita</td>
-<td></td>
-<td><a href="../day1/day1-3_feature_dimred_cluster.html">Exercise 3</a>, <a href="../day1/day1-4_clustering_find_markers.html">Exercise 4</a></td>
+<td><a href="../assets/pdf/05_preprocessing.pdf">Intermediate processing</a></td>
+<td><a href="../day1/day1-3_feature_dimred_cluster.html">Exercise 3</a></td>
 </tr>
 </tbody>
 </table>
@@ -329,15 +337,6 @@ Note
 <section id="day-2" class="level2">
 <h2 class="anchored" data-anchor-id="day-2">Day 2</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 47%">
-<col style="width: 12%">
-<col style="width: 11%">
-<col style="width: 8%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>block</th>
@@ -354,15 +353,15 @@ Note
 <td>block 1</td>
 <td>9:15</td>
 <td>10:30</td>
-<td>Spatial statistics</td>
-<td>Martin Emonts</td>
+<td>Clustering and annotation</td>
+<td>Joana Carlevaro-Fita</td>
 <td></td>
-<td></td>
+<td><a href="../day1/day1-4_clustering_find_markers.html">Exercise 4</a></td>
 </tr>
 <tr class="even">
 <td>break</td>
 <td>10:30</td>
-<td>10:45</td>
+<td>11:00</td>
 <td></td>
 <td></td>
 <td></td>
@@ -370,35 +369,53 @@ Note
 </tr>
 <tr class="odd">
 <td>block 2</td>
-<td>10:45</td>
+<td>11:00</td>
+<td>11:45</td>
+<td>Spatial statistics</td>
+<td>Mark Robinson</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>block 2</td>
+<td>11:45</td>
 <td>12:30</td>
-<td>DESpace</td>
+<td>Co-localization analysis</td>
+<td>Martin Emons</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>break</td>
+<td>12:30</td>
+<td>1:30</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>block 3</td>
+<td>1:30</td>
+<td>2:15</td>
+<td>Exercises: co-localisation analysis</td>
+<td>Martin Emons</td>
+<td></td>
+<td><a href="../day2/day2-2_svg_feature_set_signatures.html">Exercise 6</a></td>
+</tr>
+<tr class="odd">
+<td>block 3</td>
+<td>2:15</td>
+<td>3:00</td>
+<td>SVG and DSP for spatial data</td>
 <td>Peiying Cai</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>break</td>
-<td>12:30</td>
-<td>13:30</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>block 3</td>
-<td>1:30</td>
 <td>3:00</td>
-<td>Multiple samples DESpace, differential colocalization</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>break</td>
-<td>3:00</td>
-<td>3:15</td>
+<td>3:30</td>
 <td></td>
 <td></td>
 <td></td>
@@ -406,10 +423,19 @@ Note
 </tr>
 <tr class="odd">
 <td>block 4</td>
-<td>3:15</td>
-<td>5:15</td>
-<td>Deconvolution</td>
+<td>3:30</td>
+<td>4:15</td>
+<td>Exercise: SVG and DSP for spatial data</td>
+<td>Peiying Cai</td>
 <td></td>
+<td><a href="../day2/day2-3_differential_spatial_pattern.html">Exercise 7</a></td>
+</tr>
+<tr class="even">
+<td>post-course</td>
+<td>4:15</td>
+<td>4:30</td>
+<td>Post-course information</td>
+<td>Deepak Tanwar</td>
 <td></td>
 <td></td>
 </tr>
