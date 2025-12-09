@@ -137,7 +137,7 @@ sfe <- runUnivariate(sfe,
     colGraphName="visium")
 ```
 
-We order them and plot the gene expression top 3 genes wiht the `plotSpatialFeature` function from the `Voyager` package.
+We order them and plot the gene expression top 3 genes with the `plotSpatialFeature` function from the `Voyager` package.
 
 ```{r day2-1-spatial-stats-8 }
 I <- rowData(sfe)$moran_sample01
@@ -286,12 +286,12 @@ This chapter so far showed how to perform lattice-data analysis for one sample. 
 
 One option is to compute a measure of global spatial association giving one numerical value per field-of-view. 
 
-First we will load 4 slides from the dataset (2 healthy slides and 2 cancerous slides). 
+First we will load subsetted slides from 4 samples in the dataset (2 healthy slides and 2 cancerous slides). 
 
 Due to conversion issues, this code creates a `SpatialFeatureExperiment` via a `SingleCellExperiment`
 
 ```{r day2-1-spatial-stats-16 }
-speMult <- loadHDF5SummarizedExperiment(dir="data/", prefix="02.3_spe_tmp")
+speMult <- loadHDF5SummarizedExperiment(dir="data/Human_Colon_Cancer_P1/", prefix="02.3_spe_tmp")
 
 speMult$array_row <- speMult$row
 speMult$array_col <- speMult$col
