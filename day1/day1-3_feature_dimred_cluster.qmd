@@ -92,25 +92,6 @@ plotVisium(spe, annotate = "sizeFactors", zoom = TRUE, point_shape = 22)
 Do you observe any spatial patterns or gradients for the size factors across the tissue section? What do you think they reflect?
 :::
 
-### Bonus: accounting for compositional biases
-The `scuttle::computePooledFactors()` implements the strategy introduced by [Lun et al.](https://link.springer.com/article/10.1186/s13059-016-0947-7) to account for compositional biases (which can introduce spurious differences between cells) during normalization. 
-
-::: {.callout-tip collapse="true"}
-### Answer
-```{r, eval=FALSE}
-lib.sf.spe <- sizeFactors(spe) ## Store size factors calculated above
-set.seed(100)
-clusters <- quickCluster(spe)
-spe <- computeSumFactors(spe, cluster=clusters, min.mean=0.1)
-spe <- logNormCounts(spe)
-
-plot(lib.sf.spe, sizeFactors(spe), xlab="Library size factor",
-    ylab="Deconvolution size factor", log='xy', pch=16,
-    col=as.integer(factor(clusters)))
-abline(a=0, b=1, col="red")
-```
-:::
-
 ### Bonus: spatially-aware normalization 
 While `logNormCounts` provides a general-purpose normalization, specialized spatially-aware normalization methods exist.  These methods aim to correct for technical variations while preserving true spatial biological patterns. Depending on the dataset and research question, exploring such advanced normalization techniques might be beneficial.
 
@@ -198,7 +179,7 @@ We will go very quickly over this topic, which will be discussed in depth tomorr
 ```{r}
 # Select randomly 6 HVGs
 set.seed(123)
-random_HVG <- sample(row.names(dec), size = 6)
+random_HVG <- sample(hvg, size = 6)
 
 # Create a plot for each gene in top_HVG
 ps <- lapply(random_HVG, \(.) {
@@ -241,7 +222,9 @@ plot(attr(reducedDim(spe, "PCA"), "percentVar"),
 
 ::: callout-important
 ## Exercise 6
-Based on the scree plot, how many principal components would you consider for downstream analysis? Why? You can also have  look at the `scran::getDenoisedPCs` function to help you make this choice.
+Based on the scree plot, how many principal components would you consider for downstream analysis? Why? 
+
+Bonus: You can also have look at the `scran::getDenoisedPCs` function to help you make this choice.
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -288,7 +271,7 @@ To extract the 10 genes most associated to PC2:
 attributes(reducedDims(spe)[["PCA"]])$rotation[, "PC2"] |> abs() |> sort(decreasing = TRUE) |> names() |> head(n=10)
 
 ```
-
+:::
 
 ### Spatially aware DR:
 
