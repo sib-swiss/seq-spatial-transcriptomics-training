@@ -8,25 +8,29 @@ title: "Course schedule"
 
 ## Day 1
 
-| block         | start | end   | topic                                                        | instructor | presentation | exercise |
-|---------------|-------|-------|--------------------------------------------------------------|------------|--------------|----------|
-| introduction  | 9:15  | 9:45  | introduction to the course                                   |  Deepak Tanwar  |  [Introduction](../assets/pdf/01_introduction.pdf)        |          |
-| block 1       | 9:45  | 10:30 | introduction to spatial omics                                |  Joana Carlevaro-Fita          |              |          |
-| break         | 10:30 | 10:45 |                                                              |            |              |          |
-| block 2       | 10:45 | 12:30 | Data structure + quality control + normalization and scaling |  Deepak Tanwar          |  [space](../assets/pdf/03_space_ranger_spe.pdf)            | [Setup](../day1/day1-0_setup.qmd), [Exercise 1](../day1/day1-1_SpatialExperiment.qmd)         |
-| break         | 12:30 | 13:30 |                                                              |            |              |          |
-| block 3       | 1:30  | 3:00  | Exercises quality control                                    |  Deepak Tanwar          |              | [Exercise 2](../day1/day1-2_spotsweeper_qc.qmd)         |
-| break         | 3:00  | 3:15  |                                                              |            |              |          |
-| block 4       | 3:15  | 5:15  | Feature selection, dimensionality reduction and clustering   |  Joana Carlevaro-Fita          |              |  [Exercise 3](../day1/day1-3_feature_dimred_cluster.qmd), [Exercise 4](../day1/day1-4_clustering_find_markers.qmd)        |
+| block         | start | end   | topic                                                        | instructor            | presentation | exercise |
+|---------------|-------|-------|--------------------------------------------------------------|-----------------------|--------------|----------|
+| introduction  | 9:15  | 9:45  | introduction to the course                                   |  Deepak Tanwar        |  [Introduction](../assets/pdf/01_introduction.pdf)    |  |
+| block 1       | 9:45  | 10:30 | introduction to spatial omics                                |  Joana Carlevaro-Fita |  [Spatial omics](../assets/pdf/02_introduction_spatial_omics.pdf) |  |
+| break         | 10:30 | 11:00 |                                                              |                       | | |
+| block 2       | 10:45 | 12:30 | Setup, Space-ranger, and Data structure                      |  Deepak Tanwar        |  [Space-ranger and `SpatialExperiment`](../assets/pdf/03_space_ranger_spe.pdf) | [Setup](../day1/day1-0_setup.qmd), [Exercise 1](../day1/day1-1_SpatialExperiment.qmd) |
+| break         | 12:30 | 13:30 |                                                              |                       | | |
+| block 3       | 1:30  | 3:00  | Quality control and normalization                            |  Deepak Tanwar        |  [QC and normalization](../assets/pdf/04_qc_norm.pdf)  | [Exercise 2](../day1/day1-2_spotsweeper_qc.qmd) |
+| break         | 3:00  | 3:30  |                                                              |                       | | |
+| block 4       | 3:30  | 5:15  | Feature selection, dimensionality reduction                  |  Joana Carlevaro-Fita |  [Intermediate processing](../assets/pdf/05_preprocessing.pdf) |  [Exercise 3](../day1/day1-3_feature_dimred_cluster.qmd)  |
+
 
 ## Day 2
 
-| block   | start | end   | topic                                                 | instructor    | presentation | exercise |
-|---------|-------|-------|-------------------------------------------------------|---------------|--------------|----------|
-| block 1 | 9:15  | 10:30 | Spatial statistics                                    | Martin Emonts |              |          |
-| break   | 10:30 | 10:45 |                                                       |               |              |          |
-| block 2 | 10:45 | 12:30 | DESpace                                               | Peiying Cai   |              |          |
-| break   | 12:30 | 13:30 |                                                       |               |              |          |
-| block 3 | 1:30  | 3:00  | Multiple samples DESpace, differential colocalization |               |              |          |
-| break   | 3:00  | 3:15  |                                                       |               |              |          |
-| block 4 | 3:15  | 5:15  | Deconvolution                                         |               |              |          |
+| block   | start | end   | topic                                                 | instructor           | presentation | exercise |
+|---------|-------|-------|-------------------------------------------------------|----------------------|--------------|----------|
+| block 1 | 9:15  | 10:30 | Clustering and annotation                             | Joana Carlevaro-Fita |              | [Exercise 4](../day1/day1-4_clustering_find_markers.qmd) |
+| break   | 10:30 | 11:00 |                                                       |                      |  |  |
+| block 2 | 11:00 | 11:45 | Spatial statistics                                    | Mark Robinson        |              |  |
+| block 2 | 11:45 | 12:30 | Co-localization analysis                              | Martin Emons         |              |          |
+| break   | 12:30 | 1:30 |                                                        |                      |  |  |
+| block 3 | 1:30  | 2:15  | Exercises: co-localisation analysis                   | Martin Emons         |              | [Exercise 6](../day2/day2-2_svg_feature_set_signatures.qmd) |
+| block 3 | 2:15  | 3:00  | SVG and DSP for spatial data                          | Peiying Cai          |              |          |
+| break   | 3:00  | 3:30  |                                                       |                      |  |  |
+| block 4 | 3:30  | 4:15  | Exercise: SVG and DSP for spatial data                | Peiying Cai          |              | [Exercise 7](../day2/day2-3_differential_spatial_pattern.qmd) |
+| post-course | 4:15  | 4:30  | Post-course information                           | Deepak Tanwar        |              |          |
