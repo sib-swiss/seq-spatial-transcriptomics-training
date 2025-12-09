@@ -44,10 +44,10 @@ library(DESpace)
 
 ## Load preprocessed data
 
-We will work with the same VisiumHD dataset from the human colon cancer study [recently published](https://www.nature.com/articles/s41588-025-02193-3). Here we use a preprocessed dataset containing 4 VisiumHD slides from three patients (P1CRC, P5CRC, P3NAT, and P5NAT), representing either colorectal carcinoma (CRC) or normal adjacent tissues (NAT), all with pre-computed clusters.
+We will work with the same VisiumHD dataset from the human colon cancer study [recently published](https://www.nature.com/articles/s41588-025-02193-3). Here we use a subsetted dataset containing 4 slides from three patients (P1CRC, P5CRC, P3NAT, and P5NAT), representing either colorectal carcinoma (CRC) or normal adjacent tissues (NAT), all with pre-computed clusters.
 
 ```{r}
-spe <- loadHDF5SummarizedExperiment(dir="data/", prefix="02.3_spe_tmp")
+spe <- loadHDF5SummarizedExperiment(dir="data/Human_Colon_Cancer_P1/", prefix="02.3_spe_tmp")
 spe <- scuttle::logNormCounts(spe)
 spe
 ```
