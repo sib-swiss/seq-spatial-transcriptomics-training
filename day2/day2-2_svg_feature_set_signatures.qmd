@@ -20,7 +20,7 @@ By the end of this exercise, you will be able to:
 - Score cells/spots with gene-set signatures and interpret spatial pathway patterns
 
 # Libraries
-```{r}
+```{r day2-2-svg-feature-set-signatures-1}
 #| message: false
 #| warning: false
 #| output: false
@@ -45,7 +45,7 @@ library(pheatmap)
 
 We begin by loading the `SpatialExperiment` object prepared in the previous exercise containing clustering results.
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-2}
 spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.4_spe")
 ```
 
@@ -66,7 +66,7 @@ SVG methods differ in how they use spatial coordinates and what types of spatial
 In this exercise, we will focus on the first two categories, using `nnSVG`[@weber2023nnsvg] for overall SVGs and `DESpace`[@cai2024despace] for domain-specific SVGs.
 
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-3}
 set.seed(123)
 # Sample 100 spots to decrease runtime in this exercise
 n <- 100
@@ -100,7 +100,7 @@ dim(sub)
 > Note: `nnSVG` may take up to ~10 minutes to run. Feel free to take a short break and grab a coffee!
 > While it is running, you might want to take a look at the [nnSVG paper](https://www.nature.com/articles/s41467-023-39748-z) and the [package vignette](https://bioconductor.org/packages/devel/bioc/vignettes/nnSVG/inst/doc/nnSVG.html) to better understand how the method works, including its handling of covariates and multiple samples.
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-4}
 set.seed(123)
 sub <- nnSVG(sub)
 ```
@@ -115,7 +115,7 @@ Inspect the nnSVG output stored in `rowData(sub)`.
 
 ::: {.callout-tip collapse="true"}
 ### Answer
-```{r}
+```{r day2-2-svg-feature-set-signatures-5}
 # Select top SVGs
 res_nnSVG <- rowData(sub)
 head(res_nnSVG, 3)
@@ -125,7 +125,7 @@ top_nnSVG <- res_nnSVG$gene_name[seq_len(3)]
 The main output is in `rowData` of the `SpatialExperiment` object, which includes: the likelihood ratio statistic (`LR_stat`), the gene’s rank based on this statistic (`rank`), raw p-values from a chi-squared test with 2 degrees of freedom (`pval`), p-values adjusted for multiple testing (`padj`), and the estimated effect size (`prop_sv`), defined as the proportion of spatial variance relative to total variance.
 
 > If you did not run `nnSVG` due to runtime constraints, you may use these pre-computed top SVGs:
-```{r}
+```{r day2-2-svg-feature-set-signatures-6}
 #| eval: false
 top_nnSVG <- c("MXRA8", "VWA1", "SKI")
 ```
@@ -135,7 +135,7 @@ top_nnSVG <- c("MXRA8", "VWA1", "SKI")
 
 `DESpace` detects genes that show significantly higher/lower expression in one spatial domain compared to the rest of the tissue. To run `DESpace`, we need cluster labels or manual annotation. Here we use pre-computed spatial clusters from the Day1 exercise 4.
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-7}
 res <- svg_test(sub, cluster_col="Banksy", verbose = TRUE)
 ```
 
@@ -150,7 +150,7 @@ Have a look at the DESpace results.
 
 ::: {.callout-tip collapse="true"}
 ### Answer
-```{r}
+```{r day2-2-svg-feature-set-signatures-8}
 head(res_DESpace <- res$gene_results, 3)
 top_DESpace <- res_DESpace$gene_id[seq_len(3)]
 ```
@@ -162,7 +162,7 @@ The main output is in `gene_results`: a `data.frame` containing: gene name (`gen
 
 As we did yesterday, we first model gene variance using a Poisson noise model with `scran::modelGeneVarByPoisson()` and select the top HVGs.
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-9}
 dec <- modelGeneVarByPoisson(spe)
 top_HVG <- row.names(dec[order(dec$bio, decreasing = T), ])[1:3]
 top_HVG
@@ -178,7 +178,7 @@ top_HVG
 ::: {.callout-tip collapse="true"}
 ### Answer
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-10}
 gs <- c(
     nnSVG=top_nnSVG,
     DESpace=top_DESpace,
@@ -212,7 +212,7 @@ High AUC values correspond to high coordinated expression of the gene set.
 
 ### Retrieve `MSigDB` Hallmark gene sets
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-11}
 # Retrieve hallmark gene sets from 'MSigDB'
 db <- msigdbr(species="Homo sapiens", category="H")
 
@@ -232,18 +232,18 @@ How many gene sets are there? What is the range of gene counts across these sets
 ::: {.callout-tip collapse="true"}
 ### Answer
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-12}
 length(gs)
 ```
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-13}
 range(sapply(gs, length))
 ```
 :::
 
 ### Gene set scoring with `AUCell`
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-14}
 # Realize (sparse) gene expression matrix
 mtx <- as(logcounts(spe), "dgCMatrix") 
 
@@ -278,7 +278,7 @@ colData(spe)[rownames(auc)] <- res <- t(assay(auc))
 ::: {.callout-tip collapse="true"}
 ## Answer
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-15}
 #| fig-width: 4
 #| fig-height: 4
 
@@ -301,7 +301,7 @@ spe[[top]] <- scale(spe[[top]])
 plotCoords(spe, annotate = top) 
 ```
 
-```{r}
+```{r day2-2-svg-feature-set-signatures-16}
 #| fig-width: 7
 #| fig-height: 7
 
@@ -316,7 +316,7 @@ Highly correlated sets will exhibit similar spatial patterns.
 :::
 
 Clear your environment:
-```{r}
+```{r day2-2-svg-feature-set-signatures-17}
 #| eval: false
 rm(list = ls())
 gc()
