@@ -9,14 +9,14 @@ bibliography: ../references.bib
 
 ## Spatial Variable Genes (SVGs) and Feature-set Signatures
 
-In this practical exercise, we focus on spatially structured gene expression, pathway-level signatures. We will calculate SVGs using two families of methods, compare SVGs with HVGs, understand how spatial information influences downstream analysis, and quantify pathway activities using gene-set scoring.
+In this practical exercise, we focus on spatially structured gene expression, pathway-level signatures. We will calculate SVGs using two families of methods, compare SVGs to HVGs, understand how spatial information influences downstream analysis, and quantify pathway activities using gene-set scoring.
 
 ## Learning Objectives
 
 By the end of this exercise, you will be able to:
 
-- Identify SVGs with two types of SVGs
-- Compare SVGs with HVGs 
+- Identify SVGs with two types of methods
+- Compare SVGs to HVGs 
 - Score cells/spots with gene-set signatures and interpret spatial pathway patterns
 
 # Libraries
@@ -51,11 +51,11 @@ spe <- loadHDF5SummarizedExperiment(dir="results/day1", prefix="01.4_spe")
 
 ## Spatially variable genes (SVGs)
 
-In Day 1, we introduced highly variable genes (HVGs), which capture overall transcriptional variability and are useful for identifying major sources of variation and reducing dimensionality. HVGs reflect global heterogeneity, but they do not use spatial information. 
+In Day 1, we performed the analyses using the set of most highly variable genes (HVGs), which capture overall transcriptional variability and are useful for identifying major sources of variation and reducing dimensionality. HVGs reflect global heterogeneity, but they do not use spatial information. 
 
 In spatial transcriptomics, however, we are often interested in genes whose expression changes across tissue in structured spatial patterns. These are called spatially variable genes (SVGs), which conceptually generalize HVGs by adding spatial information.
 
-SVG methods differ in how they use spatial coordinates and what types of spatial structure they detect. They can be broadly grouped into three categories [@yan2025svg]:
+SVG inference methods differ in how they use spatial coordinates and what types of spatial structure they detect. They can be broadly grouped into three categories [@yan2025svg]:
 
 - **Overall SVGs** detect any spatial pattern across the tissue; can be used for feature selection for downstream analyses (e.g., spatially-aware clustering)
 
@@ -73,24 +73,21 @@ n <- 100
 sub <- spe[, sample(ncol(spe), n)]
 rowData(sub)$gene_name <- rowData(sub)$Symbol
 
-# Subset to HVGs only to further decrease runtime
+# Subset to a subset of 200 HVGs, to further decrease runtime
 hvg_idx <- which(rowData(spe)$hvg)[seq_len(200)]
 sub <- sub[hvg_idx, ]
 
-# Remove empty spots
-keep_spots <- colSums(counts(sub)) > 0
-sub <- sub[, keep_spots]
-
-# Remove genes with all zeros
+# Remove genes with all zeros on this subset of spots
 keep_genes <- rowSums(counts(sub)) > 0
 sub <- sub[keep_genes, ]
 
-# Remove lowly expressed genes (expressed in ≥1% of spots)
+# Remove lowly expressed genes (expressed in less than 1% of the spots)
 keep_genes2 <- rowMeans(counts(sub) > 0) >= 0.01 
 sub <- sub[keep_genes2, ]
-
-sub <- logNormCounts(sub)
 dim(sub)
+
+## Renormalize on this subset of genes 
+sub <- logNormCounts(sub)
 ```
 
 ### nnSVG
@@ -98,11 +95,11 @@ dim(sub)
 `nnSVG` detects SVGs by modeling spatial gene expression using Gaussian processes, capturing smooth gradients or spatial trends. 
 
 > Note: `nnSVG` may take up to ~10 minutes to run. Feel free to take a short break and grab a coffee!
-> While it is running, you might want to take a look at the [nnSVG paper](https://www.nature.com/articles/s41467-023-39748-z) and the [package vignette](https://bioconductor.org/packages/devel/bioc/vignettes/nnSVG/inst/doc/nnSVG.html) to better understand how the method works, including its handling of covariates and multiple samples.
+> While it is running, take a look at the [nnSVG paper](https://www.nature.com/articles/s41467-023-39748-z) and the [package vignette](https://bioconductor.org/packages/devel/bioc/vignettes/nnSVG/inst/doc/nnSVG.html) to better understand how the method works, including its handling of covariates and multiple samples.
 
 ```{r day2-2-svg-feature-set-signatures-4}
 set.seed(123)
-sub <- nnSVG(sub)
+sub <- nnSVG(sub) 
 ```
 
 ::: callout-important
@@ -117,7 +114,8 @@ Inspect the nnSVG output stored in `rowData(sub)`.
 ### Answer
 ```{r day2-2-svg-feature-set-signatures-5}
 # Select top SVGs
-res_nnSVG <- rowData(sub)
+res_nnSVG <- rowData(sub) 
+res_nnSVG <- res_nnSVG[order(res_nnSVG$pval), ]
 head(res_nnSVG, 3)
 top_nnSVG <- res_nnSVG$gene_name[seq_len(3)]
 ```
@@ -127,13 +125,13 @@ The main output is in `rowData` of the `SpatialExperiment` object, which include
 > If you did not run `nnSVG` due to runtime constraints, you may use these pre-computed top SVGs:
 ```{r day2-2-svg-feature-set-signatures-6}
 #| eval: false
-top_nnSVG <- c("MXRA8", "VWA1", "SKI")
+top_nnSVG <- c("PIGR", "LEFTY1", "CXCR4")
 ```
 :::
 
 ### DESpace
 
-`DESpace` detects genes that show significantly higher/lower expression in one spatial domain compared to the rest of the tissue. To run `DESpace`, we need cluster labels or manual annotation. Here we use pre-computed spatial clusters from the Day1 exercise 4.
+`DESpace` detects genes that show significantly higher/lower expression in one spatial domain compared to the rest of the tissue. To run `DESpace`, we need cluster labels or manual annotation. Here we use pre-computed spatial clusters from the day1, exercise 4.
 
 ```{r day2-2-svg-feature-set-signatures-7}
 res <- svg_test(sub, cluster_col="Banksy", verbose = TRUE)
@@ -200,7 +198,7 @@ wrap_plots(ps, nrow=3) & theme(
 
 ::: callout-important
 ## Bonus question
-Try using SVGs for dimensionality reduction (e.g., PCA) and clustering (e.g., Leiden clustering, BayesSpace, Banksy). How do clustering results differ compared to using HVGs? 
+Try using SVGs for dimensionality reduction (e.g., PCA) and clustering (e.g., Leiden clustering, BayesSpace, Banksy) as seen yesterday (exercises 3 and 4). How do clustering results differ compared to using HVGs? 
 :::
 
 ## Feature-set signatures
@@ -328,5 +326,5 @@ gc()
 
 - HVGs and SVGs emphasize different aspects of the data: HVGs (global heterogeneity); SVGs (spatially structured patterns).
 - Different SVG methods detect different types of structure.
-- Gene set signatures summarize coordinated activity of biological pathways. and can be mapped across the tissue and compared between regions or clusters.
+- Gene set signatures summarize coordinated activity of biological pathways. They can be mapped across the tissue and compared between regions or clusters.
 :::
