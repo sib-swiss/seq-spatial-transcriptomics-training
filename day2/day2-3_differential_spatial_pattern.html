@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-230b0edcc17825a0f87886d255295d6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-e0c19abc34f0e04f75bc673f4472a256.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -273,6 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/HDF5Array">HDF5Array</a></span><span class="op">)</span> </span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment">SpatialExperiment</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmweber/ggspavis">ggspavis</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/peicai/DESpace">DESpace</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -281,14 +282,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We will work with the same VisiumHD dataset from the human colon cancer study <a href="https://www.nature.com/articles/s41588-025-02193-3">recently published</a>. Here we use a subsetted dataset containing 4 slides from three patients (P1CRC, P5CRC, P3NAT, and P5NAT), representing either colorectal carcinoma (CRC) or normal adjacent tissues (NAT), all with pre-computed clusters.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HDF5Array/man/saveHDF5SummarizedExperiment.html">loadHDF5SummarizedExperiment</a></span><span class="op">(</span>dir<span class="op">=</span><span class="st">"data/Human_Colon_Cancer_P1/"</span>, prefix<span class="op">=</span><span class="st">"02.3_spe_tmp"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Remove mitochondrial genes</span></span>
+<span><span class="va">gn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">Symbol</span></span>
+<span><span class="va">mt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^MT-"</span>, <span class="va">gn</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html">table</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mt
+FALSE  TRUE 
+18034    11 </code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span><span class="op">!</span><span class="va">mt</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Extract sample labels</span></span>
+<span><span class="va">sample_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">[[</span><span class="st">"sample_id"</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Create a sample indicator matrix</span></span>
+<span><span class="co"># Each column represents a sample; entries are 1 if the spot belongs to that sample</span></span>
+<span><span class="va">sample_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sample_id</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span> </span>
+<span><span class="co"># Total counts of each gene in each sample</span></span>
+<span><span class="va">gene_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
+<span><span class="va">counts_per_sample</span> <span class="op">&lt;-</span> <span class="va">gene_counts</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">sample_mat</span></span>
+<span></span>
+<span><span class="co"># Number of non-zero spots per gene per sample</span></span>
+<span><span class="va">nonzero_per_sample</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">gene_counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">sample_mat</span> </span>
+<span></span>
+<span><span class="co"># Keep only genes that pass the filter in all samples</span></span>
+<span><span class="va">sel_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">counts_per_sample</span> <span class="op">&gt;=</span> <span class="fl">50</span> <span class="op">&amp;</span> <span class="va">nonzero_per_sample</span> <span class="op">&gt;=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">colMeans</span><span class="op">(</span><span class="va">sel_matrix</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span><span class="va">sel</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Normalization</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
 <span><span class="va">spe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SpatialExperiment 
-dim: 18045 56120 
+dim: 12114 56120 
 metadata(0):
 assays(2): counts logcounts
-rownames(18045): SAMD11 NOC2L ... MT-ND6 MT-CYB
+rownames(12114): SAMD11 NOC2L ... TMLHE VAMP7
 rowData names(3): ID Symbol Type
 colnames(56120): s_016um_00145_00029-1.Normal_P5
   s_016um_00165_00109-1.Normal_P5 ... s_016um_00122_00096-1.Normal_P3
@@ -311,7 +344,7 @@ imgData names(4): sample_id image_id data scaleFactor</code></pre>
 <code>cluster</code>: spatial domain labels</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 3 rows and 6 columns
                                       row       col  cluster condition
@@ -325,7 +358,7 @@ s_016um_00145_00029-1.Normal_P5 Normal_P5   2.309698
 s_016um_00165_00109-1.Normal_P5 Normal_P5   3.266692
 s_016um_00188_00060-1.Normal_P5 Normal_P5   0.938006</code></pre>
 </div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html">table</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">condition</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html">table</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">condition</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Cancer Normal 
@@ -334,7 +367,7 @@ Cancer Normal
 </div>
 <p>Visualize clusters for each sample.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html">unique</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">sample_id</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html">unique</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">sample_id</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">samples</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span></span>
 <span>       <span class="fu"><a href="https://rdrr.io/pkg/ggspavis/man/plotCoords.html">plotCoords</a></span><span class="op">(</span><span class="va">spe</span><span class="op">[</span>, <span class="va">spe</span><span class="op">$</span><span class="va">sample_id</span> <span class="op">==</span> <span class="va">.</span><span class="op">]</span>,</span>
 <span>                  annotate<span class="op">=</span><span class="st">"cluster"</span>,</span>
@@ -366,22 +399,17 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <section id="global-test" class="level3"><h3 class="anchored" data-anchor-id="global-test">Global test</h3>
 <p>To answer the question: does the expression of a gene change between conditions, but change differently for some domains compared to others?</p>
 <p><code><a href="https://peicai.github.io/DESpace/reference/dsp_test.html">DESpace::dsp_test()</a></code> first aggregates spot- or cell-level counts into pseudobulk counts for each (sample, domain) combination, then tests whether the interaction term (condition x domain) in the model is different from zero.</p>
+<blockquote class="blockquote">
+<p>Take few minutes to run. While it is running, take a look at the <a href="https://peicai.github.io/DESpace/articles/DSP.html">package vignette</a>.</p>
+</blockquote>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Take few minutes to run</span></span>
-<span><span class="va">res_edgeR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://peicai.github.io/DESpace/reference/dsp_test.html">dsp_test</a></span><span class="op">(</span><span class="va">spe</span>,</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">res_edgeR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://peicai.github.io/DESpace/reference/dsp_test.html">dsp_test</a></span><span class="op">(</span><span class="va">spe</span>,</span>
 <span>                      cluster_col <span class="op">=</span> <span class="st">"cluster"</span>,</span>
 <span>                      sample_col <span class="op">=</span> <span class="st">"sample_id"</span>,</span>
 <span>                      condition_col <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>                      filter_gene <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                      verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using 'dsp_test' for spatial variable pattern genes detection.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filter low quality genes: </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The number of genes that pass filtering is 13378.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Filter low quality clusters: </code></pre>
@@ -594,16 +622,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <span><span class="va">dsp_clu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://peicai.github.io/DESpace/reference/individual_dsp.html">individual_dsp</a></span><span class="op">(</span><span class="va">spe</span>,</span>
 <span>                      cluster_col <span class="op">=</span> <span class="st">"c8"</span>,</span>
 <span>                      sample_col <span class="op">=</span> <span class="st">"sample_id"</span>,</span>
-<span>                      condition_col <span class="op">=</span> <span class="st">"condition"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filter low quality genes: </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>min_counts = 20; min_non_zero_spots = 10.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The number of genes that pass filtering is 13378.</code></pre>
-</div>
+<span>                      condition_col <span class="op">=</span> <span class="st">"condition"</span>,</span>
+<span>                      filter_gene <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      test <span class="op">=</span> <span class="st">"LRT"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Conducting tests for layer '0' against all other layers.</code></pre>
 </div>
@@ -664,7 +685,7 @@ Answer
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select cluster id (because after binarization cluster 8 = "1")</span></span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select cluster id (because after binarization cluster 8 = "1")</span></span>
 <span><span class="va">id_clu</span> <span class="op">&lt;-</span> <span class="st">"1"</span></span>
 <span></span>
 <span><span class="co"># DSP results for cluster 8</span></span>
@@ -677,7 +698,7 @@ SIGLEC10 SIGLEC10  2.567324 5.554622 36.61699 0.0002614359 0.6649003
 COL12A1   COL12A1 -2.543965 6.903958 35.37749 0.0002945338 0.6649003
 DDAH1       DDAH1 -1.978593 7.162494 35.05049 0.0003042777 0.6649003</code></pre>
 </div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># dsp_clu[["1"]] stores DSP genes for cluster 8  (after binarization)</span></span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># dsp_clu[["1"]] stores DSP genes for cluster 8  (after binarization)</span></span>
 <span><span class="co"># dsp_clu[["0"]] stores DSP genes for all other regions (not useful here)</span></span>
 <span><span class="co"># If full clusters are used originally, dsp_clu[["8"]] would store cluster 8 results</span></span>
 <span></span>
@@ -688,13 +709,19 @@ DDAH1       DDAH1 -1.978593 7.162494 35.05049 0.0003042777 0.6649003</code></pre
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualization</span></span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Rotate slices</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html">spatialCoords</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">row</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">$</span><span class="va">pxl_col_in_fullres</span></span>
+<span><span class="va">spe</span><span class="op">$</span><span class="va">col</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">spe</span><span class="op">$</span><span class="va">pxl_row_in_fullres</span></span>
+<span></span>
+<span><span class="co"># Visualization</span></span>
 <span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">samples</span>, \<span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Subset sample</span></span>
 <span>  <span class="va">spe_j</span> <span class="op">&lt;-</span> <span class="va">spe</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">sample_id</span> <span class="op">==</span> <span class="va">.</span><span class="op">]</span></span>
 <span>  <span class="co"># FeaturePlot for cluster 8</span></span>
 <span>  <span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://peicai.github.io/DESpace/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">spe_j</span>, </span>
 <span>                      feature <span class="op">=</span> <span class="va">gs</span>, </span>
+<span>                      coordinates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pxl_row_in_fullres"</span>, <span class="st">"pxl_col_in_fullres"</span><span class="op">)</span>,</span>
 <span>                      cluster_col <span class="op">=</span> <span class="st">"c8"</span>, <span class="co"># binary cluster column</span></span>
 <span>                      cluster <span class="op">=</span> <span class="st">"1"</span>,      <span class="co"># plot on cluster 8</span></span>
 <span>                      platform <span class="op">=</span> <span class="st">"VisiumHD"</span>,</span>
@@ -702,7 +729,6 @@ DDAH1       DDAH1 -1.978593 7.162494 35.05049 0.0003042777 0.6649003</code></pre
 <span>                      diverging <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                      point_size <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                      linewidth <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="co">#scale_y_reverse() +</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> </span>
 <span>  </span>
@@ -718,7 +744,7 @@ Coordinate system already present.
 Coordinate system already present.
 ℹ Adding new coordinate system, which will replace the existing one.</code></pre>
 </div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">plots</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">'collect'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">gs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">plots</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">'collect'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">gs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="day2-3_differential_spatial_pattern_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="768"></p>
@@ -731,9 +757,22 @@ Coordinate system already present.
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bonus question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try running the individual domain test using the default setting <code>test = "QLF</code>. How do the results change? (Hint: check the number of significant genes.) Why might this happen?</p>
+</div>
+</div>
 <p>Clear your environment:</p>
 <div class="cell">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/gc.html">gc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">.rs.restartR</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -829,7 +868,7 @@ Important
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/seq-spatial-transcriptomics-training\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
