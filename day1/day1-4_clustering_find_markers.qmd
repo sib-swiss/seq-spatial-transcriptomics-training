@@ -144,7 +144,7 @@ lapply(tail(names(sort(table(spe$Banksy))), 8), \(k) {
 ```
 
 
-::: callout-important
+:::{.callout-important}
 ## Exercise 1
 Visualise the clusters obtained with the 3 methods, and compare their spatial distribution. What do you observe?
 :::   
@@ -177,7 +177,7 @@ plotVisium(spe, annotate="SingleR_label", zoom = T, point_shape = 22, point_size
   scale_fill_brewer(palette = "Set1")
 ```
 
-::: callout-important
+:::{.callout-important}
 ## Exercise 2
 What do you think about this annotation? Do you identify potentially relevant biological structures? How are these isolated above in the calculated clusters and spatial domains? 
 :::
@@ -211,7 +211,7 @@ pheatmap(
   annotation_colors = ann_colors  
 )
 ```
-
+:::
 
 ## Save the object
 
