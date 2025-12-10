@@ -24,13 +24,13 @@ title: "Course schedule"
 
 | block   | start | end   | topic                                                 | instructor           | presentation | exercise |
 |---------|-------|-------|-------------------------------------------------------|----------------------|--------------|----------|
-| block 1 | 9:15  | 10:30 | Clustering and annotation                             | Joana Carlevaro-Fita |              | [Exercise 4](../day1/day1-4_clustering_find_markers.qmd) |
+| block 1 | 9:15  | 10:30 | Clustering and annotation                             | Joana Carlevaro-Fita |  [Clustering](../assets/pdf/06_spatial_domains.pdf)  | [Exercise 4](../day1/day1-4_clustering_find_markers.qmd) |
 | break   | 10:30 | 11:00 |                                                       |                      |  |  |
 | block 2 | 11:00 | 11:45 | Spatial statistics                                    | Mark Robinson        | [Statistical methods](../assets/pdf/07_stats_methods.pdf) |  |
 | block 2 | 11:45 | 12:30 | Co-localization analysis                              | Martin Emons         |  [Spatial stats](../assets/pdf/08_spastat_lecture.pdf)  |          |
 | break   | 12:30 | 1:30 |                                                        |                      |  |  |
 | block 3 | 1:30  | 2:15  | Exercises: co-localisation analysis                   | Martin Emons         |              | [Exercise 5](../day2/day2-1_spatial_stats.qmd) |
-| block 3 | 2:15  | 3:00  | SVG and DSP for spatial data                          | Peiying Cai          |              |          |
+| block 3 | 2:15  | 3:00  | SVG and DSP for spatial data                          | Peiying Cai          |  [SVG and DSP](../assets/pdf/09_svg_dsp.pdf) |          |
 | break   | 3:00  | 3:30  |                                                       |                      |  |  |
 | block 4 | 3:30  | 4:15  | Exercise: SVG and DSP for spatial data                | Peiying Cai          |              | [Exercise 6](../day2/day2-2_svg_feature_set_signatures.qmd), [Exercise 7](../day2/day2-3_differential_spatial_pattern.qmd) |
 | post-course | 4:15  | 4:30  | Post-course information                           | Deepak Tanwar        |              |          |
