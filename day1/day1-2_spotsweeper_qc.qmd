@@ -247,6 +247,7 @@ plotQCmetrics(spe,
 ) +
   ggtitle("Local outliers for %MT")
 ```
+:::
 
 ::: callout-important
 ## Exercise 4
@@ -350,6 +351,7 @@ What is the `findArtifacts` function performing and what are the (potentially pr
 ::: callout-important
 ## Exercise 7
 Plot the spatial distribution of the `artifact` column identified by `SpotSweeper`. What do you observe?
+:::
 
 :::{.callout-tip collapse="true"}
 ### Answer
