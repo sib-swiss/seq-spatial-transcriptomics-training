@@ -33,4 +33,4 @@ title: "Course schedule"
 | block 3 | 2:15  | 3:00  | SVG and DSP for spatial data                          | Peiying Cai          |  [SVG and DSP](../assets/pdf/09_svg_dsp.pdf) |          |
 | break   | 3:00  | 3:30  |                                                       |                      |  |  |
 | block 4 | 3:30  | 4:15  | Exercise: SVG and DSP for spatial data                | Peiying Cai          |              | [Exercise 6](../day2/day2-2_svg_feature_set_signatures.qmd), [Exercise 7](../day2/day2-3_differential_spatial_pattern.qmd) |
-| post-course | 4:15  | 4:30  | Post-course information                           | Deepak Tanwar        |              |          |
+| post-course | 4:15  | 4:30  | Post-course information                           | Deepak Tanwar        | [Closing remarks](../assets/pdf/10_post_course.pdf)  |          |
