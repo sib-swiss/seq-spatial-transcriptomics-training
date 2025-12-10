@@ -2,7 +2,7 @@ project:
   type: website
   execute-dir: project
   render:
-    - "*.qmd"
+    - "**/*.qmd"
     - "!CONTRIBUTIONG.md"
     - "!LICENSE.md"
 
